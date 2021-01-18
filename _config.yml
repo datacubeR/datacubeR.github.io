@@ -270,7 +270,7 @@ defaults:
       title_suffix: "a project by Róbert Papp (TWiStErRob)"
       published: true
       released: true
-      breadcrumbs: true
+      breadcrumbs: false
       images:
         icon: projects/unknown-app-icon-512.png
         icon_small: projects/unknown-app-icon-512.png
@@ -285,7 +285,7 @@ defaults:
     values:
       layout: job
       title_suffix: "a former workplace of Róbert Papp"
-      breadcrumbs: true
+      breadcrumbs: false
       show_meta:
         sharer: true
         navigation: 'snippets/lateral_navigation_job.html'
@@ -295,7 +295,7 @@ defaults:
     values:
       #permalink: /blog/:category/ # will be available in 3.0, see https://github.com/jekyll/jekyll/pull/3320
       layout: blog_by_category
-      breadcrumbs: true
+      breadcrumbs: false
       title_suffix: "category details"
       show_meta:
         sharer: true
