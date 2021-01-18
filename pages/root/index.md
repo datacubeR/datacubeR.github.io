@@ -14,7 +14,7 @@ widget1:
   image: widget-1_canary-wharf.jpg
   text: "Find out what I've been doing when I was sitting in front of the computer in the last 10+ years."
 widget2:
-  title: "Portfolio"
+  title: "Portafolio"
   url: /project/
   image: widget-2_code.png
   text: "Check out my projects and contributions: what technologies did I use and what's the motivation behind each."

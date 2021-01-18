@@ -1,13 +1,13 @@
 ---
-title: Glide
+title: Evalueserve
 type: Personal
 role: contributor, issue support
 maintech: Android, communication
 sector: IT
 location: Szentes
 dates:
-  from: 2014-08-24
-  to: 
+  from: 2015-06-01
+  to: 2019-06-10
 employer:
   onsite: false
 ---

@@ -1,13 +1,13 @@
 ---
-title: CCC — Nokia
+title: Invar
 type: Company
 role: software development engineer in Java, manual and automated tester
 maintech: Java, Swing
 sector: telecommunications
 location: Szeged, Hungary
 dates:
-  from: 2007-02-01
-  to: 2008-07-02
+  from: 2012-12-15
+  to: 2014-07-01
 employer: {}
 ---
 

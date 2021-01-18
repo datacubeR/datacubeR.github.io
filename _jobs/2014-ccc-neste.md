@@ -1,13 +1,13 @@
 ---
-title: CCC — Neste Oil
+title: Aguas del Valle
 type: Company
 role: software development engineer
 maintech: ".NET"
-sector: telecommunications
+sector: IT
 location: Szeged, Hungary
 dates:
-  from: 2008-07-02
-  to: 2009-06-27
+  from: 2014-03-17
+  to: 2015-05-31
 employer:
   onsite: false
 ---

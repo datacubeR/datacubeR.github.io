@@ -13,19 +13,19 @@
 #
 
 # Title of your website
-title: "TWiStErRob"
+title: "datacubeR"
 
 
 # The slogan describes your website and is used on homepage in <title> and other important places
-slogan: "Professional & Hobby Development site"
+slogan: "ML y Datascience"
 
 
 # The description is used on homepage and in the footer to quickly describe your website. Use a maximum of 150 characters for SEO-purposes.
-description: "Home for all things about and by Róbert&nbsp;Papp (TWiStErRob)."
+description: "Espero pueda ser un lugar donde juntos aprendamos Machine&nbsp;Learning"
 
 # Main author of the website
 # See > authors.yml
-author: twisterrob
+author: Alfonso
 
 # This URL is the main address for absolute links. Don't include a slash at the end.
 url: 'http://www.twisterrob.net'

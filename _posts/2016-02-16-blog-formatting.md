@@ -5,7 +5,7 @@ teaser: "All-in-one visual medley of most formatting options I use in markdown o
 category: web
 tags:
 - blog
-- jekyll
+- hola
 - liquid
 - collection
 - efficiency
@@ -51,9 +51,9 @@ This heading is not part of the [TOC](#toc). All headings can be linked via thei
 
 ### Normal code block
 
-```java
-/** Comment */
-public void method();
+```python
+import pandas as pd
+import torch
 ```
 
 *Some extra explanation to help understand the code.*
@@ -62,10 +62,9 @@ public void method();
 ### Code block with title
 
 ```java
-/** Comment */
-public void method();
+import torch 
 ```
-{: title="Short description of the code block"}
+{: title="Probando nuevos títulos"}
 
 
 ### Code block with Liquid code

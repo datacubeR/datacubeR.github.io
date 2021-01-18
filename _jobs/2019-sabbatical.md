@@ -1,13 +1,13 @@
 ---
-title: Sabbatical
+title: Cencosud Scotiabank
 type: Company
 role: multitalented senior software engineer
 maintech: Android, Web
 sector: IT
 location: Szentes
 dates:
-  from: 2014-07-08
-  to: 2016-12-05
+  from: 2019-11-06
+  to: 2020-12-31
 employer:
   onsite: true
 ---

@@ -5,17 +5,17 @@
 		{% include tag_cloud.html baseurl=tags_url %}
 	</div>
 
-	<div class="panel radius">
+	<!-- <div class="panel radius">
 		<h3>Subscribe</h3>
 		<ul class="no-bullet">
 			<li class="icon-rss"><a href="{{ site.baseurl }}/rss.xml">RSS Feed</a></li>
 			<li class="icon-rss"><a href="{{ site.baseurl }}/atom.xml">Atom Feed</a></li>
 		</ul>
-	</div>
+	</div> -->
 
 	<div class="panel radius">
 		{% assign categories_url = site.baseurl | append: '/blog/category/' %}
-		<h3><a href="{{ categories_url }}">Categories</a></h3>
+		<h3><a href="{{ categories_url }}">Categorías</a></h3>
 		<ul class="no-bullet">
 		{% for category in site.categories %}
 			{% assign category_key = category[0] %}
@@ -26,7 +26,7 @@
 
 	<div class="panel radius">
 		{% assign archive_url = site.baseurl | append: '/blog/archive/' %}
-		<h3><a href="{{ archive_url }}">Archive</a></h3>
+		<h3><a href="{{ archive_url }}">Archivados</a></h3>
 		<ul class="no-bullet">
 			{% for post in site.posts reversed %}
 				{% assign currentdate = post.date | date: '%Y-%m' %}

@@ -1,26 +1,26 @@
 # Left
 
-- title: Home
+- title: Inicio
   icon: home
   url: /
   side: left
 
-- title: Work
+- title: Vida Profesional
   icon: lab-flask
   url: /work/
-  side: left
+  side: right
   dropdown:
   - title: CV (PDF)
     icon: graduation-cap
     url: site.data.links.cv-view
-  - title: Past Jobs
-    icon: graduation-cap
+  - title: Vida Profesional
+    icon: trophy
     url: /work/
-#  - title: Detailed Skill listing
-#    icon: trophy
-#    url: /work/skills.html
+# - title: Detailed Skill listing
+#   icon: trophy
+#   url: /work/skills.html
 
-- title: Products
+- title: Proyectos
   icon: install
   url: /project/
   side: left
@@ -109,17 +109,17 @@
 
 # Right
 
-- title: Search
-  icon: magnifying-glass
-  url: /search/
-  side: right
+# - title: Search
+#   icon: magnifying-glass
+#   url: /search/
+#   side: right
 
 - title: Info
   icon: v-card
   url: /info/
   side: right
 
-- title: Contact
-  icon: mail
-  url: /contact/
-  side: right
+# - title: Contact
+#   icon: mail
+#   url: /contact/
+#   side: right

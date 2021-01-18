@@ -1,13 +1,13 @@
-- menu_name: "Thanks"
+- menu_name: "Gracias Totales"
 
-- name: "Icons from Entypo by Daniel Bruce"
-  url: "http://entypo.com/"
-  title: "Entypo+ — carefully crafted premium pictograms"
+- name: "Academia Desafío Latam"
+  url: "https://desafiolatam.com/"
+  title: "Vamos con todo!!"
 
-- name: "Built on Foundation by Zurb"
-  url: "http://foundation.zurb.com/"
-  title: "The most advanced responsive front-end framework in the world."
+# - name: "Built on Foundation by Zurb"
+#   url: "http://foundation.zurb.com/"
+#   title: "The most advanced responsive front-end framework in the world."
 
-- name: "Using Backstretch by Scott Robbin"
-  url: "http://srobbin.com/jquery-plugins/backstretch/"
-  title: "A dynamic background helper plugin"
+# - name: "Using Backstretch by Scott Robbin"
+#   url: "http://srobbin.com/jquery-plugins/backstretch/"
+#   title: "A dynamic background helper plugin"

@@ -6,8 +6,8 @@ maintech: Software Engineering
 sector: IT
 location: Szeged, Hungary
 dates:
-  from: 2005-09-01
-  to: 2008-06-17
+  from: 2005-03-01
+  to: 2013-12-30
 employer: {}
 ---
 

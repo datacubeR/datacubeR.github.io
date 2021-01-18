@@ -2,7 +2,10 @@
 title: "Practical JFixture"
 subheadline: "How to use it to help you write clean, focused tests"
 teaser: "Magic one-liner with powerful behaviour"
+layout: page-fullwidth
 category: dev
+header:
+  image_fullwidth: header.jpg
 tags:
 - test
 - tutorial
