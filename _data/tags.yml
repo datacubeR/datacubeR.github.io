@@ -20,6 +20,6 @@ pytorch:
 liquid:
   title: "Liquid"
   color: '#84BC48'
-google:
-  title: "Google"
+sklearn:
+  title: "Scikit-Learn"
   color: '#1A6EEF'
