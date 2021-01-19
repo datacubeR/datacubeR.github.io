@@ -1,7 +1,7 @@
 - name: LinkedIn
-  url: http://uk.linkedin.com/in/papproberts
+  url: https://www.linkedin.com/in/alfonso-tobar-arancibia-788b0868/
   class: icon-linkedin
-  title: "Scout me on LinkedIn"
+  title: "Conectemos por LinkedIn"
 
 # - name: Google Play
 #   url: https://play.google.com/store/apps/developer?id=Róbert+Papp+(TWiStErRob)
@@ -9,29 +9,29 @@
 #   title: "Install my apps from Google Play"
 
 - name: GitHub
-  url: http://github.com/TWiStErRob
+  url: http://github.com/datacubeR
   class: icon-github
-  title: "Interpret my code on GitHub"
+  title: "Revisa mi código en Github"
 
-- name: YouTube
-  url: http://www.youtube.com/user/TWiStErRob
-  class: icon-youtube
-  title: "Watch my videos on YouTube"
+# - name: YouTube
+#   url: http://www.youtube.com/user/TWiStErRob
+#   class: icon-youtube
+#   title: "Watch my videos on YouTube"
 
 # - name: Google+
 #   url: https://plus.google.com/+RóbertPappTWiStErRob
 #   class: icon-google-plus
 #   title: "Add me to your circles on Google Plus!"
 
-- name: Facebook
-  url: http://www.facebook.com/TWiStErRob
-  class: icon-facebook
-  title: "Let's be friends on Facebook!"
+# - name: Facebook
+#   url: http://www.facebook.com/TWiStErRob
+#   class: icon-facebook
+#   title: "Let's be friends on Facebook!"
 
 - name: Twitter
-  url: http://twitter.com/TWiStErRob
+  url: http://twitter.com/data_cubeR
   class: icon-twitter
-  title: "Follow my tweets on Twitter"
+  title: "Sígueme en Twitter"
 
 # - name: Skype
 #   url: skype:twisterrob?chat&topic=twisterrob.net

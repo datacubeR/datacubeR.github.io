@@ -9,19 +9,19 @@ layout: frontpage
 header:
  image_fullwidth: header.jpg
 widget1:
-  title: "Professional Experience"
-  url: /work/
-  image: widget-1_canary-wharf.jpg
+  title: "Desafío Itaú-Binnario"
+  url: /concurso/
+  image: widget1-trofeo-binnario.png
   text: "Find out what I've been doing when I was sitting in front of the computer in the last 10+ years."
 widget2:
-  title: "Portafolio"
+  title: "Mi Equipo"
   url: /project/
-  image: widget-2_code.png
+  image: keyboard.png
   text: "Check out my projects and contributions: what technologies did I use and what's the motivation behind each."
 widget3:
   title: "Blog"
   url: /blog/
-  image: widget-3_keyboard.jpg
+  image: tablet.png
   text: "Read my articles about software development, the problems I encountered and solutions I came up with."
 ---
 

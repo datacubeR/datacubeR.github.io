@@ -2,8 +2,8 @@
 # tag-name:
 #   color: css-color (hashed colors need quotes)
 #   title: Alternative Display
-android:
-  title: "Android"
+python:
+  title: "Python"
   color: '#A4C639'
 ruby:
   title: "Ruby"
@@ -11,10 +11,11 @@ ruby:
 github:
   title: "GitHub"
   color: '#f5f5f5'
-jekyll:
-  title: "Jekyll"
+tensorflow:
+  title: "Tensorflow"
   color: '#fc0'
-git:
+pytorch:
+  title: "Pytorch"
   color: '#f44d27'
 liquid:
   title: "Liquid"

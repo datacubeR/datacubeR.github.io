@@ -3,8 +3,9 @@ title: "Getting a full Thread Dump on Android"
 subheadline: "Detailed walkthrough"
 category: android
 tags:
-- android
-- debug
+- python
+- pytorch
+- tensorflow
 - workaround
 ---
 

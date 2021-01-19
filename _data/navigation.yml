@@ -6,53 +6,56 @@
   side: left
 
 - title: Vida Profesional
-  icon: lab-flask
+  icon: trophy
   url: /work/
   side: right
   dropdown:
   - title: CV (PDF)
     icon: graduation-cap
-    url: site.data.links.cv-view
-  - title: Vida Profesional
-    icon: trophy
-    url: /work/
+    url: site.data.links.cv-es
+  - title: Resume (PDF)
+    icon: graduation-cap
+    url: site.data.links.cv-en
+  # - title: Vida Profesional
+  #   icon: lab-flask
+  #   url: /work/
 # - title: Detailed Skill listing
 #   icon: trophy
 #   url: /work/skills.html
 
-- title: Proyectos
-  icon: install
-  url: /project/
-  side: left
-  dropdown:
-  - special: projects
-  - title: POC & Bodge
-    dropdown:
-      - special: projects-other
-  - title: Other Sites (old)
-    icon: browser
-    dropdown:
-    - title: Old Homepage (2005–2007)
-      url: http://twisterrob.uw.hu/mypage
-    - title: LESS Attractive! (2012)
-      url: http://twisterrob.net/dev/less
-    - title: Reference Projects (2006)
-      url: http://web.twisterrob.net/ref
-    - title: Project Earthquake (2004)
-      url: http://twisterrob.uw.hu/peq/eng/index_eng.htm
-    - title: Learn Italian in Hungarian (2004)
-      url: http://web.twisterrob.net/italian
-    - title: Regex Sandbox
-      url: http://regex.twisterrob.net
-    - title: Old Website (2005–2007)
-      url: http://twisterrob.uw.hu
+# - title: Proyectos
+#   icon: install
+#   url: /project/
+#   side: left
+#   dropdown:
+#   - special: projects
+#   - title: POC & Bodge
+#     dropdown:
+#       - special: projects-other
+#   - title: Other Sites (old)
+#     icon: browser
+#     dropdown:
+#     - title: Old Homepage (2005–2007)
+#       url: http://twisterrob.uw.hu/mypage
+#     - title: LESS Attractive! (2012)
+#       url: http://twisterrob.net/dev/less
+#     - title: Reference Projects (2006)
+#       url: http://web.twisterrob.net/ref
+#     - title: Project Earthquake (2004)
+#       url: http://twisterrob.uw.hu/peq/eng/index_eng.htm
+#     - title: Learn Italian in Hungarian (2004)
+#       url: http://web.twisterrob.net/italian
+#     - title: Regex Sandbox
+#       url: http://regex.twisterrob.net
+#     - title: Old Website (2005–2007)
+#       url: http://twisterrob.uw.hu
 
 - title: Blog
   icon: open-book
   url: /blog/
   side: left
   dropdown:
-  - title: Categories
+  - title: Categorías
     icon: archive
     url: /blog/category/
     dropdown:

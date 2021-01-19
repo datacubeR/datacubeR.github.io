@@ -1,8 +1,8 @@
 ---
 permalink: /contact/
 layout: page
-title: "Contact"
-meta_title: "Contact Róbert Papp (TWiStErRob)"
+title: "Contáctame"
+meta_title: "Contáctame"
 teaser: "Want to message me to ask a question or just tell me something?"
 script:
   head: >
@@ -19,8 +19,8 @@ If you want to know more about me check out the [info page]({{ site.baseurl }}/i
 You can reach me at {% include snippets/email.html address=email %} where you can send attachments, images, etc. In case you just want to send me a quick message or want to stay anonymous, feel free to use the form below.
 {% endif %}
 
-<p><iframe src="https://docs.google.com/forms/d/1cG89BafxKwdxv9kzS-C_MjZfte0Ldlz37vr0m2U77jA/viewform?embedded=true"
-           width="100%" height="715" frameborder="0" marginwidth="0" marginheight="0" scrolling="no">Loading...</iframe></p>
+<!-- <p><iframe src="https://docs.google.com/forms/d/1cG89BafxKwdxv9kzS-C_MjZfte0Ldlz37vr0m2U77jA/viewform?embedded=true"
+           width="100%" height="715" frameborder="0" marginwidth="0" marginheight="0" scrolling="no">Loading...</iframe></p> -->
 
 ## Social contacts
 

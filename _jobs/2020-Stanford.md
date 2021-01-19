@@ -1,10 +1,10 @@
 ---
-title: AI Specialization
-type: Company
-role: senior software engineer
-maintech: Android
-sector: travel
-location: London
+title: AI Specialization (Machine Learning)
+type: Educación
+role: Estudiante
+maintech: Python
+sector: Machine Learning
+location: Remoto
 dates:
   from: 2020-11-30
   to: 2021-02-21
@@ -12,8 +12,6 @@ employer:
   onsite: true
 ---
 
-Trainline is the UK's leading rail ticket distributor. I'm working on the Android mobile team to make the flagship Android app better.
+Corresponde al primero de 3 cursos de la AI Specialization impartido por Stanford. Este curso corresponde a la cátedra CS229 impartida por el profesor ANdrew Ng y que contempla el entendimiento interno de los Modelos de Machine Learning más clásicos.
 
-**Technologies**: Android, Java, Gradle, MVP, Dagger, RxJava, Retrofit, Espresso, JUnit, Mockito, JFixture
-
-**Tools**: Android Studio, Git, Slack, Jira, Trello, Outlook
+El curso tiene por objetivo entender la matématica de cada uno de los modelos utilizando Cálculo Matricial Diferencial avanzado, Algebra Lineal y Probabilidad y Estadística. Varios de los modelos estudiados tuvieron que ser implementados desde cero sin la ayuda de librerías externas.

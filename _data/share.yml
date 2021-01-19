@@ -9,8 +9,8 @@ twitter:
   # https://dev.twitter.com/web/tweet-button/web-intent
   name: "Twitter"
   color: '#00aced'
-  title: "Tweet on Twitter"
-  link: 'https://twitter.com/intent/tweet?text=<title>&url=<link>&via=twisterrob'
+  title: "Si te gusto, twitealo en Twitter"
+  link: 'https://twitter.com/intent/tweet?text=<title>&url=<link>&via=data_cubeR'
 # googleplus:
 #   # https://developers.google.com/+/web/share/
 #   name: "Google+"
@@ -28,5 +28,5 @@ twitter:
 linkedin:
  name: "LinkedIn"
  color: '#0077B5'
- title: "Share on LinkedIn"
+ title: "Si te gustó, comparte en LinkedIn"
  link: 'http://www.linkedin.com/shareArticle?mini=true&url=<link>'

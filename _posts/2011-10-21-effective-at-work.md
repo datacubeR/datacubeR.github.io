@@ -1,4 +1,5 @@
 ---
+permalink: /concurso/
 title: "How to be effective at work?"
 subheadline: "Generic rules and examples"
 teaser: "Tips and tricks to be fast and effective in a software engineering job."

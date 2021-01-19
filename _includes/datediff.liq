@@ -14,19 +14,19 @@
 	{% assign measure = include.measure %}
 	{% if measure == 'dynamic' %}
 		{% if 1 < year_diff or year_diff == 1 and day_diff > 180 %}
-			{% assign measure = 'years' %}
+			{% assign measure = 'años' %}
 		{% elsif year_diff == 0 and day_diff <= 42 %}
-			{% assign measure = 'days' %}
+			{% assign measure = 'días' %}
 		{% else %}
-			{% assign measure = 'months' %}
+			{% assign measure = 'meses' %}
 		{% endif %}
 	{% endif %}
 
-	{% if measure == 'days' %}
+	{% if measure == 'días' %}
 		{% comment %} result = years * 365 + days, no fractions (integer arithmetic) {% endcomment %}
 		{% assign date_diff = year_diff | times: 365 | plus: day_diff %}
 		{{ date_diff }}
-	{% elsif measure == 'months' %}
+	{% elsif measure == 'meses' %}
 		{% comment %} result = years * 12 + days / 30 round up, .0 ending removed {% endcomment %}
 		{% assign year_diff_mo = year_diff | times: 12 %}
 		{% assign day_diff_mo = day_diff | divided_by: 30.0 %}
@@ -38,7 +38,7 @@
 		{% endif %}
 		{% assign date_diff = year_diff_mo | plus: day_diff_mo %}
 		{{ date_diff | remove: '.0' }}
-	{% elsif measure == 'years' %}
+	{% elsif measure == 'años' %}
 		{% comment %} result = years + days / 365 rounded to nearest 0.1, .0 ending removed {% endcomment %}
 		{% assign day_diff_yr = day_diff | divided_by: 365.0 %}
 		{% assign date_diff = day_diff_yr | plus: year_diff | times: 10 %}
