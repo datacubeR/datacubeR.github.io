@@ -10,17 +10,17 @@ layout: frontpage
 #   image_fullwidth: ml.jpeg
 widget1:
   title: "Desafío Itaú-Binnario"
-  url: /concurso/
+  url: /concurso/1
   image: widget1-trofeo-binnario.png
   text: "Les cuento lo que significó para mí participar dentro en el Desafío Itaú-Binnario, cómo traté el problema y como ha sido ser el ganador de esto."
 widget2:
   title: "Mi Equipo"
-  url: /project/
+  url: /project/1
   image: keyboard.png
   text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como lo he ido seteando para poder tener todo lo que necesito para trabajar con datos."
 widget3:
   title: "Blog"
-  url: /blog/
+  url: /blog/1
   image: tablet.png
   text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
 ---
