@@ -3,13 +3,13 @@
 email:
   name: "E-mail"
   color: '#777777'
-  title: "Send via E-mail"
+  title: "Compartelo por E-mail"
   link: 'mailto:?subject=<title>&body=<link>'
 twitter:
   # https://dev.twitter.com/web/tweet-button/web-intent
   name: "Twitter"
   color: '#00aced'
-  title: "Si te gusto, twitealo en Twitter"
+  title: "Si te gustó, twitealo en Twitter"
   link: 'https://twitter.com/intent/tweet?text=<title>&url=<link>&via=data_cubeR'
 # googleplus:
 #   # https://developers.google.com/+/web/share/

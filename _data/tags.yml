@@ -17,9 +17,12 @@ tensorflow:
 pytorch:
   title: "Pytorch"
   color: '#f44d27'
-liquid:
-  title: "Liquid"
-  color: '#84BC48'
+r:
+  title: "R"
+  color: '#D10FCE'
 sklearn:
   title: "Scikit-Learn"
   color: '#1A6EEF'
+data:
+  title: "Data Wrangling"
+  color: '#D69E0F'

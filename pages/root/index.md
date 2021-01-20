@@ -12,17 +12,17 @@ widget1:
   title: "Desafío Itaú-Binnario"
   url: /concurso/
   image: widget1-trofeo-binnario.png
-  text: "Find out what I've been doing when I was sitting in front of the computer in the last 10+ years."
+  text: "Les cuento lo que significó para mí participar dentro en el Desafío Itaú-Binnario, cómo traté el problema y como ha sido ser el ganador de esto."
 widget2:
   title: "Mi Equipo"
   url: /project/
   image: keyboard.png
-  text: "Check out my projects and contributions: what technologies did I use and what's the motivation behind each."
+  text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como lo he ido seteando para poder tener todo lo que necesito para trabajar con datos."
 widget3:
   title: "Blog"
   url: /blog/
   image: tablet.png
-  text: "Read my articles about software development, the problems I encountered and solutions I came up with."
+  text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
 ---
 
 {% comment %}

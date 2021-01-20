@@ -248,7 +248,7 @@ defaults:
     values:
       # sidebar:        # Possible values › left, right › by default there will be no sidebar
       show_meta:
-        sharer: true
+        sharer: false
   -
     scope:
       type: posts
