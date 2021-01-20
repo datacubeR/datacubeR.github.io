@@ -117,7 +117,7 @@
 #   url: /search/
 #   side: right
 
-- title: Info
+- title: Acerca de Mí
   icon: v-card
   url: /info/
   side: right

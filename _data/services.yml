@@ -3,7 +3,12 @@
 - name: "Contáctame"
   url: "/contact/"
   class: "icon-mail"
-  title: "Contact"
+  title: "¿Quieres contactarme? Hablemos!!"
+
+- name: "Ayudame a mejorar"
+  url: "https://github.com/datacubeR/datacubeR.github.io/issues"
+  class: "icon-mail"
+  title: "Si encuentras un error reportalo en mi Github"
 
 # - name: "RSS"
 #   url: "/rss.xml"

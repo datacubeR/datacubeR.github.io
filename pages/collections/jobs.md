@@ -1,13 +1,14 @@
 ---
 permalink: /work/
-title: "Róbert Papp's work experience"
+title: "Mi tiempo como Profesional"
 breadcrumbs: false
 ---
-<span class="icon-install"></span> Download my [CV]({{ site.data.links.cv-view }}){:target="_blank"} as a [PDF]({{ site.data.links.cv-download }}).  
-{% comment %}<span class="icon-trophy"></span> Check out my [detailed skills]({{ site.baseurl }}/work/skills.html).{% endcomment %}
 
+Hola soy Alfonso, entré a estudiar Ingeniería Comercial por error, me cambié a Civil por miedo a no encontrar pega, pero terminé trabajando como Data Scientist por casualidad y me encanta. Si te interesa saber de mi trayectoria profesional podrás ver en detalle lo que he hecho.
 
-I'm also developing applications at home, to ease the pain of repetitive tasks and help myself (and others) to work/live more efficiently. It's also a good opportunity to keep myself challenged and keep my officially unused technical knowledge fresh. See the list of my [Projects]({{ site.baseurl }}/project/) for more information.
+<span class="icon-install"></span> Si te interesa descargar mi [CV en español]({{ site.data.links.cv-es }}){:target="_blank"} o en [Inglés]({{ site.data.links.cv-en }}).  
+
+Además, hace poco pude cumplir uno de mis sueños que es enseñar. Agradezco a Desafío Latam por la oportunidad y la confianza.
 
 <section class="timeline clearfix ir">
 	<h2 class="timeline-date">El futuro</h2>

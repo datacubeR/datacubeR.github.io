@@ -258,7 +258,7 @@ defaults:
         info: true
         sharer: true
         navigation: 'snippets/lateral_navigation_blog.html'
-        comments: true
+        comments: false
       # sidebar:        # Possible values › left, right › by default there will be no sidebar
       #author: twisterrob # disable for now, I'm the only one
   -
@@ -277,7 +277,7 @@ defaults:
       show_meta:
         info: true
         sharer: true
-        comments: true
+        comments: false
   -
     scope:
       type: jobs
@@ -299,7 +299,7 @@ defaults:
       title_suffix: "category details"
       show_meta:
         sharer: true
-        comments: true
+        comments: false
 
 
 #     _____ __________ 

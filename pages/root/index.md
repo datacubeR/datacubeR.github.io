@@ -6,8 +6,8 @@
 #
 permalink: /index.html
 layout: frontpage
-header:
- image_fullwidth: header.jpg
+# header:
+#   image_fullwidth: ml.jpeg
 widget1:
   title: "Desafío Itaú-Binnario"
   url: /concurso/
