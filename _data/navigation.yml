@@ -117,10 +117,10 @@
 #   url: /search/
 #   side: right
 
-# - title: Acerca de Mí
-#   icon: v-card
-#   url: /info/
-#   side: right
+- title: Acerca de Mí
+  icon: v-card
+  url: /info/
+  side: right
 
 # - title: Contact
 #   icon: mail
