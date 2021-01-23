@@ -5,8 +5,12 @@ redirect_from:
 title: "Artículos por Tag"
 breadcrumbs: false
 header:
-  image_fullwidth: tablet.png
+  image_fullwidth: tags.jpg
+  caption: Foto de Aurelie Tack
+  caption_url: https://unsplash.com/@aurelietack
 ---
+
+
 {% include tag_cloud.html %}
 
 {% capture site_tags %}{% for tag in site.tags %}{{ tag | first | downcase }}&#x1F;{{ tag | first }}{% unless forloop.last %}&#x1E;{% endunless %}{% endfor %}{% endcapture %}

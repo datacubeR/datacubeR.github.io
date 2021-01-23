@@ -3,37 +3,28 @@ permalink: /contact/
 layout: page
 title: "Contáctame"
 meta_title: "Contáctame"
-teaser: "Want to message me to ask a question or just tell me something?"
+teaser: "¿Te interesa trabajar conmigo o hay algo en lo que pueda ayudarte?"
+header:
+  image_fullwidth: contact.jpg
 script:
   head: >
     function rot5(c){return c.length>1?c.replace(/[0-9]/g, rot5):String.fromCharCode((c<="9"?57:57)>=(c=c.charCodeAt(0)+5)?c:c-10);}
     function rot13(c){return c.length>1?c.replace(/[a-zA-Z]/g, rot13):String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);}
 ---
-You can find different ways to get in touch with me below.  
-If you want to know more about me check out the [info page]({{ site.baseurl }}/info/).
+Si quieres saber de mí te recomendaría ir a la página [Acerca de mí]({{ site.baseurl }}/info/), o si te interesa mi trayectoria profesional puedes ir [Vida Profesional]({{ site.baseurl }}/work/).
 
 ## E-mail
 
-{% assign email = site.data.authors[site.author].email %}
-{% if email %}
-You can reach me at {% include snippets/email.html address=email %} where you can send attachments, images, etc. In case you just want to send me a quick message or want to stay anonymous, feel free to use the form below.
-{% endif %}
+Si quieres contactarme por Email, puedes hacerlo [acá](mailto:alfonso.tobar@alumnos.usm.cl). En general lo reviso seguido por lo que puedo contestarte pronto.
 
-<!-- <p><iframe src="https://docs.google.com/forms/d/1cG89BafxKwdxv9kzS-C_MjZfte0Ldlz37vr0m2U77jA/viewform?embedded=true"
-           width="100%" height="715" frameborder="0" marginwidth="0" marginheight="0" scrolling="no">Loading...</iframe></p> -->
 
-## Social contacts
+## Redes Sociales
 
-You can also find me on various social sites, check them out at the [bottom of the page](#subfooter).
+* Tengo Facebook, pero la única razón es para que me devuelvan mis billeteras (ya ha pasado dos veces y les agradezco en el alma a esas dos almas caritativas que se preocuparon de buscarme y me la deolvieron con todito lo que tenía).
 
-## Options
-I should be online on most of the social services, if my Android phone has an internet connection, so I'll receive a notification about most of them.
+* Soy bien activo en Linkedin, por lo que también puedes mandarme un mensaje. Este es mi [perfíl](https://www.linkedin.com/in/alfonso-tobar-arancibia-788b0868/)
 
- * If you want to send me a message use the above form.
- * If you want a reply supply your email address.
- * If you want a live conversation, either:
-   * Go to my Google+ profile and click the little Hangout/Message button below my picture
-   * Go to my Facebook profile and send a message  
-     (sadly, [it'll go to my Other folder](https://www.facebook.com/help/398578543552207) so I won't necessarily notice it)
-   * Chat me up on Skype
- * If I don't respond you can always send me an email requesting to be online on one of the above
+* Si te interesan mis proyectos, quizás puedas encontrar algo interesante en mi [Github](https://github.com/datacubeR), forkea algún repo o sígueme, a veces puedo subir cosas de interés.
+
+Gracias, [**Alfonso**]({{ site.baseurl }}/contact/)
+

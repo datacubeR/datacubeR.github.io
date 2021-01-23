@@ -4,9 +4,9 @@
 #   title: Alternative Display
 python:
   title: "Python"
-  color: '#A4C639'
+  color: '#2CBD00'
 tutorial:
-  title: "tutorial"
+  title: "Tutorial"
   color: '#32A2A8'
 github:
   title: "GitHub"
@@ -16,7 +16,7 @@ tensorflow:
   color: '#fc0'
 pytorch:
   title: "Pytorch"
-  color: '#f44d27'
+  color: '#FF002F'
 r:
   title: "R"
   color: '#D10FCE'
@@ -25,4 +25,8 @@ sklearn:
   color: '#1A6EEF'
 data:
   title: "Data Wrangling"
-  color: '#D69E0F'
+  color: '#FF7700'
+
+ML:
+  title: "Machine Learning"
+  color: '#000000'

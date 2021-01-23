@@ -20,7 +20,7 @@ widget2:
   text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como lo he ido seteando para poder tener todo lo que necesito para trabajar con datos."
 widget3:
   title: "Blog"
-  url: /blog/1
+  url: /blog/
   image: tablet.png
   text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
 ---

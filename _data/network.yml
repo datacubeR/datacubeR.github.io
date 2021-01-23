@@ -1,13 +1,14 @@
 - menu_name: "Gracias Totales"
 
+
 - name: "Academia Desafío Latam"
   url: "https://desafiolatam.com/"
   title: "Vamos con todo!!"
 
-# - name: "Built on Foundation by Zurb"
-#   url: "http://foundation.zurb.com/"
-#   title: "The most advanced responsive front-end framework in the world."
+- name: "TWiStErRob"
+  url: "https://github.com/TWiStErRob/twisterrob.github.io"
+  title: "Tremendo template de Jekyll"
 
-# - name: "Using Backstretch by Scott Robbin"
-#   url: "http://srobbin.com/jquery-plugins/backstretch/"
-#   title: "A dynamic background helper plugin"
+- name: "Feeling Responsive"
+  url: "https://github.com/Phlow/feeling-responsive"
+  title: "Otro buen template de Jekyll"

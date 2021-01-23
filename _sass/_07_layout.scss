@@ -483,3 +483,20 @@ body.video {
 .pr5  { padding-right: 5px !important; }
 .pr10 { padding-right: 10px !important; }
 .pr20 { padding-right: 20px !important; }
+
+/* Youtube
+------------------------------------------------------------------- */
+.embed-youtube {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+  }
+
+.embed-youtube iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
