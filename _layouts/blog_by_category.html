@@ -27,7 +27,7 @@ subheadline: 'Articles in Category'
 	<p>There are no posts in this category.</p>
 {% endif %}
 
-<h2 id="other">Other categories</h2>
+<h2 id="other">Otras Categorías</h2>
 <ul class="quick-links">
 {% for other_category in site.pages %}
 	{% if other_category.category and other_category.category != page.category %}
@@ -39,4 +39,4 @@ subheadline: 'Articles in Category'
 	{% endif %}
 {% endfor %}
 </ul>
-<a href="{{ site.baseurl }}/blog/category/">See all posts in all categories</a>
+<a href="{{ site.baseurl }}/blog/category/">Ver todos los artículos en todas las categorías</a>

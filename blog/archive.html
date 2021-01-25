@@ -1,5 +1,5 @@
 ---
-title: "Articles by date"
+title: "Artículos por Fecha"
 breadcrumbs: false
 permalink: /blog/archive/
 ---
@@ -17,6 +17,8 @@ permalink: /blog/archive/
 {% assign lastyear = '' %}
 {% assign lastdate = '' %}
 {% for post in site.posts %}
+
+
 	{% assign currentdate = post.date | date: '%Y-%m' %}
 	{% if currentdate != lastdate %}
 		{% unless forloop.first %}</ul>{% endunless %}
@@ -25,7 +27,24 @@ permalink: /blog/archive/
 			<h2 id="{{ currentyear }}"><span class="icon-alias-archive">{{ currentyear }}</span></h2>
 			{% assign lastyear = currentyear %}
 		{% endif %}
-		<h3 id="{{ currentdate }}">{{ post.date | date: '%Y %B' }}</h3>
+
+				<h3 id="{{ currentdate }}">
+					{% assign m = post.date | date: '%m' %}
+					{% case m %}
+					{% when '01' %}Enero
+					{% when '02' %}Febrero
+					{% when '03' %}Marzo
+					{% when '04' %}Abril
+					{% when '05' %}Mayo
+					{% when '06' %}Junio
+					{% when '07' %}Julio
+					{% when '08' %}Agosto
+					{% when '09' %}Septiembre
+					{% when '10' %}Octubre
+					{% when '11' %}Noviembre
+					{% when '12' %}Diciembre
+					{% endcase %} {{ post.date | date: '%Y' }}
+				</h3>
 		<ul>
 		{% assign lastdate = currentdate %}
 	{% endif %}

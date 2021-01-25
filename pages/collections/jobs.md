@@ -31,9 +31,9 @@ Además, hace poco pude cumplir uno de mis sueños que es enseñar. Agradezco a 
 					current
 				{% endif %}
 			</span><br/>
-			<strong>Role</strong>: {{ job.role }}<br/>
+			<strong>Rol</strong>: {{ job.role }}<br/>
 			<strong>Sector</strong>: {{ job.sector }}<br/>
-			<strong>Main technologies</strong>: {{ job.maintech }}
+			<strong>Tecnologías</strong>: {{ job.maintech }}
 		</article></a>
 
 		{% assign currentYear = job.dates.from | date: '%Y' %}

@@ -39,7 +39,23 @@
 						<li class="icon-alias-archive"><a href="{{ archive_url }}#{{ currentyear }}">{{ currentyear }}</a><ul>
 						{% assign year = currentyear %}
 					{% endif %}
-					<li>{{ post.date | date: '%m' | times: 1 }}. <a href="{{ archive_url }}#{{ currentdate }}">{{ post.date | date: '%B' }}</a>
+					<li>{{ post.date | date: '%m' | times: 1 }}. <a href="{{ archive_url }}#{{ currentdate }}">
+						{% assign m = post.date | date: '%m' %}
+											{% case m %}
+											{% when '01' %}Enero
+											{% when '02' %}Febrero
+											{% when '03' %}Marzo
+											{% when '04' %}Abril
+											{% when '05' %}Mayo
+											{% when '06' %}Junio
+											{% when '07' %}Julio
+											{% when '08' %}Agosto
+											{% when '09' %}Septiembre
+											{% when '10' %}Octubre
+											{% when '11' %}Noviembre
+											{% when '12' %}Diciembre
+											{% endcase %} 
+											</a>
 					{% assign date = currentdate %}
 				{% else %}
 					{% assign count = count | plus: 1 %}
