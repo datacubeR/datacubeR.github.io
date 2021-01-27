@@ -98,8 +98,7 @@
 #      - title: 4. gyakorlat
 #        url: /blog/notes/szar4.html
 #      - title: 5. gyakorlat
-#        url: /blog/notes/szar5.html
-#      - title: 6. gyakorlat
+#        url: /blog/notes/szar5.htmlurl: site.data.links.cv-en
 #        url: /blog/notes/szar6.html
 #      - title: 7. gyakorlat
 #        url: /blog/notes/szar7.html
@@ -123,6 +122,16 @@
   icon: v-card
   url: /info/
   side: right
+  dropdown:
+  - title: Prensa
+    dropdown:
+    - title: La Estrella
+      url: site.data.links.l_e
+    - title: Revista Gerencia
+      url: site.data.links.r_g
+    - title: Diario Financiero
+      url: site.data.links.d_f
+    
 
 # - title: Contact
 #   icon: mail

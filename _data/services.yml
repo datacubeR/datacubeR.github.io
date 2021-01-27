@@ -1,15 +1,14 @@
-- menu_name: "Servicios"
+- menu_name: "Ayúdame a Mejorar"
+
+- name: "Reporta un Error"
+  url: "https://github.com/datacubeR/datacubeR.github.io/issues"
+  class: "icon-github"
+  title: "Ayúdame a mejorar el contenido, repórtalo en mi Github"
 
 - name: "Contáctame"
   url: "/contact/"
   class: "icon-mail"
-  title: "¿Quieres contactarme? Hablemos!!"
-
-- name: "Ayudame a mejorar"
-  url: "https://github.com/datacubeR/datacubeR.github.io/issues"
-  class: "icon-github"
-  title: "Si encuentras un error reportalo en mi Github"
-
+  title: "¿Viste algo que debo corregir? Avísame!!"
 # - name: "RSS"
 #   url: "/rss.xml"
 #   class: "icon-rss"

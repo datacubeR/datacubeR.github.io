@@ -9,7 +9,7 @@
 {% endcomment %}
 {% if include.panel or site.kramdown.toc_panel %}{% assign show_panel = true %}{% else %}{% assign show_panel = false %}{% endif %}
 {% if show_panel %}<div id="toc" class="panel radius" markdown="1">{% endif %}
-## Table of Contents
+## Tabla de Contenidos
 {:{% unless show_panel %}#toc{% endunless %}.no_toc}
 *  Auto generated table of contents
 {:toc}
