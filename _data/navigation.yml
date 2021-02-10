@@ -56,22 +56,22 @@
   icon: open-book
   url: /blog/
   side: left
-  dropdown:
-  - title: Categorías
-    icon: archive
-    url: /blog/category/
-    dropdown:
-    - special: blog-categories
-  - title: Tags
-    icon: price-tag
-    url: /blog/tags/
-    dropdown:
-    - special: blog-tags
-  - title: Archive
-    icon: back-in-time
-    url: /blog/archive/
-    dropdown:
-    - special: blog-years
+  # dropdown:
+  # - title: Categorías
+  #   icon: archive
+  #   url: /blog/category/
+  #   dropdown:
+  #   - special: blog-categories
+  # - title: Tags
+  #   icon: price-tag
+  #   url: /blog/tags/
+  #   dropdown:
+  #   - special: blog-tags
+  # - title: Archive
+  #   icon: back-in-time
+  #   url: /blog/archive/
+  #   dropdown:
+  #   - special: blog-years
 #  - title: Notes
 #    icon: blackboard
 #    url: /blog/notes/
@@ -129,6 +129,18 @@
       url: site.data.links.l_e
     - title: Revista Gerencia
       url: site.data.links.r_g
+    - title: Ebanking News
+      url: site.data.links.e_n
+    - title: Zoom Tecnológico
+      url: site.data.links.z_t
+    - title: Modo Radio
+      url: site.data.links.m_r
+    - title: Corporate TI
+      url: site.data.links.c_t
+    - title: Tierra Amarillano
+      url: site.data.links.t_a
+    - title: Litoral Press
+      url: site.data.links.l_p
     - title: Diario Financiero
       url: site.data.links.d_f
     

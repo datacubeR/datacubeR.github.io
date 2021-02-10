@@ -4,7 +4,7 @@ title: "Mi tiempo como Profesional"
 breadcrumbs: false
 ---
 
-Hola soy Alfonso, entré a estudiar Ingeniería Comercial por error, me cambié a Civil por miedo a no encontrar pega, pero terminé trabajando como Data Scientist por casualidad y me encanta. Si te interesa saber de mi trayectoria profesional podrás ver en detalle lo que he hecho.
+Hola soy Alfonso, entré a estudiar Ingeniería Comercial por error, me cambié a Civil por miedo a no encontrar pega, pero terminé trabajando como Data Scientist por casualidad, y me encanta. Si te interesa saber de mi trayectoria profesional podrás ver en detalle lo que he hecho.
 
 <span class="icon-install"></span> Si te interesa descargar mi [CV en español]({{ site.data.links.cv-es }}){:target="_blank"} o en [Inglés]({{ site.data.links.cv-en }}).  
 

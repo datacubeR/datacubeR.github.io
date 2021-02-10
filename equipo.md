@@ -6,7 +6,6 @@ subheadline: ""
 teaser: "Este es el equipo que utilizo para hacer Data Science"
 header:
   image_fullwidth: equip.jpg
-  caption: hola como estás
 ---
 <!-- ...and learn more at the same time. You can message me at the [contact page]({{ site.baseurl }}/contact/). -->
 

@@ -8,8 +8,8 @@ python:
 tutorial:
   title: "Tutorial"
   color: '#32A2A8'
-github:
-  title: "GitHub"
+dl:
+  title: "Deep Learning"
   color: '#f5f5f5'
 tensorflow:
   title: "Tensorflow"
@@ -26,7 +26,6 @@ sklearn:
 data:
   title: "Data Wrangling"
   color: '#FF7700'
-
 ML:
   title: "Machine Learning"
   color: '#000000'

@@ -10,6 +10,12 @@ header:
 breadcrumbs: false
 ---
 
+Acá pueden ver alguno de los proyectos personales en los que estoy involucrado:
+
+<br>
+<br>
+<br>
+
 {% assign found = false %}
 {% for project in site.projects %}{% if project.published and project.type == 'app' %}
 	{% unless found %}{% assign found = true %}
@@ -43,12 +49,14 @@ breadcrumbs: false
 
 
 {% assign found = false %}
-{% for project in site.projects %}{% if project.published and project.type == 'bodge' %}
+{% for project in site.projects %}{% if project.published and project.type == 'school' %}
 	{% unless found %}{% assign found = true %}
-		<h2>Bodges</h2>
+		<h2>Machine Learning School</h2>
 		<blockquote>
-			Bodging is a wonderful British word that means to patch together, to make temporary repairs. A bodge is clumsy, it's inelegant, it'll fall apart, but it'll work. And it'll keep working as long as there's someone around to bodge it again if it breaks. You know that bit in Apollo 13 where they have to fit the square peg in the round hole? That is a bodge. Actually, that's possibly the greatest bodge in human history.
-			<cite><a href="https://www.youtube.com/watch?v=lIFE7h3m40U">Tom Scott</a></cite>
+			Machine Learning School es una idea que tengo hace mucho rato, de explicar en detalle la teoría necesaria para desarrollar modelos de Machine Learning. 
+			Mucha de la teoría dura de los modelos no está disponible en espñol por lo que 
+			esta será una instancia donde sólo los más entusiastas podrán entender la matemática dura detrás de un modelo.
+			No usaremos algoritmos prehechos, los crearemos de cero!!!
 		</blockquote>
 		<div class="clearfix text-center">
 		<ul class="small-block-grid-1 medium-block-grid-2 large-block-grid-3 items">

@@ -5,7 +5,9 @@ title: "Contáctame"
 meta_title: "Contáctame"
 teaser: "¿Te interesa trabajar conmigo o hay algo en lo que pueda ayudarte?"
 header:
-  image_fullwidth: contact.jpg
+  image_fullwidth: contacto.jpg
+  caption: Foto de Pavan Trikutam en Unsplash
+
 script:
   head: >
     function rot5(c){return c.length>1?c.replace(/[0-9]/g, rot5):String.fromCharCode((c<="9"?57:57)>=(c=c.charCodeAt(0)+5)?c:c-10);}

@@ -19,10 +19,10 @@ widget2:
   image: keyboard.png
   text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como lo he ido seteando para poder tener todo lo que necesito para trabajar con datos."
 widget3:
-  title: "Blog"
-  url: /blog/
-  image: tablet.png
-  text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
+  title: "Proyectos"
+  url: /project/
+  image: jarvis-ironman.jpg
+  text: "Acá puedes ver algunos de los Proyectos de Machine Learning en los que estoy involucrado, y trabajando actualmente. En progreso."
 widget4:
   title: "Blog"
   url: /blog/
