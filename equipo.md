@@ -223,10 +223,12 @@ chsh -s $(which zsh)
 ```
 {: title="Permite dejar ZSH como el Terminal por defecto"}
 
+{% include alert warning='Para asegurarse que ZSH quede como el shell por defecto a veces es necesario desloguearse o reiniciar el Compu.'%}
+
 Para instalar `Oh my ZSH` es necesario tener curl o wget, la verdad creo que en mi caso utilice curl, porque en Linux algunas librerías de R piden curl. Por lo tanto utilicé ese método. Para más detalles es mejor ir al [github](https://github.com/ohmyzsh/ohmyzsh).
 
 ```shell
-alfonso@legion-7i$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 {: title="Instalar Oh my ZSH"}
 
@@ -431,20 +433,21 @@ sudo gdebi rstudio-1.4.1103-amd64.deb
 
 ### VS Code
 
-Para terminar, uno de los editores que más estoy usando junto con Jupyter es VS Code. La instalación es sumamente sencilla:
+Para terminar, uno de los editores que más estoy usando junto con Jupyter es VS Code. La instalación es sumamente sencilla. Sólo se debe descargar el archivo `.deb` desde [acá](https://code.visualstudio.com/download) y  listo. Además se pueden descargar certificados para la actualización automática:
 
 ```shell
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -o root -g root -m 644 packages.microsoft.gpg /etc/apt/trusted.gpg.d/
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 ```
-{: title="Instalar VS Code en un sólo comando"}
+{: title="Instalar certificado para actualizaciones"}
 
 {% include alert tip='Alternativamente se puede instalar como un snap app. Pero la verdad es que no ví tan buenos reviews, ya que las snap apps son más pesadas, y más lentas, pero puede ser una opción:
 ```shell
 sudo snap install --classic code
 ```
 '%}
+
 
 Si abren VS Code se darán cuenta que el terminal no se ve bien, esto debido nuevamente a problemas de fuentes. Para solucionar esto, es necesario instalar la fuente `MesloLGM Nerd Font` desde [acá](https://github.com/ryanoasis/nerd-fonts/releases/download/v2.0.0/Meslo.zip).
 
