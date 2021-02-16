@@ -383,6 +383,28 @@ Línea a Línea sería:
 * Cuenta los valores correctos
 * Almacena los valores de Loss, y número de Correctos.
 
+## Testeando el Modelo
+
+De acuerdo a los resultados obtenidos, podríamos mirar las imágenes de los 12 primeros números, tal cual hicimos en la parte exploratoria, pero en este caso para los datos de Test:
+
+```python
+im = make_grid(X_test[:12],nrow = 12)
+plt.figure(figsize = (10,4))
+plt.imshow(np.transpose(im.numpy(),(1,2,0)))
+```
+{: title="Revisión 12 primeros datos de Test"}
+
+![png]({{ site.urlimg }}ann_pytorch/test_ann.png){: .center}
+
+```python
+torch.argmax(y_val, dim = 1)[:12]
+```
+{: title="Chequeo de las 12 primeras predicciones"}
+
+    tensor([7, 2, 1, 0, 4, 1, 4, 9, 5, 9, 0, 6], device='cuda:0')
+
+{% include alert success='Se puede ver que el modelo fue todo un éxito. Dada la buena arquitectura realizada fue posible obtener un puntaje de entrenamiento y validación suficientemente bueno que permite generalizar de muy buena manera. En este caso se puede ver que todos los números fueron correctamente predichos.'%}
+
 Esto ha sido todo, espero se entienda las capacidades de Pytorch, a pesar de que el código puede ser abrumante inicialmente la idea es poder efectivamente entender qué sucede en la red de manera interna. 
 
 **¿Es necesario utilizar todo este montón de codigo siempre?** Yo diría que para empezar sí, para entender qué hace la red. Pero pretendo mostrar Pytorch Lightning en el futuro, éste permite evitar todo el código repetitivo para enfocarse primordialmente en el diseño de la Red, pero para entender aquello creo que es muy beneicioso entender el proceso interno.
