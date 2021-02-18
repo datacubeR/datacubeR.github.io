@@ -14,20 +14,20 @@ widget1:
   image: widget1-trofeo-binnario.png
   text: "Les cuento lo que significó para mí participar dentro en el Desafío Itaú-Binnario, y las lecciones aprendidas para futuras competencias."
 widget2:
-  title: "Mi Equipo"
+  title: "Mi Equipo para Data Science"
   url: /equipo/
   image: keyboard.png
-  text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como lo he ido seteando para poder tener todo lo que necesito para trabajar con datos."
+  text: "Tener un buen equipo para hacer Machine Learning es súper importante, yo no tengo el mejor, pero les cuento como configurarlo para tener todo lo que necesito para trabajar con datos."
 widget3:
   title: "Proyectos"
   url: /project/
   image: jarvis-ironman.jpg
   text: "Acá puedes ver algunos de los Proyectos de Machine Learning en los que estoy involucrado, y trabajando actualmente. En progreso."
-widget4:
-  title: "Blog"
-  url: /blog/
-  image: tablet.png
-  text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
+# widget4:
+#   title: "Blog"
+#   url: /blog/
+#   image: tablet.png
+#   text: "Artículo relacionados a la Ciencia de Datos, resolviendo algunos problemas comunes que ocurren al lidiar con datos, o presentando tutoriales de metodologías que normalmente uso."
 ---
 
 {% comment %}

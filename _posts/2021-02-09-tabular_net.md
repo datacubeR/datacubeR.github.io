@@ -173,12 +173,10 @@ A continuación una implementación en Python:
 
 ```python
 def haversine_distance(df, lat1, long1, lat2, long2):
-
     r = 6371  # average radius of Earth in kilometers
        
     phi1 = np.radians(df[lat1])
     phi2 = np.radians(df[lat2])
-    
     delta_phi = np.radians(df[lat2]-df[lat1])
     delta_lambda = np.radians(df[long2]-df[long1])
      
@@ -242,8 +240,8 @@ Una vez creadas estas variables, es necesario definir cómo se tratará cada var
 ```python
 cat_cols = ['Hour','AMorPM','Weekday']
 cont_cols = ['pickup_longitude',
-       'pickup_latitude', 'dropoff_longitude', 'dropoff_latitude',
-       'passenger_count', 'dist_km']
+            'pickup_latitude', 'dropoff_longitude', 'dropoff_latitude',
+            'passenger_count', 'dist_km']
 
 ```
 {: title="Definición del Tipo de Variable"}
@@ -265,19 +263,13 @@ cont
 {: title='Transformar a "category"'}
 
 
-    array([[-73.992365  ,  40.730521  , -73.975499  ,  40.744746  ,
-              1.        ,   2.12631159],
-           [-73.990078  ,  40.740558  , -73.974232  ,  40.744114  ,
-              1.        ,   1.39230687],
-           [-73.994149  ,  40.751118  , -73.960064  ,  40.766235  ,
-              1.        ,   3.32676344],
+    array([[-73.992365,  40.730521, -73.975499,  40.744746, 1. ,   2.12631159],
+           [-73.990078,  40.740558, -73.974232,  40.744114, 1. ,   1.39230687],
+           [-73.994149,  40.751118, -73.960064,  40.766235, 1. ,   3.32676344],
            ...,
-           [-73.988574  ,  40.749772  , -74.011541  ,  40.707799  ,
-              1.        ,   5.05252282],
-           [-74.004449  ,  40.724529  , -73.992697  ,  40.730765  ,
-              1.        ,   1.20892296],
-           [-73.955415  ,  40.77192   , -73.967623  ,  40.763015  ,
-              1.        ,   1.42739869]])
+           [-73.988574,  40.749772, -74.011541,  40.707799, 1. ,   5.05252282],
+           [-74.004449,  40.724529, -73.992697,  40.730765, 1. ,   1.20892296],
+           [-73.955415,  40.77192 , -73.967623,  40.763015, 1. ,   1.42739869]])
 
 
 
@@ -321,43 +313,44 @@ El modelo propuesto es el siguiente:
 
 ```python
 def __init__(self,emb_szs, n_cont, out_sz, layers, p=0.5):
-        #layers = [200,100,50] unidades en cada capa
-        super().__init__()
-        self.embeds = nn.ModuleList([nn.Embedding(ni,nf) for ni,nf in emb_szs])
-        self.emb_drop = nn.Dropout(p)
-        self.bn_cont = nn.BatchNorm1d(n_cont)
-        
-        layerlist = []
-        n_emb = sum([nf for ni,nf in emb_szs])
-        n_in = n_emb + n_cont
-        
-        for i in layers:
-            layerlist.append(nn.Linear(n_in,i))
-            layerlist.append(nn.ReLU(inplace = True))
-            layerlist.append(nn.BatchNorm1d(i))
-            layerlist.append(nn.Dropout(p))
-            n_in = i
-        
-        layerlist.append(nn.Linear(layers[-1],out_sz))
-        self.layers = nn.Sequential(*layerlist)
+    #layers = [200,100,50] unidades en cada capa
+    super().__init__()
+    self.embeds = nn.ModuleList([nn.Embedding(ni,nf) for ni,nf in emb_szs])
+    self.emb_drop = nn.Dropout(p)
+    self.bn_cont = nn.BatchNorm1d(n_cont)
+    
+    layerlist = []
+    n_emb = sum([nf for ni,nf in emb_szs])
+    n_in = n_emb + n_cont
+    
+    for i in layers:
+        layerlist.append(nn.Linear(n_in,i))
+        layerlist.append(nn.ReLU(inplace = True))
+        layerlist.append(nn.BatchNorm1d(i))
+        layerlist.append(nn.Dropout(p))
+        n_in = i
+    
+    layerlist.append(nn.Linear(layers[-1],out_sz))
+    self.layers = nn.Sequential(*layerlist)
 ```
 {: title='Arquitectura'}
 
 * `embeds` serán los distintos embeddings para cada variable categórica. Como se puede ver, éstos irán reduciendo la dimensionalidad de acuerdo a lo determinado en `emb_size`. Esta capa embedding pasará por un dropout para su regularización.
 * `fc` será una capa secuencial que posee capas fully connected. Estas capas son dinámicas dependiendo de la lista entregada a través de `layers`. En el caso particular de esta red se crean dos secuencias de 200 y 100 neuronas cada una. Cada secuencia se co\\$
-def forward(self, x_cat, x_cont):
 
-        embeddings = []
-        
-        for i,e in enumerate(self.embeds):
-            embeddings.append(e(x_cat[:,i]))
-        
-        x = torch.cat(embeddings,1)
-        x = self.emb_drop(x)
-        x_cont = self.bn_cont(x_cont)
-        x = torch.cat([x,x_cont],1)
-        x = self.fc(x)
-        return x
+```python
+def forward(self, x_cat, x_cont):
+    embeddings = []
+    
+    for i,e in enumerate(self.embeds):
+        embeddings.append(e(x_cat[:,i]))
+    
+    x = torch.cat(embeddings,1)
+    x = self.emb_drop(x)
+    x_cont = self.bn_cont(x_cont)
+    x = torch.cat([x,x_cont],1)
+    x = self.fc(x)
+    return x
 ```
 {: title='Forward Propagation'}
 
@@ -397,9 +390,7 @@ class TabularModel(nn.Module):
         x_cont = self.bn_cont(x_cont)
         x = torch.cat([x,x_cont],1)
         x = self.fc(x)
-        return x
-    
-      
+        return x    
 ```
 {: title='Definición Final del Modelo'}
 
@@ -451,7 +442,6 @@ Una vez generado el modelo a utilizar se procede a la definición del proceso de
 ```python
 criterion = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr = 0.001)
-
 ```
 Asumiendo que los datos ya se encuentran mezclados, se tomará un 20% para testear. El entrenamiento en este caso se realizará full batch.
 
