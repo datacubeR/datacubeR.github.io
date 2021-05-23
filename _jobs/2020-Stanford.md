@@ -15,3 +15,7 @@ employer:
 Corresponde al primero de 3 cursos de la AI Specialization impartido por Stanford. Este curso corresponde a la cátedra CS229 impartida por el profesor Andrew Ng y que contempla el entendimiento interno de los Modelos de Machine Learning más clásicos.
 
 El curso tiene por objetivo entender la matématica de cada uno de los modelos utilizando Cálculo Matricial Diferencial avanzado, Algebra Lineal y Probabilidad y Estadística. Varios de los modelos estudiados tuvieron que ser implementados desde cero sin la ayuda de librerías externas.
+
+A lo largo del curso aprendí en detalle el funcionamiento interno de modelos como Linear/Logistic Regression, SVM, Random Forest, Gradient Boosting, Linear Discriminant Analysis, K-Means, Gaussian Mixture y Neural Networks.
+
+
