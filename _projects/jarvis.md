@@ -155,7 +155,7 @@ Los principales obstáculos que me encontré fueron la BIOS de la placa madre (l
 
 Ahora me queda nada más que probar, ya instalé Ubuntu siguiendo las instrucciones que dejé de cómo setear tu [Equipo]({{ site.baseurl }}/equipo/). Debido a que esta maquina es sólo Ubuntu, es decir, no hice Dual Boot, decidí usar la opción <q>...Borrar todo e instalar Ubuntu...</q> y ya (la verdad no lo decidí, fue la única manera de que me funcionara). Esto porque al hacer dual Boot es Windows quien genera el booteo del computador. Investigando noté que si uno no tiene Windows uno tiene que crear una partición que se encargue de eso. Al usar la opción descrita arriba Ubuntu lo hace automático.
 
-Además mi idea es poder acceder a este computador/servidor desde donde sea, para ello voy a mostrar un pequeño [tutorial]() de cómo conectarse utilizando SSH, y cómo me conecto de manera remota. Lo último que me faltaría es probar el Wake-on-Lan que permite activar mi PC remotamente para encenderlo y luego acceder por SSH.
+Además mi idea es poder acceder a este computador/servidor desde donde sea, para ello voy a mostrar un pequeño [tutorial]({{ site.baseurl }}/blog/2021/02/ssh) de cómo conectarse utilizando SSH, y cómo me conecto de manera remota. Lo último que me faltaría es probar el Wake-on-Lan que permite activar mi PC remotamente para encenderlo y luego acceder por SSH.
 
 
 
