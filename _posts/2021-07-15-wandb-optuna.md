@@ -4,7 +4,7 @@ subheadline: "Herramientas complementarias para crear un Modelo"
 teaser: "Optuna + Weights & Biases"
 # layout: page-fullwidth
 usemathjax: true
-category: ml
+category: quick
 header: no
 image:
     thumb: wandb-optuna/wb.jpg
@@ -13,6 +13,7 @@ tags:
 - ML
 - dl
 - tutorial
+published: false
 ---
 
 # Optimización Bayesiana
@@ -706,7 +707,7 @@ study.trials_dataframe()
 
 
 
-{% include alert success='Los resultados son los esperados, x debe ser cercano a 0 e y cercano a 1.'%}
+{% include alert success='Los resultados son los esperados, **x** debe ser cercano a 0 e **y** cercano a 1.'%}
 
 ### Guardando los resultados en wandb 
 

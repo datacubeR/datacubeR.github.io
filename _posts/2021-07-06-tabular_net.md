@@ -18,12 +18,11 @@ tags:
 ![picture of me]({{ site.urlimg }}taxi/taxi.jpg){: .left .show-for-large-up .hide-for-print width="500"}
 ![picture of me]({{ site.urlimg }}taxi/taxi.jpg){: .center .hide-for-large-up width="250"}
 
-Cada vez me va gustando más Pytorch, por lo que me interesa ir probando nuevas cosas.<!--more--> La mayoría de mi trabajo requiere de datos tabulares (no hay mucho espacio en Chile para otro tipo de modelos aún) y es bien sabido que los modelo Boosting son el estado del Arte para este tipo de datos. ¿Pero es posible obtener buenos resultados utilizando redes neuronales en datos tabulares? Por supuesto que sí, ya hay ramas de investigación que están empezando a mirar esto. Una de estas ramas ya ha dado fruto y se creo Tabnet, que es la primera arquitectura de Redes Neuronales especializada en datos tabulares utilizando transformers (ver [acá](https://pypi.org/project/pytorch-tabnet/)).
+Cada vez me va gustando más Pytorch, por lo que me interesa ir probando nuevas cosas.<!--more--> La mayoría de mi trabajo requiere de datos tabulares (no hay mucho espacio en Chile para otro tipo de modelos aún) y es bien sabido que los modelo Boosting son el estado del Arte para este tipo de datos. ¿Pero es posible obtener buenos resultados utilizando redes neuronales en datos tabulares? Por supuesto que sí, ya hay ramas de investigación que están empezando a investigar entorno a esto. Una de estas ramas ya ha dado fruto creando `Tabnet`, que es la primera arquitectura de Redes Neuronales especializada en datos tabulares utilizando transformers (ver [acá](https://pypi.org/project/pytorch-tabnet/)).
 
-Hoy no entrenaremos un Tabnet (pero prometo hacerlo pronto), pero sí como enfrentar un problema de datos tabulares con variables categóricas y continuas utilizando Redes Neuronales. Para ello utilizaremos un dataset de Kaggle de un problema de Taxi en NYC. 
+Hoy no entrenaremos un Tabnet (pero prometo hacerlo pronto), pero sí cómo enfrentar un problema de datos tabulares con variables categóricas y continuas utilizando Redes Neuronales. Para ello utilizaremos un dataset de Kaggle de un problema de Taxi en NYC. 
 
-En mi caso estoy utilizando un dataset reducido de 120000 registros, el cual disponibilizaré [acá].
-
+En mi caso estoy utilizando un dataset reducido de 120000 registros, el cual disponibilizaré [acá](https://drive.google.com/file/d/1Hm-_rSeYcjGmjltr5QsaIhP2r3Sqmiot/view?usp=sharing).
 
 
 ```python
@@ -36,7 +35,7 @@ import matplotlib.pyplot as plt
 
 {: title="Importando Librerías"}
 
-En el caso de hoy estaré nuevamente entrenando la red en GPU:
+En el caso de hoy estaré nuevamente entrenando la red en GPU en mi Laptop:
 
 ```python
 print(torch.cuda.is_available())
@@ -168,7 +167,6 @@ Se crearán variables derivadas a partir de los datos entregados en el dataset:
 
  Para el cálculo de la distancia de dos puntos se utilizará la distancia Haversine. Para entender cómo funciona lo mejor es referirse a [Wikipedia](https://es.wikipedia.org/wiki/F%C3%B3rmula_del_semiverseno). La razón de esta formula es que es una fórmula que considera la curvatura de la tierra y se utiliza en especial para medir distancias cuando se tienen coordenadas geográficas.
 
-
 A continuación una implementación en Python:
 
 ```python
@@ -200,7 +198,7 @@ df['dist_km'] = haversine_distance(df, 'pickup_latitude',
 
 ### Variables temporales
 
-A partir de la fecha de subida del pasajero es obtener mucha información que puede ser importante al momento de estimar la tarifa:
+A partir de la fecha de subida del pasajero es fácil obtener mucha información que puede ser importante al momento de estimar la tarifa:
 
 
 ```python
@@ -285,8 +283,7 @@ y = torch.tensor(df[y_col].values,dtype = torch.float)
 
 Para lidiar con las variables categóricas se utilizarán embeddings. Esta representación es equivalente a un One Hot Encoding. Las variables categóricas serán definidas por un vector de dimensiones dadas por el modelador. La gracia de esta representación es que cada elemento del vector guarda características latentes de cada categoría lo cual permite establecer relaciones entre cada categoría. Esta representación no se entrega a la red, sino que ésta la aprende por sí misma en el proceso de entrenamiento.
 
-Esto puede sonar un poco abstracto, pero es bien difícil de explicar. Haré un tutorial explicando más en detalle qué es un embedding.
-
+Esto puede sonar un poco abstracto, pero es bien difícil de explicar. Espero poder explicar más en detalle qué es un embedding en futuros artículos.
 Ahora para elegir el número de dimensiones en el cual se quiere crear cada embedding se utilizará el siguiente criterio:
 
 * Cada variable se reducirá al mínimo entre 50 y la mitad entera de sus variables.
@@ -555,7 +552,5 @@ for i in range(10):
 Si bien, falta para que las redes neuronales destronen a los algoritmos de Gradient Boosting en términos de performance en data tabular, es posible hacer modelos con Arquitecturas no tan tradicionales que permiten entregar buenos resultados.
 
 Espero les haya gustado y aprendido algo nuevo, porque yo aprendí harto.
-
-
 
 [**Alfonso**]({{ site.baseurl }}/contact/)
