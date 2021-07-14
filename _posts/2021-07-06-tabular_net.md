@@ -289,6 +289,7 @@ Ahora para elegir el número de dimensiones en el cual se quiere crear cada embe
 * Cada variable se reducirá al mínimo entre 50 y la mitad entera de sus variables.
 
 ```python
+cat_size = [len(df[col].cat.categories) for col in cat_cols]
 emb_size = [(size, min(50,size+1)//2) for size in cat_size]
 emb_size # corresponde al numero de categorías y el número al que se va a reducir
 ```
