@@ -13,6 +13,7 @@ tags:
 - ML
 - dl
 - tutorial
+- pytorch
 published: false
 ---
 
