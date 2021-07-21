@@ -1,7 +1,7 @@
 ---
-title: "Dogs vs Cats"
-subheadline: "Lo que fue SOAT ahora en corre en tu laptop."
-teaser: "Corriendo Pytorch en la RTX 3090"
+title: "Transfer Learning + RTX 3090"
+subheadline: "Resolviendo el Problema de Perros vs Gatos"
+teaser: "Lo que fue SOAT ahora corre en tu laptop."
 # layout: page-fullwidth
 usemathjax: true
 category: dl
@@ -10,11 +10,10 @@ image:
     thumb: dogs_cats/dog-cat.jpg
 tags:
 - python
-- ML
 - dl
 - tutorial
 - pytorch
-published: false
+published: true
 ---
 
 
@@ -22,7 +21,7 @@ published: false
 ![picture of me]({{ site.urlimg }}dogs_cats/dog-cat.jpg){: .center .hide-for-large-up width="250"}
 En Junio del 2012, Andrew Ng era optimista acerca de los promisorios resultados que estaban entregando en ese tiempo las redes Neuronales. <!--more--> En un trabajo llamado *¿Cuántos computadores para identificar un gato? 16000* Se demostraba el tremendo logro de que una red neuronal pudiera diferenciar una imagen de un gato, eso sí a un tremendo costo computacional. En el mismo año 2012, pero en Septiembre se la Arquitectura AlexNet ganó el *ImageNet Large Scale Visual Recognition Challenge*. Un consurso que hace un tiempo se dejó de hacer pero que fue el impulsor de grandes Arquitecturas de Redes Convolucionales como Inception (GoogleNet), ResNets, ResNexts entre otras.
 
-En el artículo de hoy quiero demostrar si es posible resolver el problema de Gatos vs Perros. Si bien este es un problema que ya está resuelto quiero atacarlo con datos reales. Para ello se disponibilizaron 24994 entre perros y gatos para entrenar una red Neuronal de clasificación que sea capaz de diferenciarlo. Generaremos una implementación de una Red en Pytorch y lo compararemos con una implementación de AlexNet pre-entrenado utilizando transfer Learning.
+En el artículo de hoy quiero demostrar que es posible resolver el problema de Gatos vs Perros. Este es un problema que ya está resuelto, pero quiero atacarlo con datos reales, de buena calidad, color y buen tamaño. Para ello se disponibilizaron 24994 entre perros y gatos para entrenar una red Neuronal que sea capaz de diferenciarlos. Generaremos una implementación de una Red en Pytorch y lo compararemos con una implementación de AlexNet pre-entrenado utilizando <mark>Transfer Learning</mark>.
 
 Además me interesa probar como rinde la RTX 3090 en un set de datos considerable. Vamos con la implementación:
 
@@ -46,7 +45,7 @@ import glob
 ```
 {: title="Importando Librerías."}
 
-Las imágenes de Gatos y Perros se pueden obtenerlas del siguiente [link](https://drive.google.com/file/d/1fuFurVV8rcrVTAFPjhQvzGLNdnTi1jWZ/view)
+Además si te interesa recrear este problema disponibilicé las imágenes de este tutorial en el siguiente [link](https://drive.google.com/file/d/1fuFurVV8rcrVTAFPjhQvzGLNdnTi1jWZ/view)
 
 {% include alert alert='Nota: Este es un problema de verdad y las imágenes pesan cerca de 800Mb por lo que asegúrate de tener espacio para almacenarlas y una cantidad de RAM suficiente para manipular esta cantidad de datos.'%} 
 
@@ -63,7 +62,7 @@ with Image.open('CATS_DOGS/test/CAT/10107.jpg') as im:
 
 ![png]({{ site.urlimg }}dogs_cats/output_2_0.png){: .center}
 
-En este caso tenemos una imágen pequeñita de un gato. Pero no todas las imágenes son así. Antes que cualquier cosa chequeemos la integridad de los datos. Muchas veces imágenes pueden venir corruptas y no es posible importarlas. Por lo tanto, chequeemos el número de elementos en las carpetas:
+En este caso tenemos una imágen pequeñita de un gato. Pero no todas las imágenes son así. Antes que cualquier cosa chequeemos la integridad de los datos. Muchas veces, las imágenes pueden venir corruptas y no es posible importarlas. Por lo tanto, chequeemos el número de elementos en las carpetas:
 
 ```python
 img_names = glob.glob('*/*/*/*.jpg')
@@ -194,9 +193,9 @@ df.describe()
 </table>
 </div>
 
-{% include alert todo='Es posible observar que el tamaño máximo de las imágenes es de 500 x 500, imágenes de tamaño razonable mientras que las dimensiones más pequeñas son del orden de 40 píxeles. En promedio las imágenes tienen un tamaño cercano a los 400x360. Cabe destacar también que las imágenes son a color por lo que tendrán 3 canales (RGB).'%}  
+{% include alert todo='Es posible observar que el tamaño máximo de las imágenes es de 500 x 500 (imágenes de tamaño razonable). Por otro lado, las dimensiones más pequeñas son del orden de 40 píxeles. En promedio las imágenes tienen un tamaño cercano a los 400x360. Cabe destacar también que las imágenes son a color por lo que tendrán 3 canales (RGB).'%}  
 
-Importemos entonces una imagen de un perro. Es posible ver que la imagen es de alta calidad y se puede diferenciar claramente su contenido, a diferencia de los problemas de CIFAR-10 o MNIST que son los más básicos para partir explorando en redes neuronales.
+Importemos entonces una imagen de un perro. Es posible ver que la imagen es de alta calidad y se puede notar claramente su contenido a diferencia de los problemas de CIFAR-10 o MNIST que son los más básicos para partir explorando en cuanto a redes neuronales.
 
 ```python
 dog = Image.open('CATS_DOGS/train/DOG/14.jpg')
@@ -250,7 +249,7 @@ plt.imshow(np.transpose(im.numpy(), (1,2,0)));
 
 ## Data Augmentation
 
-Adicionalmente haremos modificaciones a la imágen, tales como pequeñas rotaciones, y flips tipos espejos, que funcionarán como Data Augmentation a modo de dar mayor capacidad de entendimiento a la red Neuronal.
+Adicionalmente haremos modificaciones a la imagen, tales como pequeñas rotaciones, y flips tipo espejo, que funcionarán como Data Augmentation a modo de dar mayor capacidad de entendimiento a la red Neuronal.
 
 {% include alert tip='Si bien en artículos anteriores utilizamos Albumentations para realizar este proceso, en este caso utilizaremos directamente torchvision. La razón de esto es que torchvision espera que la imágen sea importada en formato imagen, es decir, utilizando PIL, mientras que Albumentations espera un numpy array, lo que agregaría un paso de transformación adicional.' %}
 
@@ -309,7 +308,7 @@ plt.imshow(np.transpose(im.numpy(), (1,2,0)));
 
 # Red Convolucional Convencional
 
-El primer modelo que intentaremos es una Red Convolucional común y corriente. Para ello crearemos un Pipeline de Transformaciones que incluirán rotaciones, flips, un tamaño estandar que en este caso será de 224 pixeles. La imágen será centrada y además se normalizará.
+El primer modelo que intentaremos es una Red Convolucional común y corriente. Para ello crearemos un Pipeline de Transformaciones que incluirán rotaciones, flips y un tamaño estandar que en este caso será de 224 pixeles. La imágen será centrada y además se normalizará.
 
 {% include alert warning='El augmentation se realiza sólo a los datos de entrenamiento. A los datos de test se aplica sólo el Centrado y el cambio de tamaño, además de la normalización.'%}
 
@@ -332,9 +331,9 @@ test_transform = transforms.Compose([
     transforms.Normalize([0.485,0.456,0.406],[0.229,0.224,0.225])
 ])
 ```
-Torchvision contiene un ImageFolder utility que es muy conveniente para la organización con el que se entregan las imágenes. Este `.ImageFolder` permitirá importar los datos de entrenamiento y Test y mediante las subcarpetas podrá inmediatemente asignar la clase a la que pertence cada imagen. Las clases del problema serán entonces inferidas de los nombres `CAT` y `DOG`.
+`Torchvision` contiene un ImageFolder utility que es muy conveniente para la organización con el que se entregan las imágenes. Este `.ImageFolder` permitirá importar los datos de entrenamiento y Test. Además, mediante las subcarpetas podrá inmediatemente asignar la clase a la que pertence cada imagen. Las clases del problema serán entonces inferidas de los nombres `CAT` y `DOG`.
 
-Además en este mismo paso se crearán los DataLoaders. Se utilizará un batch size de 100 imágenes y se mezclarán sólo las de entrenamiento. Una aspecto que va a ser primordial si se quiere acelerar el proceso de entrenamiento es el uso de `pin_memory=True` que permitirá provisionar memoria en la GPU para un entrenamiento más rápido y `num_workers=12`, que permitirá hacer el proceso de augmentation (que hay que recordar que se hace en CPU) de manera paralelizada.
+Además en este mismo paso se crearán los DataLoaders. Se utilizará un batch size de 100 imágenes y se mezclarán sólo las de entrenamiento. Una aspecto que va a ser primordial si se quiere acelerar el proceso de entrenamiento es el uso de `pin_memory=True`. Esto permitirá provisionar memoria en la GPU para un entrenamiento más rápido y `num_workers=12`, que permitirá hacer el proceso de augmentation (que hay que recordar que se hace en CPU) de manera paralelizada.
 
 {% include alert warning='En mi experiencia es bueno dejar un par de núcleos libres. En mi caso estoy entrenando en J.A.R.V.I.S que tiene 16 núcleos. Si bien a los que les gusta el peligro pueden usar todos sus núcleos, yo prefiero dejar algunos libres, porque si mi proceso se demora, no quiero perder mi progreso porque el PC se quedó sin recursos.'%}
 
@@ -398,7 +397,7 @@ plt.axis('off');
 
 # Arquitectura de la Red
 
-La Red que utilizaremos tendrá 2 capas convolucionales, y 3 capas lineales. Entre cada capa convolucional se aplicará una activación `ReLU` y un `MaxPool2D` para reducir de tamaño. Luego de las capas convolucionales se aplicarán 3 capas Lineales, una que recibe el tensor proveniente de las capas Convolucionales de tamaño (54x54, que es el tamaño de la imagen resultante x16 (número de filtros de la capa anterior)) que tendrá 120 neuronas, luego pasará a una capa de 84 para terminar en dos clases (Perros y Gatos).
+La Red que utilizaremos tendrá 2 capas convolucionales. Entre cada capa convolucional se aplicará una activación `ReLU` y un `MaxPool2D` para reducir de tamaño. Luego de las capas convolucionales se aplicarán 3 capas Lineales, una que recibe el tensor proveniente de las capas Convolucionales de tamaño (54x54, que es el tamaño de la imagen resultante x16 (número de filtros de la capa anterior)) que tendrá 120 neuronas, luego pasará a una capa de 84 para terminar en las dos clases (Perros y Gatos).
 
 
 ```python
@@ -526,7 +525,7 @@ print(f'Total Time: {total_time/60} minutes')
     Epoch 3/3, Train Loss : 0.3059287965297699, Test Loss: 0.5692620277404785
     Total Time: 0.6383750836054484 minutes
 
-{% include alert success='La red neuronal fue entrenada utilizando la RTX 3090. Como pueden ver, el entrenamiento es muy rapido, toma cerca de 40 segundos. Hice pruebas con num_workers=1 y toma cerca de 4 minutos. Realmente incluye mucho paralelizar las transformaciones. Es muy probable que si utilizaramos ALbumentations se podría reducir esto aún más. 
+{% include alert success='La red neuronal fue entrenada utilizando la RTX 3090. Como pueden ver, el entrenamiento es muy rapido, toma cerca de 40 segundos. Hice pruebas con num_workers=1 y toma cerca de 4 minutos. Realmente influye mucho paralelizar las transformaciones. Es muy probable que si utilizaramos Albumentations se podría reducir esto aún más. 
 
 Con respecto a los resultados se ve que hay sobreajuste a pesar de sólo entrenar por 3 Epochs. Esto va a tener un impacto negativo en el desemepeño del modelo.'%}
 
@@ -594,7 +593,7 @@ prediction_grid(CNNmodel, im_list)
 
 # Transfer Learning 
 
-Transfer Learning se refiere al uso de Redes Preentrenadas, es decir, ya tienen pesos. Esto normalemente se traduce en que ya *saben ver*. Por lo tanto no tienen que aprender a ver y además aprender a diferenciar mi data. Al usar redes entrenadas lo único que se debe preocupar la red es en aprender de mis datos, por que la *habilidad de ver* la aprendió en su pre-entrenamiento. En el caso de AlexNet, fue preentrenada en ImageNet, que creo que tiene categorías de Perros y Gatos.
+Transfer Learning se refiere al uso de Redes Preentrenadas, es decir, ya tienen pesos. Esto normalemente se traduce en que ya *saben ver*. Por lo tanto, no tienen que aprender a ver y además aprender a diferenciar mi data. Al usar redes entrenadas, de lo único que se debe preocupar la red es en aprender mis datos. Entonces, la *habilidad para ver* la aprendió en su pre-entrenamiento y el **ver mis datos** lo aprende en el fine-tuning que daremos ahora. En este caso usaremos AlexNet, la cual fue preentrenada en ImageNet, que creo que tiene categorías de Perros y Gatos.
 
 Por lo tanto desde `torchvision.models` podemos importar AlexNet pre-entrenado. Como se puede ver es un modelo bastante más complejo.
 
@@ -650,7 +649,7 @@ AlexNetmodel
 ```
 {: title="Modificamos Cabeza de la Red."}
 
-Esta modificación se hace para que el tamaño resultante de la red sea consistente con la capa densa. En nuestro caso recibimos 9216 parámetros (una imagen de 36x36 con 256 filtros.) se pasa por un ReLu como activación y un Dropout a modo de regularización para luego llegar a una capa de 1024 y la capa final.
+Como se puede ver originalmente la cabeza de la red (la parte llamada *classifier*) estaba configurada de 4096 neuronas a 1000 (que son las 1000 categorías de ImageNet). Probablemente esto sea demasiado para nuestro problema y nos puede llevar al overfitting, por lo tanto generamos algo bastante más simple. Además, esta modificación debe ser consistente con los tamaños de imágenes que estamos utilizando. En nuestro caso recibimos 9216 parámetros (una imagen de 36x36 con 256 filtros), se pasa por una ReLu como activación y un Dropout a modo de regularización para luego llegar a una capa de 1024 y la capa final.
 
 
     AlexNet(
@@ -684,7 +683,7 @@ device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 AlexNetmodel = AlexNetmodel.to(device)
 ```
 
-Este modelo tiene más parámetros, alrededor de 9.5 millones, pero sólo entrenaremos aquellas de la capa densa.
+Como se puede ver, este modelo tiene varios más parámetros, alrededor de 9.5 millones, pero sólo entrenaremos aquellos de la capa densa.
 ```python
 cont = 0
 for param in AlexNetmodel.classifier.parameters():
@@ -811,6 +810,7 @@ print(f'\nDuration: {time.time() - start_time:.0f} seconds') # print the time el
     
     Duration: 198 seconds
 
+{% include alert info='Como podemos ver acá se puede ver el poder de la RTX 3090. Estamos pasando casi 20 mil imágenes en batches de 10, y aún así tomá cerca de 200 segundos, poco más de 3 minutos. Realmente quedé bien sorprendido con el proceso de augmentation paralelizado en 12 cores y el traspaso a la GPU que por el uso de pin memory se hace bastante más rápido.'%}
 
 
 ```python
@@ -828,7 +828,7 @@ correct.item()/len(test_data)
 
     0.9580867061270196
 
-Análogamente, chequearemos como responde el modelo en Datos no vistos anteriormente. Además agregué algunos perros que me dejaron en mi Linkedin que tendían a fallar y un Gato relativamente difícil de ver.
+Como se puede ver el cambio es brutal, la mejora es clara. Análogamente, chequearemos como responde el modelo en Datos no vistos anteriormente (a.k.a mis mascotas). Además agregué algunos perros que dejaron en mi Linkedin que tendían a fallar y un Gato relativamente difícil de ver.
 
 ```python
 from mpl_toolkits.axes_grid1 import ImageGrid
@@ -867,9 +867,9 @@ prediction_grid(AlexNetmodel, im_list,2,6)
 
 ![png]({{ site.urlimg }}dogs_cats/resultados-dog-cat.png){: center}
     
-{% include alert success='La verdad es que los resultados obtenidos con este modelo me dejan mucho más conforme. Pudimos mejorar la imagen en la que el modelo anterior fallaba. Mejoramos una imagen que me dieron que de hecho predecía como un toro. El gato blanco que es bien complejo de ver también funcionó bastante bien. El único caso que no funcionó también fue el Perro de [Stefanni](https://www.linkedin.com/in/stefanni-cavaletto/). Tiendo a pensar que la razón es porque se está tapando gran parte de los rasgos de su cara que siento que deben ser claves para que el modelo prediga de manera correcta.'%}
+{% include alert success='La verdad es que los resultados obtenidos con este modelo me dejan mucho más conforme. Pudimos mejorar la imagen en la que el modelo anterior fallaba. Mejoramos una imagen que me dieron que de hecho predecía como un toro. El gato blanco que es bien complejo de ver también funcionó bastante bien. El único caso que no funcionó tan bien fue el Perro de [Stefanni](https://www.linkedin.com/in/stefanni-cavaletto/). Tiendo a pensar que la razón es porque se está tapando gran parte de los rasgos de su cara que siento que deben ser claves para que el modelo prediga de manera correcta.'%}
 
-Ese fue el tutorial de hoy. Espero que hayan podido aprender harto. Yo al menos aprendí harto y me voy sintiendo más cómodo en Pytorch. Además me voy muy conforme con la RTX 3090. A pesar de estar lidiando con imágenes muy pesadas no tuvo problemas para entrenar el modelo rápidamente.
+Ese fue el tutorial de hoy. Espero que hayan podido aprender harto. Yo al menos aprendí harto y me voy sintiendo cada vez más cómodo con Pytorch. Además, me voy muy conforme con la RTX 3090. A pesar de estar lidiando con imágenes muy pesadas no tuvo problemas para entrenar el modelo rápidamente.
 
 Nos vemos a la próxima!!!
 
