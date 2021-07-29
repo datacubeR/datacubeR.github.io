@@ -1,4 +1,5 @@
 ---
+permalink: /dog-cats/
 title: "Transfer Learning + RTX 3090"
 subheadline: "Resolviendo el Problema de Perros vs Gatos"
 teaser: "Lo que fue SOAT ahora corre en tu laptop."
