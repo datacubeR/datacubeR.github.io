@@ -13,17 +13,17 @@ tags:
 - ML
 - dl
 - tutorial
-published: false
+published: true
 ---
 
 ![picture of me]({{ site.urlimg }}pl/PTL.png){: .left .show-for-large-up .hide-for-print width="500"}
 ![picture of me]({{ site.urlimg }}pl/PTL.png){: .center .hide-for-large-up width="250"}
 
-Una de las cosas que más se le critican a Pytorch es la verbosidad necesaria para poder llevar a cabo una tarea. Y es cierto. Pytorch no nació como una herramienta para abstraer el proceso de modelamiento. Todo lo contrario es una API de bajo nivel desarrollada por Facebook para hacer Research. Entonces, ¿eso quiere decir que siempre habrá que escribir mucho código? NO, para eso llego Pytorch Lightning. <!--more--> 
+Una de las cosas que más se le critican a Pytorch es la verbosidad para poder llevar a cabo una tarea, normalmente muchas líneas de código. Lamentablemente es cierto. Pytorch no nació como una herramienta para abstraer el proceso de modelamiento. Todo lo contrario es una API de bajo nivel desarrollada por Facebook para hacer Research. Entonces, ¿eso quiere decir que siempre habrá que escribir mucho código? NO, para eso llego Pytorch Lightning. <!--more--> 
 
-Pytorch Lightning viene a ser una "especie de equivalente" a Keras en Tensorflow, pero más que una abstracción del código, viene a ser una manera de organizar el código evitando el exceso de boilerplate característico en Pytorch.
+Pytorch Lightning lo presentan como una <q>especie de equivalente</q> a Keras en el ecosistema Tensorflow (aunque no es tan así). Pero, más que una abstracción del código, viene a ser una manera de organizar el código evitando el exceso de boilerplate característico en Pytorch.
 
-Dado que Pytorch nació como una herramienta enfocada en investigación, está super orientado en detallar cada parte del proceso. Y una de las ventajas que esto tiene es que, es muy fácil encontrar implementaciones de lo últimos avances en Deep Learning (por ejemplo acá en [Papers with Code](https://paperswithcode.com/)). El problema, es que, cuando se quiere prototipar algo rápido puede ser latero, e incluso cuesta recordar todos los pasos necesarios para implementar el entrenamiento de un modelo. Vamos a ver entonces cuál es la diferencia entre Pytorch Nativo y Lightning.
+Dado que Pytorch nació como una herramienta enfocada en investigación, está super orientado en detallar cada parte del proceso. Una de las ventajas que esto tiene es que es muy fácil encontrar implementaciones de lo últimos avances en Deep Learning (por ejemplo acá en [Papers with Code](https://paperswithcode.com/)). El problema es que, cuando se quiere prototipar algo rápido puede ser latero. Muchas veces, incluso cuesta recordar todos los pasos necesarios para implementar el entrenamiento de un modelo. Vamos a ver entonces cuál es la diferencia entre Pytorch Nativo y Lightning.
 
 {% include alert warning='Pytorch, y también Pytorch Lightning se basan fuertemente en la programación orientada a objetos. Por lo que si no sabes muy bien qué son las clases en Python, este es un buen momento para comenzar a estudiarlas.'%}
 
@@ -56,9 +56,9 @@ X, y = fetch_openml('mnist_784', version=1, return_X_y=True, as_frame=False)
 ```
 {: title="Importando la data desde Scikit-Learn."}
 
-{% include alert info='Muchos se preguntarán por qué utilizar MNIST desde Scikit-Learn siendo que `torchvision` lo tiene incluido. Bueno, la verdad es que la versión de `torchvision` viene pre-cocinada para llegar y utilizarse. Y en la realidad no se utiliza la data de esa manera. Por lo tanto, para acercarnos más a cómo los distintos procesos de importación de dato se ejecutan en la realidad es que lo haremos desde Scikit-Learn.'%}
+{% include alert info='Muchos se preguntarán por qué utilizar MNIST desde Scikit-Learn siendo que `torchvision` tiene esta data incluida para importar directamente. Bueno, la verdad es que la versión de `torchvision` viene `pre-cocinada` para llegar y usar. En la realidad rara vez ocurre eso. Por lo tanto, para acercarnos más a cómo los distintos procesos de importación de datos se ejecutan en la realidad es que lo haremos desde Scikit-Learn.'%}
 
-En este caso, X corresponde a un arreglo de elementos que representa una imágen de un dígito de <var>28x28</var>.
+En este caso, X corresponde a un `numpy array` con elementos que representan una imágen de un dígito de <var>28x28</var>.
 
 ```python
 import matplotlib.pyplot as plt
@@ -67,11 +67,11 @@ plt.axis('off');
 ```
 ![picture of me]({{ site.urlimg }}pl/digit.png){: .center}
 
-Para que Pytorch pueda hacer uso de los datos, estos tienen que ser una clase que herede de la clase `Dataset`. Una clase dataset tiene que tener 3 partes:
+Para que Pytorch pueda hacer uso de los datos, estos tienen que ser una clase que hereda de la clase `Dataset`. Una clase dataset tiene que tener 3 partes:
 
-* El constructor con todos los parámetros para instanciar la clase.
-* Un \_\_len\_\_ que será le encargada de contar el número de observaciones (en este caso imágenes) del Dataset.
-* Un \_\_getitem\_\_ que será la función encargada de tomar los elementos uno a uno y convertirlos en tensores compatibles con `Pytorch`.
+* El constructor \_\_init\_\_() con los parámetros necesarios para instanciar la clase (normalmente definidos por uno).
+* Un \_\_len\_\_() que será le encargada de contar el número de observaciones (en este caso imágenes) del Dataset. Esto es fácilmente solucionable con un `len()`.
+* Un \_\_getitem\_\_() que será el método encargado de tomar los elementos uno a uno y convertirlos en tensores compatibles con `Pytorch`. Esta parte es la que hay que poner más atención ya que variará dependiendo del tipo de dato a usar.
 
 En este caso nuestra clase se creará con 3 parámetros:
 * X, que serán las imágenes en formato `numpy` array.
@@ -108,17 +108,17 @@ transform = A.Compose([
 data = MNISTDataset(X,y, transform = transform)
 train, validation, test = random_split(data, lengths = [50000, 10000, 10000])
 ```
-Si nos fijamos bien \_\_getitem\_\_ es el método que se encarga de obtener cada uno de los elementos por indice (idx) y en el caso de la imagen, hacer un `.reshape` al tamaño correspondiente (<var>28x28</var> en nuestro caso). En caso de utilizar `Albumentations`, tenemos que considerar un paso para aplicar las transformaciones. Estas transformaciones incluyen `ToTensorV2()` que es la manera en la que `Albumentations` transforma en tensores de `Pytorch`. En caso de que no hayan transformaciones nos encargaremos de transformar en tensor desde numpy.
+Si nos fijamos bien \_\_getitem\_\_ es el método para obtener cada uno de los elementos por indice (idx) y en el caso de estas imágenes, hacer un `.reshape` al tamaño correspondiente (<var>28x28</var>). Como estamos utilizando transformaciones en `Albumentations`, tenemos que considerar un paso para aplicar las transformaciones. Estas transformaciones incluyen `ToTensorV2()` que es la manera en la que `Albumentations` transforma en tensores de `Pytorch`. En caso de que no hayan transformaciones nos encargaremos de transformar en tensor desde numpy.
 
 La clase `MNISTDataset()` retornará las imágenes y los labels asociados. Notar que estos resultados pasan por `random_split` que se encargará de dividir el dataset en 3 partes train, validation y test.
 
-{% include alert info='Notar que esto es posible porque en este caso los 3 subsets del proceso son sometidos a las mismas transformaciones. En el caso de que de no ser así y cada dataset tenga distintas transformaciones, entonces es más conveniente dividir la data al inicio y luego instanciar 3 clases MNISTDataset para cada subset con sus respectivas transformaciones.'%}
+{% include alert info='Hay que notar que realizar el split de la data fue posible debido a que en este caso los 3 subsets del proceso son sometidos a las mismas transformaciones. En el caso de que de no ser así y cada subset requiera de distintas transformaciones, entonces es más conveniente dividir la data al inicio y luego instanciar 3 clases MNISTDataset para cada subset con sus respectivas transformaciones.'%}
 
 ## DataLoaders
 
-Una vez que los datos han sido separados, serán utilizados para crear los DataLoaders. Los DataLoaders son elementos en Pytorch que se encargan de ir cargando los datos de manera gradual en memoria, sea local o GPU. 
+Una vez que los datos han sido separados, se deben crear los DataLoaders. Los DataLoaders son elementos en Pytorch que se encargan de ir cargando los datos de manera gradual en memoria, sea local o GPU. 
 
-Lo más importante de esta parte es que, es aquí en donde se decide el tamaño del batch que se irá cargando- Ademáss es importante mencionar que el set de entrenamiento hay que mezclarlo para evitar que se aprendan elementos en orden (lo cual puede llevar a overfitting), hay que fijar `pin_memory = True` para pre-alocar espacio en la GPU y `num_workers` suficiente para evitar que cuellos de botella para paralelizar todo lo que sea posible.
+Lo más importante de esta parte es que aquí es en donde se decide el tamaño del batch que se irá cargando. Además es importante mencionar que el set de entrenamiento hay que mezclarlo para evitar que se aprendan elementos en orden (lo cual puede llevar a overfitting). También es necesario fijar `pin_memory = True` para pre-alocar espacio en la GPU (no es necesario en caso de entrenar en CPU) y `num_workers` suficiente para evitar que cuellos de botella para paralelizar todo lo que sea posible.
 
 ```python
 dataloaders = {'train': torch.utils.data.DataLoader(dataset = train, 
@@ -140,13 +140,12 @@ dataloaders = {'train': torch.utils.data.DataLoader(dataset = train,
               }
 ```
 
-## Modelo 
+## Modelo en Pytorch Nativo
 
-Una vez que se tienen los DataLoader es necesario construir la arquitectura del modelo. En este caso utilizaremos Redes Convolucionales.
-No voy a entrar tanto en detalle en esta parte. Pero básicamente todo modelo hereda desde `nn.Module` y sólo es necesario hacer un override del constructor dependiendo de características con las que se va a construir el modelo y del forward que muestra cómo los datos van viajando por las distintas capas generadas en el constructor.
+Una vez que se tienen los DataLoader es necesario construir la arquitectura del modelo. En este caso utilizaremos Redes Convolucionales. No voy a entrar tanto en detalle en esta parte. Pero básicamente todo modelo hereda desde `nn.Module` y sólo es necesario hacer un override del constructor (tomando en cuenta las características con las que se va a construir el modelo) y del forward que muestra cómo los datos van viajando por las distintas capas generadas en el constructor.
 
 **NOTA**: `CNN_BLOCK` es una función que condensa una red Convolucional estándar. Los parámetros denotan lo siguiente:
-* **c_in** y **c_out**: Son los canales de entrada y de salida de la red. Normalmente En la primera capa se utiliza 1 canal de entrada para iḿágenes blanco y negro y 3 para imágenes RGB. Recientemente descubrí que imágenes satelitales pueden más de 3 canales.
+* **c_in** y **c_out**: Son los canales de entrada y de salida de la red. Normalmente en la primera capa se utiliza 1 canal de entrada para imágenes blanco y negro y 3 para imágenes RGB. Aunque recientemente descubrí que imágenes satelitales pueden tener más de 3 canales.
 * **k** es el tamaño del filtro o kernel.
 * **p** es el padding.
 * **s** es el stride.
@@ -182,22 +181,24 @@ model.to(device)
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
 ```
-Además al instanciar el modelo, se traspasa la GPU en caso de tener, y se deben definir la función de Costo, que normalmente se le llama `criterion` y el optimizador, que en este caso se está utilizando Adam con un learning rate de <var>1e-3</var>.
+Además al instanciar el modelo, se debe traspasar a la GPU en caso de tener, y se deben definir la función de Costo, que normalmente se le llama `criterion`, y el optimizador, que en este caso se está utilizando Adam con un learning rate de <var>1e-3</var>.
 
-Luego para entrenar el modelo viene la parte más latera, aparatosa y propensa error. Los loop de entrenamiento. Dependiendo del modelo hay que fijarse en muchos aspectos:
+Luego para entrenar el modelo viene la parte más `latera`, `fome`, `tediosa`, `aparatosa` y `propensa error`: <mark>Los loop de entrenamiento</mark>. Dependiendo del modelo hay que fijarse en muchos aspectos:
 
 1. Agregar Loop de Epochs.
-2. Agregar Loop para DataLoader.
+2. Agregar Loop de DataLoaders.
 3. Pasar los datos a la GPU.
-4. Cambiar el modo del modelo a `train()` según corresponda.
+4. Cambiar el modo del modelo a `train()`.
 5. Reiniciar los gradientes.
-6. Hacer un Forward.
+6. Hacer un Forward Pass.
 7. Calcular el loss.
 8. Calcular el backpropagation con `.backward`.
 9. Actualizar los pesos con `step`.
-10. Repetir los pasos 2, 3, 4, 6 y 7 pero aplicado a Test.
+10. Repetir los pasos `2`, `3`, `4`, `6` y `7` pero aplicado a Test.
 11. Definir métricas para mostrar en el entrenamiento. 
-12. Agregar alguna barrita de progreso para hacer la espera menos tediosa.
+12. Agregar alguna barrita de progreso para hacer la espera menos tediosa (normalmente con `tqdm`).
+
+Todos estos pasos se pueden ver reflejados en la siguiente función:
 
 ```python
 def fit(model, dataloader, epochs = 5):
@@ -230,8 +231,6 @@ def fit(model, dataloader, epochs = 5):
         print(f'Epoch {epoch}/{epochs}, Training Loss: {np.mean(train_loss):.3f}, Validation Loss: {np.mean(val_loss):.3f}, Accuracy {np.mean(train_acc):.3f}, Validation Accuracy: {np.mean(val_acc):.3f}')
 ```
 {: title="Definición Loop de entrenamiento"}
-
-
 
 ```python
 fit(model, dataloaders)
@@ -278,8 +277,8 @@ El problema con esto es que si quiero calcular el Accuracy con otro dataset no v
 
 # Pytorch Lightning Way 
 
-El desarrollo de Pytorch Lightning fue iniciado por William Falcon (aunque hoy hay mucha gente contribuyendo al proyecto), un Investigador en Deep Learning que encontraba que si bien Pytorch era de gran utilidad tenía estos inconvenientes de código muy complicado de escribir, pero por sobre todo propenso a error.
-El ecosistema de Pytorch Lightning está creciendo día a día con librerías como Flash, que es una interfaz de mucho más alto nivel para Pytorch, y torchmetrics que permitirá calcular las métricas más relevantes para Redes Neuronales, sin tener que hacer esos loops y operaciones ultracomplicadas que se pueden ver en mis tutoriales anteriores.
+El desarrollo de Pytorch Lightning fue iniciado por William Falcon (aunque hoy hay mucha gente contribuyendo al proyecto), un Investigador en Deep Learning que encontraba que si bien Pytorch era de gran utilidad tenía estos inconvenientes de código muy complicado de escribir, pero por sobre todo, propenso a error.
+El ecosistema de Pytorch Lightning está creciendo día a día con librerías como `Flash`, que es una interfaz de mucho más alto nivel para Pytorch para resolver tareas específicas, y `torchmetrics` que permite calcular las métricas más relevantes para Redes Neuronales, sin tener que hacer esos loops y operaciones ultracomplicadas que se pueden ver en mis tutoriales anteriores.
 
 {% include alert alert='Uno pudiera decir, no necesito estas métricas. Todo esto ya está implementado en Scikit-Learn. Y es cierto. Pero hay al menos dos inconvenientes: uno es que las métricas de Scikit-Learn no aceptan tensores (por lo que habŕia que transformar todo a Numpy, lo cual puede ser bien costoso) pero por sobre todo es que las métricas de Scikit no corren en GPU por lo que van a ser mucho más lentas.'%}
 
@@ -289,16 +288,16 @@ import pytorch_lightning as pl
 import torchmetrics
 ```
 
-Pytorch Lightning define dos clases más, el `LightningDataModule`, que será una manera de organizar la data y el `LightningModule` que permitirá organizar el modelo.
+Pytorch Lightning define dos clases adicionales de las cuales se puede heredar: el `LightningDataModule`, que será una manera de organizar la data y el `LightningModule` que permitirá organizar el modelo.
 
 En este caso para crear un Dataset crearemos una clase pero que herede desde el `LightningDataModule`, Para esto es necesario definir:
 * Un constructor, con los parámetros que se consideren necesarios para construir el modelo.
 * `setup()` que será el método encargado de generar las clases Dataset.
 * `*_dataloaders()` que serán los encargados de cargar los datos.
-    * `train_dataloader()` se utilizará exclusivamente para entrenar.
-    * `val_dataloader()` se utilizará para medir la performance al entrenar y chequear en tiempo real si hay overfitting.
-    * `test_dataloader()` se utilizará en data no vista por el modelo. 
-    * `predict_dataloader()` se utilizará para ejecutar un método predict. Sí leíste bien, Pytorch Lightning tuvo la brillante idea de implementar un `.predict()` e incluso un `.fit()`. Sigue leyendo para entender cómo se usa.
+    * `train_dataloader()` que se utilizará exclusivamente para para cargar los datos de entrenamiento.
+    * `val_dataloader()` que se utilizará para medir la performance al entrenar y chequear en tiempo real si hay overfitting.
+    * `test_dataloader()` que se utilizará para medir la performance final del modelo. Estos normalmente son datos no vistos anteriormente por el modelo.
+    * `predict_dataloader()` es opcional y se utilizará para ejecutar un método predict. Sí leíste bien, Pytorch Lightning tuvo la brillante idea de implementar un `.predict()` e incluso un `.fit()`. Sigue leyendo para entender cómo se usa.
 
 {% include alert warning='Todos los nombres de los métodos junto con sus parámetros son estándar y no se pueden cambiar. Ya que de hacerlo Pytorch Lightning arrojará errores como loco. Y no quieres eso.'%}
 
@@ -320,22 +319,24 @@ class MNISTDataModule(pl.LightningDataModule):
     def predict_dataloader(self):
         return torch.utils.data.DataLoader(dataset = self.test, shuffle = False, pin_memory = True, num_workers = 10)
 ```
+{: title="Lightning Data Module"}
+
+
 Por otro lado, el modelo se creará dentro de una clase que heredará del `LightningModule`, y contendrá todo lo relacionado al modelo más su entrenamiento. Los métodos que deben definirse son:
 * El constructor con los parámetros necesarios para la construcción del modelo.
-*  `forward()` que contendrá el proceso en el cómo los datos viajarán a través de la red. Hasta acá es igual a lo que teníamos con Pytorch Nativo, pero acá parte lo nuevo.
+*  `forward()` que contendrá el proceso en el cómo los datos viajarán a través de la red. Hasta acá es igual a lo que teníamos con Pytorch Nativo, ahora parte lo nuevo.
 * `configure_optimizers()` permitirá definir el optimizador a usar.
-* `*_step()` que incluirá todo el proceso de entrenamiento que se utiliza en los loops. El gran detalle acá es que sólo se colocan los pasos esenciales y no es necesario:
+* `*_step()` que incluirá todo el proceso de entrenamiento, validación y/o testeo que se utiliza en los loops. El gran detalle acá es que sólo se colocan los pasos esenciales y no es necesario agregar:
   * Loops para epochs.
   * Loops para dataloaders.
-  * Traspasar los datos a la GPU.
-  * No es necesario cambiar el modo del modelo.
-  * optimizer.zero_grad().
-  * loss.backward.
-  * optimizer.step().
+  * Traspaso de los datos a la GPU.
+  * Modo del modelo.
+  * `optimizer.zero_grad()`.
+  * `loss.backward()`.
+  * `optimizer.step()`.
 
-Además convenientemente tiene un `.log()` que permitirá mostrar en el proceso de entrenamiento la información que se considere pertinente.
-
-Además se puede agregar opcionalmente un `predict_step` que definirá cómo se hace inferencia con el anhelado método `.predict()`.
+Además convenientemente tiene un `.log()` que permitirá mostrar en el proceso de entrenamiento la información que se considere pertinente. Incluso se pueden agregar barras de progreso.
+Finalmente, existe de manera opcional un `predict_step` que definirá cómo se hace inferencia con el anhelado método `.predict()`.
 
 ```python
 def CNN_block(c_in, c_out, k = 3, p = 1, s = 1, pk = 2, ps = 2):
@@ -398,29 +399,33 @@ class CNN(pl.LightningModule):
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
 ```
+{: title="Lightning Module"}
 
-## Model Training 
 
-Ahora para entrenar el modelo no va a ser necesario volver a crear esos training loops gigantes sino que se debe:
+## Entrenamiento del Modelo
+
+Cuando se utiliza Pytorch Lighntning, al entrenar el modelo no tendremos que volver a crear esos training loops gigantes, en cambio debemos:
 
 * Instanciar el Modelo.
 * Instanciar un ModelCheckpoint (esto es opcional, pero de no hacerlo hay un warning bien molesto).
-* un `pl.Trainer` que permitirá definir el número de epochs, el número de gpus a utilizar (dependiendo de la disponibilidad).
+* Instanciar un `pl.Trainer` que permitirá definir el número de epochs, el número de gpus a utilizar (dependiendo de la disponibilidad).
 * La barra de progreso (yei!!)
-* Y el ansiado `.fit` en el cual se deben agregar el modelo (LighningModule) y el DataModule (LightningDataModule).
+* Y el ansiado `.fit` en el cual se deben agregar el modelo (`LighningModule`) y el DataModule (`LightningDataModule`).
 * Y ya, comienza el entrenamiento!!
 
 ```python
 %%time
 from pytorch_lightning.callbacks import ModelCheckpoint
 
-model = CNN()
-dm = MNISTDataModule(transform = transform)
-mc = ModelCheckpoint(monitor="val_loss")
+model = CNN() # Instancia del Modelo
+dm = MNISTDataModule(transform = transform) # Instancia del Data Module
+mc = ModelCheckpoint(monitor="val_loss") # Instancia del Model Checkpoint
+# Instancia del Trainer
 trainer = pl.Trainer(max_epochs = 5, 
                      gpus = 1,
                      callbacks = [mc],
                      progress_bar_refresh_rate=20)
+# Fit del Modelo
 trainer.fit(model, dm)
 ```
 
@@ -489,7 +494,7 @@ results = trainer.predict(model, datamodule = dm)
 
     Predicting: 100%|██████████| 10000/10000 [00:08<00:00, 1133.43it/s]
 
-Debido a que en el predict_dataloader se colocaron los mismos datos de test es que el resultados de las predicciones es de 10000 elementos:
+Debido a que en el `predict_dataloader()` se colocaron los mismos datos de test es que el resultados de las predicciones es de 10000 elementos:
 
 ```python
 len(results)
@@ -497,7 +502,7 @@ len(results)
 
 {% include alert success='Adicionalmente se puede utilizar con un DataLoader definido o como una inferencia normal en Pytorch. Esto entrega más flexibilidd al momento de poner el modelo en Produccion.'%}
 
-## Chequeando los resultados
+## Revisando los resultados
 
 Si queremos mirar los `n` primeros resultados podemos hacer algo así:
 
@@ -526,7 +531,7 @@ results[:20]
     tensor(7, device='cuda:0'),
     tensor(5, device='cuda:0')]
 
-Si nos fijamos, el resultado es una lista con 20 tensores resultantes que viven en la GPU. Por lo tanto, si queremos ver bien la respuesta podemos traerlos a la CPU y verlos de la siguiente forma:
+Si nos fijamos, el resultado es una lista con 20 tensores resultantes que viven en la GPU. Por lo tanto, si queremos ver la respuesta sin esas indicaciones de tensores podemos traerlos a la CPU y verlos de la siguiente forma:
 
 ```python
 [value.cpu().item() for value in results[:n]]
@@ -545,10 +550,6 @@ for value, (elemento, pred) in enumerate(zip(dm.predict_dataloader(), results[:n
     if value == n:
         break
 ```
-
-![picture of me]({{ site.urlimg }}pl/PTL.png)
-
-    
 ![png]({{ site.urlimg }}pl/PL_tutorial/output_23_0.png){: .center}
 ![png]({{ site.urlimg }}pl/PL_tutorial/output_23_1.png){: .center}
 ![png]({{ site.urlimg }}pl/PL_tutorial/output_23_2.png){: .center}
@@ -570,13 +571,9 @@ for value, (elemento, pred) in enumerate(zip(dm.predict_dataloader(), results[:n
 ![png]({{ site.urlimg }}pl/PL_tutorial/output_23_18.png){: .center}
 ![png]({{ site.urlimg }}pl/PL_tutorial/output_23_19.png){: .center}
 
-
-
-
 Eso fue este pequeño tutorial explicando la organización básica en `Pytorch-Lightning`. Obviamente, esto es sólo el principio, y Lightning ofrece varias funcionalidades extras como por ejemplo el almacenamiento de Hiperparámetros, integración con Loggers como Weights & Biases o Tensorboard, Early Stopping, LR Scheduler, batch size finder, integración con Hydra además de herramientas para correr de manera muy sencilla en multiples GPUs o incluso TPUs.
 
 Espero les haya gustado, nos vemos a la próxima.
-
 
 [**Alfonso**]({{ site.baseurl }}/contact/)
 
