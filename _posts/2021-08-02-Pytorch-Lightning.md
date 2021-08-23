@@ -1,4 +1,5 @@
 ---
+permalink: /lightning/
 title: "Pytorch Lightning"
 subheadline: "Eliminando el Boiler Plate Code"
 teaser: "Otra librería espectacular de Deep Learning"
