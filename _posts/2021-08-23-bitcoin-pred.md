@@ -1,5 +1,5 @@
 ---
-title: "Time Series Regression"
+title: "Bitcoin Price Prediction"
 subheadline: "Predecir el comportamiento del BitCoin"
 teaser: "Creando LSTM en Pytorch Lightning"
 # layout: page-fullwidth
