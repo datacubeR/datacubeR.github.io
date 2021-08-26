@@ -1477,6 +1477,53 @@ No soy experto en temas de Finanzas ni Criptomonedas por lo que si se quiere apl
 
 Espero que este tutorial haya sido de ayuda y se pueda entender el gran potencial que se tiene al utilizar redes neuronales.
 
+## UPDATE TL;DR
+
+Luego de subir este post recibí algunos comentarios acerca de la metodología utilizada. Quiero agradecer particularmente a [Mario Leni](https://www.linkedin.com/in/mario-jos%C3%A9-leni-rodr%C3%ADguez-baa616150/), quien me compartió el siguiente video en el cual se critican algunas de las prácticas utilizadas para la predicción de Stocks y me gustaría hacer algunos comentarios al respecto:
+
+<div class='embed-youtube'>
+{% include youtubePlayer.html id="Vfx1L2jh2Ng" %}
+</div>
+
+<br>
+
+* Primero, el video está subido por un tipo que se denomina LazyProgrammer. He tenido la oportunidad algunos cursos de él en Udemy y la verdad es que explica super bien. En su sitio web menciona que tiene 2 Masters:
+  * Uno en Computer engineering con Especialización en Machine Learning y Reconocimiento de Patrones (largo el nombre)
+  * Y uno en estadísticas.
+Que el tipo tiene credenciales tiene...
+
+Ahora, es muy extraño como parte su video porque no me gusta mucho su tono. Tiene un tono agradable de voz pero igual usa palabras que encuentro pesadas. Es raro porque siento que su video es medio *pataleta* (como un berrinche) porque la gente está equivocada y reclama varias cosas sin una estructura lógica (pero igual hace propaganda a sus cursos):
+  * Que nadie escribe su código.
+  * Que uno copia y pega arrastrando errores.
+  * Que está mal utilizar el `MinMaxScaler` (algo que yo hice en mi implementación y se supone es su reclamo principal).
+  * Que no se debe usar el precio, sino que los returns.
+
+### Que nadie escribe su código
+
+Eso es cierto, una de las ventajas del código es poder reutilizarlo, y poder reproducir algo que alguien más hizo sin que tenga que demostrar cómo lo hizo. En mi caso yo sí tomé el código de varios otros posteos, pero no estaba en Pytorch Lightning. De hecho, yo lo adapté y sufrí harto para hacerlo funcionar, y entrenar el modelo costó, por eso la diferencia entre la data que saqué hasta que lo publiqué.
+
+### Que uno copia y pega arrastrando errores
+
+Es posible, en mi caso, siempre me cuestiono lo que hago con mi código para entenderlo. No suelo comprar lo que todos dicen. De hecho, especialmente en el mundo Pytorch hay mucho código boilerplate que uno solamente copia y pega sin saber para qué sirve. Yo no puedo con eso, me quita el sueño colocar código que no entiendo y siempre trato de estar super conciente de por qué se aplica cada parte. Una crítica que él reclamaba en particular es el hecho de usar secuencia de largo 1. Es muy probable que sea un error, y que mucha gente no se lo cuestione (básicamente no es una secuencia). En mi caso usé secuencias de 120. 
+
+Es interesante que en un punto dice que no se puede predecir stocks como secuencias, porque son aleatorios (~2:40). Creo que esa es precisamente la idea de las redes recurrentes: ver si es que hay algún patrón difícil de encontrar al ojo humano y aprender de él. Pero aprender no significa repetir, el punto que él menciona me da la impresión que se refiere a redes que hacen overfitting, toman el patrón y lo repiten por que no saben generalizar. Si fuera porque nada realmente es una secuencia porque es aleatorio, no podríamos predecir nada.
+
+### Que está mal utilizar el `MinMaxScaler`
+
+Es raro, reclama todo el rato que está mal hacerlo pero al final dice que no está *tan* mal (~10:00). Su punto es que a diferencia de las ondas, el stock price no está acotado por lo tanto no puedo asumir el máximo como 1 y el mínimo como -1. Yo personalmente creo que esto está mal. El `MinMaxScaler` sólo mueve la escala, en ningún momento obliga a la red neuronal a predecir en el rango -1 a 1. De hecho, la implementación tiene como capa de salida una red densamente conectada sin función de activación (esto por ser un problema de regresión). Por lo tanto, al no tener una función sigmoide no está forzada a predecir en este rango. 
+
+Entiendo que las redes neuronales no se caractarizan por su capacidad de extrapolar, y aquí puede ser que implícitamente estamos colocando un techo a la red. Pero de nuevo el objetivo de este tipo de post es mostrar cómo se entrena un modelo de serie de tiempos, no volverse rico invirtiendo en BitCoin.
+
+### Que no se debe usar el precio, sino que los returns
+
+Este punto no lo entiendo. Si me interesa investigar el precio, tratar de entender hasta cuanto va a llegar el precio, ¿por qué debería usar el return? Su razón es que no tiene tendencia. Bueno si la tendencia es el problema de la serie de tiempo de Precios, se puede quitar la tendencia aplicando diferenciación. Es muy sencillo de aplicar y me permite no tener que cambiar la variable que quiero monitorear. Probablemente si quiero ganar plata el return es una mejor opción, pero aún así no me calza la crítica.
+
+Yo creo que está bien criticar cuando uno ve un proceso incorrecto. Pero en particular en el uso de redes neuronales, donde ni los Kaggle GrandMasters están 100% seguros de lo que hacen, no me parece la manera. El inglés no es mi idioma nativo, pero estoy casi seguro que <q>idiotic</q> (~3:00) no es una palabra buena onda. Y la conclusión que saco es que hace una crítica sólo para vender sus cursos.
+
+Creo que una de las características que tienen que primar en este campo es la humildad. He visto código horriblemente malo de Phds, Kaggle Grandmasters, incluso he visto errores de concepto por parte de LazyProgrammer (tomé uno de sus cursos y aplicaba un Softmax a la salida de un problema multiclase utilizando como Loss Function CrossEntropy Loss, un concepto incorrecto y que se desaconseja/desaprueba en los foros de Pytorch), pero este es un campo en desarrollo, nadie sabe realmente cómo funcionan las Redes Neuronales. Y usando su mismo argumento, si él sí sabe como hacer Stock Prediction, por qué no es millonario invirtiendo en BitCoin (o quizás ya lo es 🤔).
+
+Sorry por lo latero, 
+
 Nos vemos la próxima,
 
 [**Alfonso**]({{ site.baseurl }}/contact/)
