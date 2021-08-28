@@ -10,7 +10,6 @@ header: no
 image:
     thumb: dogs_cats/dog-cat.jpg
 tags:
-- python
 - dl
 - tutorial
 - pytorch

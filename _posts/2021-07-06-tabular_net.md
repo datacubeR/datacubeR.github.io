@@ -9,9 +9,9 @@ header: no
 image:
     thumb: taxi/taxi.jpg
 tags:
-- python
 - pytorch
 - dl
+- ML
 - tutorial
 ---
 

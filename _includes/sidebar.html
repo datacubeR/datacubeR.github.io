@@ -31,8 +31,9 @@
 			{% for post in site.posts reversed %}
 				{% assign currentdate = post.date | date: '%Y-%m' %}
 				{% if currentdate != date %}
-					{% assign count = 1 %}
-					{% unless forloop.first %}({{ count }})</li>{% endunless %}
+					<!-- {% assign count = 1 %} -->
+                    {% assign count = count | plus: 1 %}
+					{% unless forloop.first %}<!--({{ count }})--></li>{% endunless %}
 					{% assign currentyear = post.date | date: '%Y' %}
 					{% if currentyear != year %}
 						{% unless forloop.first %}</ul></li>{% endunless %}
@@ -60,7 +61,7 @@
 				{% else %}
 					{% assign count = count | plus: 1 %}
 				{% endif %}
-				{% if forloop.last %}({{ count }})</li></ul></li>{% endif %}
+				{% if forloop.last %}<!--({{ count }})--></li></ul></li>{% endif %}
 			{% endfor %}
 		</ul>
 	</div>

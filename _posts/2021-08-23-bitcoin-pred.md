@@ -1,4 +1,5 @@
 ---
+permalink: /bitcoin/
 title: "Bitcoin Price Prediction"
 subheadline: "Predecir el comportamiento del BitCoin"
 teaser: "Creando LSTM en Pytorch Lightning"
@@ -9,7 +10,8 @@ header: no
 image:
     thumb: bitcoin/bitcoin.jpg
 tags:
-- python
+- pytorch
+- dl
 - tutorial
 published: true
 ---

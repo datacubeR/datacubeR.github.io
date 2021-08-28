@@ -10,8 +10,7 @@ header: no
 image:
     thumb: pl/PTL.png
 tags:
-- python
-- ML
+- pytorch
 - dl
 - tutorial
 published: true
@@ -401,6 +400,9 @@ class CNN(pl.LightningModule):
         return torch.optim.Adam(self.parameters(), lr=1e-3)
 ```
 {: title="Lightning Module"}
+
+### UPDATE
+{% include alert warning='En la versión 1.4.2 de Pytorch Lightning en el predict_step se debe colocar `dataloader_idx=None`. De no hacerlo, se da un error bien críptico, que dice que falta el parámetro (lo cual es raro, porque está). Me pueden dar las gracias después 😁🤟'%}
 
 
 ## Entrenamiento del Modelo

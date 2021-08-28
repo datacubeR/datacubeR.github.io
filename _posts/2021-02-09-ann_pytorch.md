@@ -9,7 +9,6 @@ header: no
 image:
     thumb: ann_pytorch/img.png
 tags:
-- python
 - pytorch
 - dl
 - tutorial
