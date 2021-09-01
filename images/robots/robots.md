@@ -1,7 +1,7 @@
 ```python
 import pandas as pd
 import numpy as np
-from tqdm.notebook import tqdm
+from tqdm.auto import tqdm
 
 import torch
 import torch.autograd as autograd
@@ -27,14 +27,26 @@ from torchmetrics.functional import accuracy
 from sklearn.metrics import classification_report, confusion_matrix
 
 pl.__version__
+
 ```
 
 
 
 
-    '1.4.2'
+    '1.3.8'
 
 
+
+
+```python
+#%matplotlib inline
+#%config InlineBackend.figure_format = 'retina'
+#sns.set(style = 'whitegrid', palette = 'muted', font_scale = 1.2)
+#HAPPY_COLORS_PALETTE = ['#01BEFE', '#FFDD00','#FF7D00','#FF006D','#ADFF02','#8F00FF']
+#sns.set_palette(sns.color_palette(HAPPY_COLORS_PALETTE))
+#rcParams['figure.figsize'] = 6,4
+
+```
 
 
 ```python
@@ -53,9 +65,10 @@ pl.seed_everything(42)
 
 
 ```python
-X_train = pd.read_csv('career-con-2019/career-con-2019/X_train.csv')
-y_train = pd.read_csv('career-con-2019/career-con-2019/y_train.csv')
+X_train = pd.read_csv('career-con-2019/X_train.csv')
+y_train = pd.read_csv('career-con-2019/y_train.csv')
 X_train.head()
+# TODO: READ DESCRIPTIONS OF THE DATA IN KAGGLE...
 ```
 
 
@@ -249,7 +262,68 @@ y_train.head()
 
 
 
-# Preprocessing
+
+```python
+def plot_ts(idx):
+    return X_train.query(f'series_id == {idx}').iloc[:,3:].plot(figsize = (20,10), title = y_train.iloc[idx]['surface']);
+```
+
+
+```python
+plot_ts(0);
+```
+
+
+    
+![png](output_6_0.png)
+    
+
+
+
+```python
+plot_ts(1);
+```
+
+
+    
+![png](output_7_0.png)
+    
+
+
+
+```python
+plot_ts(4);
+```
+
+
+    
+![png](output_8_0.png)
+    
+
+
+
+```python
+plot_ts(6);
+```
+
+
+    
+![png](output_9_0.png)
+    
+
+
+
+```python
+plot_ts(8);
+```
+
+
+    
+![png](output_10_0.png)
+    
+
+
+## Preprocessing
 
 
 ```python
@@ -356,6 +430,231 @@ y_train.head()
 
 
 ```python
+X_train
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>row_id</th>
+      <th>series_id</th>
+      <th>measurement_number</th>
+      <th>orientation_X</th>
+      <th>orientation_Y</th>
+      <th>orientation_Z</th>
+      <th>orientation_W</th>
+      <th>angular_velocity_X</th>
+      <th>angular_velocity_Y</th>
+      <th>angular_velocity_Z</th>
+      <th>linear_acceleration_X</th>
+      <th>linear_acceleration_Y</th>
+      <th>linear_acceleration_Z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0_0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-0.75853</td>
+      <td>-0.63435</td>
+      <td>-0.104880</td>
+      <td>-0.105970</td>
+      <td>0.107650</td>
+      <td>0.017561</td>
+      <td>0.000767</td>
+      <td>-0.74857</td>
+      <td>2.1030</td>
+      <td>-9.7532</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0_1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>-0.75853</td>
+      <td>-0.63434</td>
+      <td>-0.104900</td>
+      <td>-0.106000</td>
+      <td>0.067851</td>
+      <td>0.029939</td>
+      <td>0.003386</td>
+      <td>0.33995</td>
+      <td>1.5064</td>
+      <td>-9.4128</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0_2</td>
+      <td>0</td>
+      <td>2</td>
+      <td>-0.75853</td>
+      <td>-0.63435</td>
+      <td>-0.104920</td>
+      <td>-0.105970</td>
+      <td>0.007275</td>
+      <td>0.028934</td>
+      <td>-0.005978</td>
+      <td>-0.26429</td>
+      <td>1.5922</td>
+      <td>-8.7267</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0_3</td>
+      <td>0</td>
+      <td>3</td>
+      <td>-0.75852</td>
+      <td>-0.63436</td>
+      <td>-0.104950</td>
+      <td>-0.105970</td>
+      <td>-0.013053</td>
+      <td>0.019448</td>
+      <td>-0.008974</td>
+      <td>0.42684</td>
+      <td>1.0993</td>
+      <td>-10.0960</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0_4</td>
+      <td>0</td>
+      <td>4</td>
+      <td>-0.75852</td>
+      <td>-0.63435</td>
+      <td>-0.104950</td>
+      <td>-0.105960</td>
+      <td>0.005135</td>
+      <td>0.007652</td>
+      <td>0.005245</td>
+      <td>-0.50969</td>
+      <td>1.4689</td>
+      <td>-10.4410</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>487675</th>
+      <td>3809_123</td>
+      <td>3809</td>
+      <td>123</td>
+      <td>0.62871</td>
+      <td>-0.76878</td>
+      <td>-0.084391</td>
+      <td>0.081093</td>
+      <td>0.003167</td>
+      <td>0.093760</td>
+      <td>-0.142740</td>
+      <td>3.27180</td>
+      <td>2.0115</td>
+      <td>-9.0063</td>
+    </tr>
+    <tr>
+      <th>487676</th>
+      <td>3809_124</td>
+      <td>3809</td>
+      <td>124</td>
+      <td>0.62884</td>
+      <td>-0.76868</td>
+      <td>-0.084365</td>
+      <td>0.081099</td>
+      <td>0.014994</td>
+      <td>0.032637</td>
+      <td>-0.132380</td>
+      <td>4.42750</td>
+      <td>3.0696</td>
+      <td>-8.1257</td>
+    </tr>
+    <tr>
+      <th>487677</th>
+      <td>3809_125</td>
+      <td>3809</td>
+      <td>125</td>
+      <td>0.62891</td>
+      <td>-0.76861</td>
+      <td>-0.084345</td>
+      <td>0.081178</td>
+      <td>-0.031184</td>
+      <td>-0.003961</td>
+      <td>-0.138940</td>
+      <td>2.70480</td>
+      <td>4.2622</td>
+      <td>-8.1443</td>
+    </tr>
+    <tr>
+      <th>487678</th>
+      <td>3809_126</td>
+      <td>3809</td>
+      <td>126</td>
+      <td>0.62903</td>
+      <td>-0.76850</td>
+      <td>-0.084414</td>
+      <td>0.081231</td>
+      <td>-0.069153</td>
+      <td>0.013229</td>
+      <td>-0.130210</td>
+      <td>2.54100</td>
+      <td>4.7130</td>
+      <td>-9.4435</td>
+    </tr>
+    <tr>
+      <th>487679</th>
+      <td>3809_127</td>
+      <td>3809</td>
+      <td>127</td>
+      <td>0.62915</td>
+      <td>-0.76839</td>
+      <td>-0.084441</td>
+      <td>0.081284</td>
+      <td>-0.042769</td>
+      <td>0.034049</td>
+      <td>-0.125800</td>
+      <td>0.82391</td>
+      <td>4.2751</td>
+      <td>-10.4980</td>
+    </tr>
+  </tbody>
+</table>
+<p>487680 rows × 13 columns</p>
+</div>
+
+
+
+
+```python
 FEATURE_COLUMNS = X_train.columns.tolist()[3:]
 FEATURE_COLUMNS
 ```
@@ -378,16 +677,24 @@ FEATURE_COLUMNS
 
 
 ```python
+(X_train.series_id.value_counts() == 128).sum() == len(y_train) # all the sequences have a label
+```
+
+
+
+
+    True
+
+
+
+
+```python
 sequences = []
-for series_id, group in tqdm(X_train.groupby('series_id')):
+for series_id, group in X_train.groupby('series_id'):
     sequence_features = group[FEATURE_COLUMNS]
     label = y_train.query(f'series_id == {series_id}').iloc[0].label
     sequences.append((sequence_features, label))
 ```
-
-
-      0%|          | 0/3810 [00:00<?, ?it/s]
-
 
 
 ```python
@@ -432,7 +739,6 @@ class SurfaceDataModule(pl.LightningDataModule):
     def setup(self, stage = None):
         self.train_dataset = SurfaceDataset(self.train_sequences)
         self.test_dataset = SurfaceDataset(self.test_sequences)
-        
     def train_dataloader(self):
         return DataLoader(
             self.train_dataset, 
@@ -447,13 +753,22 @@ class SurfaceDataModule(pl.LightningDataModule):
             pin_memory = True, 
             num_workers = cpu_count(), 
             shuffle = False)
-    def predict_dataloader(self):
+    def test_dataloader(self):
         return DataLoader(
             self.test_dataset, 
-            batch_size = 1, 
+            batch_size = self.batch_size, 
             pin_memory = True, 
             num_workers = cpu_count(), 
             shuffle = False)
+```
+
+
+```python
+N_EPOCHS = 250
+BATCH_SIZE = 64
+
+data_module = SurfaceDataModule(train_sequences, test_sequences, BATCH_SIZE)
+data_module.setup()
 ```
 
 # Model
@@ -514,24 +829,29 @@ class SurfacePredictor(pl.LightningModule):
         self.log('val_accuracy', step_accuracy, prog_bar = True, logger = False)
         return {'loss': loss, 'accuracy': step_accuracy}
     
-    def predict_step(self, batch, batch_idx, dataloader_idx=None): # dataloader_idx: not needed
+    def test_step(self, batch, batch_idx):
         sequences = batch['sequence']
         labels = batch['label']
         loss, outputs = self(sequences, labels)
         predictions = torch.argmax(outputs, dim = 1)
-        return labels, predictions
+        step_accuracy = accuracy(predictions, labels)
+        self.log('test_loss', loss, prog_bar = True, logger = True)
+        self.log('test_accuracy', step_accuracy, prog_bar = True, logger = False)
+        return {'loss': loss, 'accuracy': step_accuracy}
     
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr = 0.0001)
+    
+    
 ```
 
 
 ```python
-N_EPOCHS = 250
-BATCH_SIZE = 64
-
-data_module = SurfaceDataModule(train_sequences, test_sequences, BATCH_SIZE)
 model = SurfacePredictor(n_features=len(FEATURE_COLUMNS), n_classes = len(label_encoder.classes_))
+```
+
+
+```python
 checkpoint_callback = ModelCheckpoint(
     dirpath = 'checkpoints',
     filename = 'best-checkpoint',
@@ -549,11 +869,10 @@ trainer = pl.Trainer(callbacks = [checkpoint_callback],
                     fast_dev_run=False)
 ```
 
-    /home/alfonso/miniconda3/envs/kaggle/lib/python3.7/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:446: UserWarning: Checkpoint directory checkpoints exists and is not empty.
+    /home/alfonso/miniconda3/envs/dl/lib/python3.7/site-packages/pytorch_lightning/callbacks/model_checkpoint.py:360: UserWarning: Checkpoint directory checkpoints exists and is not empty.
       rank_zero_warn(f"Checkpoint directory {dirpath} exists and is not empty.")
     GPU available: True, used: True
     TPU available: False, using: 0 TPU cores
-    IPU available: False, using: 0 IPUs
 
 
 
@@ -572,70 +891,73 @@ trained_model = SurfacePredictor.load_from_checkpoint(
 
 
 ```python
-trained_model.freeze()
-trained_model
+test_dataset = SurfaceDataset(test_sequences)
+
+predictions = []
+labels = []
+
+for item in tqdm(test_dataset):
+    sequence = item['sequence']
+    label = item['label']
+    
+    _, output = trained_model(sequence.unsqueeze(dim = 0))
+    prediction = torch.argmax(output, dim = 1)
+    predictions.append(prediction.item())
+    labels.append(label.item())
 ```
 
-
-
-
-    SurfacePredictor(
-      (model): SequenceModel(
-        (lstm): LSTM(10, 256, num_layers=3, batch_first=True, dropout=0.75)
-        (classifier): Linear(in_features=256, out_features=9, bias=True)
-      )
-      (criterion): CrossEntropyLoss()
-    )
-
+    100%|██████████| 762/762 [00:20<00:00, 37.79it/s]
 
 
 
 ```python
-data_module.setup()
-preds = trainer.predict(model = trained_model, datamodule = data_module)
+print(
+    classification_report(labels, predictions, target_names = label_encoder.classes_, digits = 4)
+)
 ```
 
-    LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
-
-
-
-    Predicting: 0it [00:00, ?it/s]
+                            precision    recall  f1-score   support
+    
+                    carpet     0.7568    0.5957    0.6667        47
+                  concrete     0.7845    0.8256    0.8045       172
+             fine_concrete     0.6935    0.6615    0.6772        65
+                hard_tiles     0.8000    0.8000    0.8000         5
+    hard_tiles_large_space     0.8793    0.8095    0.8430        63
+                  soft_pvc     0.8511    0.8511    0.8511       141
+                soft_tiles     0.9167    0.8730    0.8943        63
+                     tiled     0.7640    0.7640    0.7640        89
+                      wood     0.6899    0.7607    0.7236       117
+    
+                  accuracy                         0.7874       762
+                 macro avg     0.7929    0.7712    0.7805       762
+              weighted avg     0.7893    0.7874    0.7872       762
+    
 
 
 
 ```python
-trainer.validate(model = trained_model)
+print(
+    classification_report(labels, predictions, target_names = label_encoder.classes_, digits = 4)
+)
 ```
 
-    /home/alfonso/miniconda3/envs/kaggle/lib/python3.7/site-packages/pytorch_lightning/core/datamodule.py:424: LightningDeprecationWarning: DataModule.prepare_data has already been called, so it will not be called again. In v1.6 this behavior will change to always call DataModule.prepare_data.
-      f"DataModule.{name} has already been called, so it will not be called again. "
-    /home/alfonso/miniconda3/envs/kaggle/lib/python3.7/site-packages/pytorch_lightning/core/datamodule.py:424: LightningDeprecationWarning: DataModule.setup has already been called, so it will not be called again. In v1.6 this behavior will change to always call DataModule.setup.
-      f"DataModule.{name} has already been called, so it will not be called again. "
-    LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
+                            precision    recall  f1-score   support
+    
+                    carpet     0.7561    0.6596    0.7045        47
+                  concrete     0.7766    0.8488    0.8111       172
+             fine_concrete     0.7931    0.7077    0.7480        65
+                hard_tiles     0.8000    0.8000    0.8000         5
+    hard_tiles_large_space     0.9444    0.8095    0.8718        63
+                  soft_pvc     0.8671    0.8794    0.8732       141
+                soft_tiles     0.8730    0.8730    0.8730        63
+                     tiled     0.8333    0.7303    0.7784        89
+                      wood     0.7273    0.8205    0.7711       117
+    
+                  accuracy                         0.8110       762
+                 macro avg     0.8190    0.7921    0.8035       762
+              weighted avg     0.8145    0.8110    0.8107       762
+    
 
-
-
-    Validating: 0it [00:00, ?it/s]
-
-
-    --------------------------------------------------------------------------------
-    DATALOADER:0 VALIDATE RESULTS
-    {'val_accuracy': 0.8123359680175781, 'val_loss': 0.5650554299354553}
-    --------------------------------------------------------------------------------
-
-
-
-
-
-    [{'val_loss': 0.5650554299354553, 'val_accuracy': 0.8123359680175781}]
-
-
-
-
-```python
-labels = torch.tensor(preds)[:,0].numpy()
-predictions = torch.tensor(preds)[:,1].numpy()
-```
 
 
 ```python
@@ -643,11 +965,30 @@ from scikitplot.metrics import plot_confusion_matrix
 ax = plot_confusion_matrix(labels, predictions, figsize = (10,8))
 ax.set_xticklabels(label_encoder.classes_, rotation = 90, fontsize = 10)
 ax.set_yticklabels(label_encoder.classes_, fontsize = 10);
+#plt.xticklabels();
 ```
 
 
     
-![png](output_24_0.png)
+![png](output_34_0.png)
+    
+
+
+
+```python
+value = 10
+arr = test_dataset[value]['sequence'].numpy()
+plt.figure(figsize = (20,10))
+for idx, cl in enumerate(FEATURE_COLUMNS):#range(arr.shape[1]):
+    plt.plot(arr[:,idx], label = cl)
+    plt.legend();
+    
+
+```
+
+
+    
+![png](output_35_0.png)
     
 
 

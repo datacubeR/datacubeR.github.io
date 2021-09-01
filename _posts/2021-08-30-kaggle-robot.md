@@ -1,7 +1,7 @@
 ---
-title: "Floor Detection usando Redes Neuronales."
+title: "Reconociendo el Piso usando Redes Neuronales."
 subheadline: "Clasificación de Series de Tiempo en Kaggle."
-teaser: "Detectar el tipo de Piso mediante sensores con Pytorch Lightning."
+teaser: "Detectar el tipo de piso mediante data de sensores con Pytorch Lightning."
 # layout: page-fullwidth
 usemathjax: true
 category: dl
@@ -12,7 +12,7 @@ tags:
 - dl
 - pytorch
 - tutorial
-published: false
+published: true
 ---
 
 
@@ -269,6 +269,75 @@ Es importante destacar que el `series_id` identifica desde dónde hasta donde es
 </div>
 
 
+## Explorando
+
+Para poder entender de mejor manera en qué consiste el problema diseñé esta simple función que va a graficar una serie. Toma como único argumento el índice `idx` y crea un gráfico. Cada uno de los gráficos corresponde en este caso a un tipo distinto de suelo. Como van a ver a continuación algunos generan variaciones más estables, mayor amplitud, más frecuencia, etc. La idea es que la red neuronal pueda entender reconocer el tipo de <q>vibraciones</q>, <q>mediciones</q>, <q>sensaciones</q> captadas por los sensores y pueda dirimir qué tipo de suelo es:
+
+```python
+def plot_ts(idx):
+    return (X_train.query(f'series_id == {idx}').iloc[:,3:]
+            .plot(figsize = (20,10), title = y_train.iloc[idx]['surface']));
+```
+
+
+```python
+plot_ts(0);
+```
+{: title="Ejemplo de Fine Concrete"}
+
+
+    
+![png]({{ site.urlimg }}robots/output_6_0.png)
+    
+
+
+
+```python
+plot_ts(1);
+```
+{: title="Ejemplo de Concrete"}
+
+
+    
+![png]({{ site.urlimg }}robots/output_7_0.png)
+    
+
+
+
+```python
+plot_ts(4);
+```
+{: title="Ejemplo de Soft Tiles"}
+
+
+    
+![png]({{ site.urlimg }}robots/output_8_0.png)
+    
+
+
+
+```python
+plot_ts(6);
+```
+{: title="Ejemplo de Soft PVC"}
+
+
+    
+![png]({{ site.urlimg }}robots/output_9_0.png)
+    
+
+
+
+```python
+plot_ts(8);
+```
+{: title="Ejemplo de Hard Tiles Large Space"}
+
+
+    
+![png]({{ site.urlimg }}robots/output_10_0.png)
+
+Como se puede apreciar algunos tipos de suelos similares tienen comportamientos similares, lo que es la complejidad asociada al modelo en cuestión.
 
 # Preprocesamiento
 
@@ -417,7 +486,7 @@ class SurfaceDataset(Dataset):
         )
 ```
 
-{% include alert tip='En este caso el Pytorch Dataset tomará cada secuencia y la transforma en tensor. Si es que no quieren pasar malos ratos con errores crípticos asegúrense de transformar las secuencias en float32. Por alguna razón las LSTM sólo pueden trabajar con este tipo de datos (aunque creo que pueden trabajar con mixed precision en GPU) en las secuencias. Para el caso de la etiqueta utilizaremos directamente valores enteros (Long en Pytorch).'%}
+{% include alert tip='En este caso el Pytorch `Dataset` tomará cada secuencia y la transformará en tensor. Si es que no quieren pasar malos ratos con errores crípticos asegúrense de transformar las secuencias en float32. Por alguna razón las LSTM sólo pueden trabajar con este tipo de datos (aunque creo que pueden trabajar con mixed precision en GPU) en las secuencias. Para el caso de la etiqueta utilizaremos directamente valores enteros (Long en Pytorch).'%}
 
 
 ```python
@@ -454,7 +523,7 @@ class SurfaceDataModule(pl.LightningDataModule):
             num_workers = cpu_count(), 
             shuffle = False)
 ```
-En el caso del Lightning `DataModule` crearemos las secuencias y los dataloaders con configuración estándar (pin_memory y todos los núcleos, shuffle sólo en train). El único detalle importante es que para el `predict_dataloader` utilizo un batch_size de 1, esto para poder manipular los resultados y evaluar el modelo de manera más sencilla. 
+En el caso del `Lightning DataModule` crearemos las secuencias y los dataloaders con configuración estándar (`pin_memory` y todos los núcleos, `shuffle` sólo en train). El único detalle importante es que para el `predict_dataloader` utilizo un `batch_size` de 1, esto para poder manipular los resultados y evaluar el modelo de manera más sencilla. 
 
 > Spoiler Alert: Evaluaremos el comportamiento utilizando una matriz de confusión. Y para verla más bonita, es mejor hacerlo con Numpy arrays que son tensores.
 
@@ -462,7 +531,7 @@ En el caso del Lightning `DataModule` crearemos las secuencias y los dataloaders
 
 Para resolver este problema utilizaremos un stack de 3 capas de LSTM, las cuales contendrán 256 neuronas en las capas ocultas y están regularizadas con un dropout del 75% (es alto, pero anda bien).
 
-Tomaremos el último `hidden state`, es decir, la salida de la última capa de LSTMs y la conectaremos a una capa Fully Conected la que finalmente nos dara
+Tomaremos el último `hidden state`, es decir, la salida de la última capa de LSTMs y la conectaremos a una capa Fully Conected la que finalmente nos dara la clase predicha.
 
 ```python
 class SequenceModel(nn.Module):
@@ -484,12 +553,12 @@ class SequenceModel(nn.Module):
         return self.classifier(out)
 ```
 
-Finalmente generamos el Lightning Module con el proceso de entrenamiento.
-* Usamos CrossEntropyLoss como Loss Function.
+Finalmente generamos el `Lightning Module` con el proceso de entrenamiento.
+* Usamos `CrossEntropyLoss` como Loss Function.
 * Además en el forward aplicamos un truquillo para devolver tanto el loss como el output del batch. Esto sirve para evitar un loop adicional para extraer esta info.
 * Dado que se trata de un problema multiclase, la predicción final se obtiene con un argmax a la última capa de la Capa Fully Connected.
 
-{% include alert info='Para quienes vienen de Tensorflow puede que les extrañé que no estamos utilizando una función Softmax como activación de la capa de salida. Los que han estudiado en profundidad más las redes neuronales en problemas multiclase sabrán que la Softmax sufre de un problema de Overflow. Por lo tanto, en Pytorch para evitar ese tipo de inconvenientes la SoftMax está incluida al interior de la CrossEntropyLoss, por lo tanto no es necesaria aplicarla. Ahora la Función Softmax tiene como único propósito normalizar el output de cada neurona de salida en el intervalo 0 a 1. Por lo que si se aplica un argmax a la salida se obtendrá el mismo resultado aplicando o no esta función de activación.'  %}
+{% include alert info='Para quienes vienen de Tensorflow puede que les extrañé que no estamos utilizando una función Softmax como activación de la capa de salida. Los que han estudiado en más profundidad las redes neuronales en problemas multiclase, sabrán que la Softmax sufre de un problema de Overflow. Por lo tanto, en Pytorch para evitar ese tipo de inconvenientes la SoftMax está incluida al interior de la CrossEntropyLoss, por lo tanto no es necesaria aplicarla. Ahora la Función Softmax tiene como único propósito normalizar el output de cada neurona de salida en el intervalo 0 a 1. Por lo que si se aplica un argmax a la salida se obtendrá el mismo resultado aplicando o no esta función de activación.'  %}
 
 
 ```python
@@ -536,12 +605,12 @@ class SurfacePredictor(pl.LightningModule):
     def configure_optimizers(self):
         return torch.optim.Adam(self.parameters(), lr = 0.0001)
 ```
-{% include alert alert='Acá tengo un detalle que destacar. Y es que en la versión actual de Pytorch Lightning que es la `1.4.2` hubo un cambio en el `predict_step` y es que ahora se debe colocar `dataloader_idx = None`. Este cambió fue muy under, de hecho para el problema de Bitcoin se me olvidó agregar el parámetro `dataloader_idx` por lo cual no me arrojó ningún error. Y si bien parece ser que es un parámetro sin uso definido, la documentación recomendaba agregarlo así. Probablemente haré un update en el post de Pytorch Lightning.' %}
+{% include alert alert='Acá tengo un detalle que destacar. Y es que en la versión actual de Pytorch Lightning que es la `1.4.2` hubo un cambio en el `predict_step` y es que ahora se debe colocar `dataloader_idx = None`. Este cambió fue muy under. De hecho, para el problema de Bitcoin se me olvidó agregar el parámetro `dataloader_idx` por lo cual no me arrojó ningún error. Y si bien parece ser que es un parámetro sin uso definido, la documentación recomienda agregarlo así. Probablemente haré un update en el post de Pytorch Lightning.' %}
 
 
 ## Entrenamiento
 
-Para entrenar esta red neuronal se decidió utilizar un batch_size de 64 durante 250 Epochs. Intenté entrenar esto en mi Laptop a modo de prueba y fue eterno. Así que nuevamente utilicé [JARVIS]({{ site.baseurl }}/jarvis) el cual se demoró la módica suma de 11 minutos en entrenar en GPU.
+Para entrenar esta red neuronal se decidió utilizar un `batch_size` de 64 durante 250 Epochs. Intenté entrenar esto en mi Laptop a modo de prueba y fue eterno. Así que nuevamente utilicé [JARVIS]({{ site.baseurl }}/jarvis) el cual se demoró la módica suma de 11 minutos en entrenar en GPU.
 
 Adicionalmente utilizaremos un model Checkpoint para ir guardando los pesos en las epochs con el mejor `val_loss` (el mínimo).
 ```python
@@ -578,7 +647,7 @@ trainer.fit(model, data_module)
 ```
 ## Evaluación del Modelo
 
-Asumiendo que el modelo se ha entrenado y que se debe cargar en una instancia distinta a la de entrenamiento es que se puede utilizar `load_from_checkpoint` para rescatar el mejor Checkpoint (como en los juegos).
+Asumiendo que el modelo se ha entrenado y que se está cargando en un kernel limpio, distinto al de entrenamiento, es que se puede utilizar `load_from_checkpoint` para rescatar el mejor Checkpoint (como en los juegos).
 
 ```python
 trained_model = SurfacePredictor.load_from_checkpoint(
@@ -587,7 +656,7 @@ trained_model = SurfacePredictor.load_from_checkpoint(
     n_classes = len(label_encoder.classes_)
 )
 ```
-Además, todavía no estoy seguro de por qué aplicar el freeze. Se supone que esto se aplica para impedir que hayan cambios en los pesos del modelo por la acumulación de gradientes, pero sigo buscando una buena explicación al respecto.
+Además, todavía no estoy 100% seguro de por qué aplicar el freeze. Se supone que esto se aplica para impedir que hayan cambios en los pesos del modelo por la acumulación de gradientes, pero sigo buscando una buena explicación al respecto.
 
 ```python
 trained_model.freeze()
@@ -624,7 +693,7 @@ trainer.validate(model = trained_model)
       f"DataModule.{name} has already been called, so it will not be called again. "
     LOCAL_RANK: 0 - CUDA_VISIBLE_DEVICES: [0]
 
-{% include alert todo='Adicionalmente descubrí que el `.validate()` o el `.test()` sólo están disponibles luego de un `.fit()` o de un `.predict()`. De acuerdo a la nomenclatura de `Scikit-Learn` deberían tener un `_` de sufijo para evitar malos ratos. El mal rato es más que nada por que no falla, si no que entrega un resultado vacío. Al parecer es un bug en el cual ya se está trabajando (por eso el warning de arriba) y pronto debería solucionarse para que siempre que se aplique un método del Trainer haya un `.setup()` invisible.'%}
+{% include alert todo='Adicionalmente descubrí que el `.validate()` o el `.test()` sólo están disponibles luego de un `.fit()` o de un `.predict()`. De acuerdo a la nomenclatura de `Scikit-Learn` deberían tener un `_` de sufijo para evitar malos ratos. El mal rato es más que nada porque no falla, sino que entrega un resultado vacío. Al parecer es un bug en el cual ya se está trabajando (por eso el warning de arriba) y pronto debería solucionarse para que siempre que se aplique un método del Trainer haya un `.setup()` invisible.'%}
 
     --------------------------------------------------------------------------------
     DATALOADER:0 VALIDATE RESULTS
@@ -666,6 +735,5 @@ Bueno,
 Espero que haya sido interesante salirse de lo más común para resolver otro problema de Kaggle como este. Debo reconocer que me sacó hartas canas este problema porque hubo harto error críptico que decifrar, pero aprendí mucho y siento que cada vez me siento más cómodo utilizando Pytorch y Pytorch Lightning. 
 
 Nos vemos para la otra!!
-
 
 [**Alfonso**]({{ site.baseurl }}/contact/)
