@@ -6,7 +6,7 @@ maintech: Python
 sector: Machine Learning
 location: Remoto
 dates:
-  from: 2021-14-05
+  from: 2021-04-05
   to: 
 employer:
   onsite: true

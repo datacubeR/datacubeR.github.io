@@ -10,6 +10,9 @@
   url: /work/
   side: right
   dropdown:
+  - title: Hitos
+    # icon: graduation-cap
+    url: /work/
   - title: CV (PDF)
     # icon: graduation-cap
     url: site.data.links.cv-es
