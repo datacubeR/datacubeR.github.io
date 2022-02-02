@@ -2,7 +2,7 @@
 title: Charlista Pycon Chile
 type: Educación
 role: Charlista
-maintech: Hydra
+maintech: Python + Hydra
 sector: Machine Learning
 location: Remoto
 dates:
