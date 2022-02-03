@@ -34,7 +34,7 @@ La verdad es que hace rato que quería empezar a competir en Kaggle, pero me dab
 
 * Hay muchos que colocan Kernels muy bonitos, con EDA espectacular, con modelos espectaculares y que reciben muchos votos, pero que terminan dando la hora en el Private Leaderboard. Hay un chico en el cuál tomé las ideas de Hybrid Models que terminó más abajo que yo, supongo que por abusar del Public Leaderboard y otro que implementó un transformer desde cero. Como que quise copiar su Transformer pero no logré entenderlo, y lo que no entiendo no lo implemento.
 
-* La semana pasada tuve la oportunidad de escuchar una entrevista de `Weights & Biases` a un Kaggler llamado Mark Tenenholtz, y me gustó mucho, porque él decía que la verdadera habilidad que da Kaggle es aprender a tener un buen esquema de validación y evitar el Overfitting. El mejor consejo que entregaba es no preocuparse del Score Público y confiar en el CV local. Siempre dan ese consejo pero pocas veces se sigue. Y en esta competencia, el que salió 1ero en el Public LeaderBoard termino 322 en el Private LeaderBoard. De verdad la competencia fue una **oda al Overfitting**. 
+* La semana pasada tuve la oportunidad de escuchar una entrevista de `Weights & Biases` a un Kaggler llamado Mark Tenenholtz, y me gustó mucho, porque él decía que la verdadera habilidad que da Kaggle es aprender a tener un buen esquema de validación y evitar el Overfitting. El mejor consejo que entregaba es no preocuparse del Score Público y confiar en el CV local. Siempre dan ese consejo pero pocas veces se sigue. Y en esta competencia, el que salió 1ero en el Public LeaderBoard terminó 322 en el Private LeaderBoard. De verdad la competencia fue una **oda al Overfitting**. 
 
 > Más adelante les cuento como me fue a mí!!.
 
@@ -637,7 +637,7 @@ df_train.groupby(['country', 'store','product']).num_sold.mean().unstack(level =
 </div>
 
 
-{% include alert tip='Gracias al Análisis Exploratorio se pudo notar que básicamente Kaggle Rama siempre vende alrededor de 1.73x más que KaggleMart. Yo particularmente no lo utilicé en el proceso de modelamiento, pero creo que los primeros lugares si lo utilizaron para que el modelo entendiera mejor la diferencia entre una y otra tienda.'%}
+{% include alert tip='Gracias al Análisis Exploratorio se pudo notar que básicamente Kaggle Rama siempre vende alrededor de 1.73x más que KaggleMart. Yo particularmente no lo utilicé en el proceso de modelamiento, pero creo que los primeros lugares sí lo utilizaron para que el modelo entendiera mejor la diferencia entre una y otra tienda.'%}
 
 
 ## Gráficos comparativos
@@ -778,7 +778,7 @@ plt.legend();
 * Hay un incremento en las ventas al final del mes.
 * También existen incrementos en los finales de año.
 * Hay un efecto relacionado a los festivos. Se pueden ver peaks recurrentes año a año que están asociados a festividades propias de cada país. (De ahí la importancia de la librería *holidays*.)
-* Se puede ver que desde el 2016 en adelante hay un incremento lineal en las ventas. Esto muy probablemente indica que en el año a predecir (2019) la tendencia continua, y por lo tanto nuestro modelo debe ser capaz de extrapolar.
+* Se puede ver que desde el 2016 en adelante hay un incremento lineal en las ventas. Esto muy probablemente indica que en el año a predecir (2019) la tendencia continúa, y por lo tanto nuestro modelo debe ser capaz de extrapolar.
 * Se pueden ver periodos de estacionalidad cuando suavizamos la curva al nivel de semana.
 
 # Feature Engineering
@@ -1099,7 +1099,7 @@ $$var\_sin = sin\left(\frac{2n\pi}{max\_value}t\right) = sin\left(\frac{2\pi}{\f
 $$var\_cos = cos\left(\frac{2n\pi}{max\_value}t\right) = cos\left(\frac{2\pi}{\frac{max\_value}{n}}t\right)$$
 
 
-{% include alert todo='El Transformer creado por Feature-Engine tiene el inconveniente de que siempre nombre su resultado como `var_sin` o `var_cos`. Esto genera que cuando creo más de una componente de Fourier, estas se sobreescriben. Para mitigar eso creé mi propia versión del Transformer'%}
+{% include alert todo='El Transformer creado por Feature-Engine tiene el inconveniente de que siempre nombra su resultado como `var_sin` o `var_cos`. Esto genera que cuando creo más de una componente de Fourier, estas se sobreescriben. Para mitigar eso creé mi propia versión del Transformer'%}
 
 ```python
 class CyclicalTransformerV2(CyclicalTransformer):
@@ -1136,9 +1136,6 @@ fourier_variables = pd.DataFrame({'sin': np.sin(2*np.pi*1*df_train['day_of_week'
 fourier_variables.index = df_train.date
 fourier_variables[['sin','cos']].plot(figsize = (16,12));
 ```
-    
-![png]({{ site.urlimg }}kaggle-tps/output_55_0.png)
-    
 
 ```python
 ax = fourier_variables.plot.scatter('sin', 'cos', figsize = (16,12)).set_aspect('equal')
@@ -1147,23 +1144,29 @@ ax = fourier_variables.plot.scatter('sin', 'cos', figsize = (16,12)).set_aspect(
     
 ![png]({{ site.urlimg }}kaggle-tps/output_56_0.png)
     
-La gracia de la componente de Fourier es que permite que el modelo entienda que por ejemplo el Lunes (0) y el Domingo (6), están a la misma distancia a pesar de que numéricamente están a 6 unidades de distancia.
+La gracia de la componente de Fourier es que permite que el modelo entienda que por ejemplo el Lunes (0) y el Domingo (6), están a la misma distancia a pesar de que numéricamente están a 6 unidades de distancia. Es como llevarlo a coordenadas polares.
 
 ## El modelo
 
 Como dijimos una de las gracias que tiene este problema es que es muy ruidoso, pero a la vez tiene una tendencia, en la cual nosotros tendremos que extrapolar.
-La extrapolación no es una ventaja de los modelos de árboles, pero sí de los modelos líneales. Por otro lado, ajustarse a alta variabilidad no es una ventaja de los modelos lineales, pero sí de los modelo de árbol.
 
-La pregunta es, ¿por qué no usar ambos de manera inteligente?
+Sé que muchos están esperando que diga que la regresión Lineal va a resolver todos los problemas, pero no. La extrapolación no es una ventaja de los modelos de árboles, pero sí de los modelos líneales (un punto para los modelos lineales). Por otro lado, ajustarse a alta variabilidad no es una ventaja de los modelos lineales, pero sí de los modelo de árbol (un punto para los modelos de árbol).
+
+La pregunta es, 
+
+> ¿por qué no usar ambos de manera inteligente?
+
 Aquí es donde aprendí de los modelos Híbridos.
 
-El fundamento de los modelos híbridos es que estos el modelo líneal se encarga de captar la tendencia y extrapolarla. Y el modelo Boosting se encarga de aprender el ruido.
+El fundamento de los modelos híbridos es que el modelo líneal se encarga de captar la tendencia y extrapolarla. Y el modelo Boosting se encarga de aprender el ruido. Super interesante!
+
+{% include alert tip='La idea acá es probar muchas combinaciones. Dentro de los modelos lineales que probé estuvo LR, HuberRegressor, PassiveAggresiveRegressor, entre otros. Y en los Boosting, probamos los 3 grandes, XGBoost, LightGBM y Catboost. Los resultados a mostrar ahora fueron los mejores para modelos antes de ensamblar.'%}
 
 Si ajustamos un modelo líneal a la data se ve algo así:
 
 ![png]({{ site.urlimg }}kaggle-tps/linear.png){: .center}
 
-Como se ve un modelo de lineal puede captar la tendencia de las ventas, e incluso la estacionalidad. Lo que no logra captar tan bien son los puntos extremos.
+Como se ve un modelo lineal puede captar la tendencia de las ventas, e incluso la estacionalidad. Lo que no logra captar tan bien son los puntos extremos.
 
 De hecho si hacemos una gráfica de los residuals (el valor real menos la predicción) notamos esto:
 
@@ -1518,15 +1521,17 @@ save_predictions(S_test, model_name, mode = 'test')
 
 En mi caso terminé 118 (**Top 8%**, lo cual hubiera sido bronce en una competencia real) y subí 184 puestos, lo cual me deja tranquilo de que no overfitié.
 
+![png]({{ site.urlimg }}kaggle-tps/kaggle-final.png){: .center}
+
 * Mi modelo ganador no utilizó Stacking. Esto igual es interesante, porque hasta ahora el stacking sólo generó overfitting. Puede ser porque no lo implementé de manera correcta en series de tiempo, pero es algo en lo que tengo que trabajar.
 
-* No hay que creerle a un Kernel sólo porque tiene muchos votos. Varias veces me vi tentado a copiar algo en lo que no estaba de acuerdo, por ejemplo, StandardScaler antes del split, o usando KFold con fechas. Afortunadamente me quedo tranquilo que a pesar de que esos Kernels tenían buen puntaje público terminaron bien bajos en el privado.
+* No hay que creerle a un Kernel sólo porque tiene muchos votos. Varias veces me ví tentado a copiar algo en lo que no estaba de acuerdo, por ejemplo, `StandardScaler` antes del split, o usando `KFold` con fechas. Afortunadamente me quedo tranquilo que a pesar de que esos Kernels tenían buen puntaje público terminaron bien bajos en el privado 😈.
 
-* Una cosa muy desmotivante en Kaggle es que uno se acuesta en un buen puesto y al otro día 500 personas te pasaron porque copiaron y pegaron un Kernel. Evidencia de esto es lo siguiente:
+* Una cosa muy desmotivante en Kaggle es que uno se acuesta en un buen puesto y al otro día 500 personas te pasaron porque copiaron y pegaron un Kernel. 
 
 ![png]({{ site.urlimg }}kaggle-tps/kaggle.png){: .center}
 
-En un momento estuve en el top 10!!! 😱😱😱😱😱😱
+En un momento estuve en el top 10!!! 😱😱😱😱😱😱 Y luego llegó la triste realidad😞.
 
 * La fase de feature engineering fue clave. El dataset tal como estaba era casi inservible. De las variables finales que utilicé, el 95% fueron creadas. Por lo tanto sostengo que esta es por lejos la parte más importante al momento de modelar.
 
@@ -1536,7 +1541,7 @@ En un momento estuve en el top 10!!! 😱😱😱😱😱😱
 
 * Después de competir con tanta gente "Novata" tan buena, creo que jamás tendría la desfachatez de autoproclamarme experto en Machine Learning. Una de las cosas que aprendí es que sé menos de lo que creo y tengo un largo camino de aprendizaje.
   
-* Hay que atreverse a la competencia real. Tenía la convicción de que para poder estar en Kaggle hay que dedicar demasiado tiempo. Pero creo que si uno es inteligente y genera buenos scripts ordenados que uno puede eventualmente entrenar durante la noche y analizar durante el día, competir es completamente manejable con la vida. Así que me voy a tirar con todo a `Ubiquant`. Otra competencia de Series de Tiempo, donde espero poder implementar harto de lo aprendido durante TPS.
+* Hay que atreverse a la competencia real. Tenía la convicción de que para poder estar en Kaggle hay que dedicar demasiado tiempo. Pero creo que si uno es inteligente y genera buenos scripts ordenados que uno puede eventualmente entrenar durante la noche y analizar durante el día, competir es completamente manejable con la vida. Así que me voy a ir con todo a `Ubiquant`. Otra competencia de Series de Tiempo, donde espero poder implementar harto de lo aprendido durante TPS (Y que ya les cuento que es un cacho porque la data es gigante).
 
 ## Por implementar
 
@@ -1546,7 +1551,7 @@ Hay varias cosas que sin duda tengo que mejorar para las siguientes competencias
 
 * **Ser ordenado y loguear con W&B**. Me dio como latita esto, y creo que es super importante poder reproducir cada uno de los experimentos. Perdí varios experimentos que pudieron ser útiles para algún stacking por no ser ordenado. No sé por qué pero siento que tengo que seguir trabajando en esto.
 
-* **Error Analysis**. Actualmente no sé nada de esto, no lo tengo implementado y no sé como afrontarlo en mi framework de modelamiento. Tengo que ver que hacer respecto a esto. Una librería que me gustó es `deepcheck` la cual voy a estar revisando para ver cómo me ayuda.
+* **Error Analysis**. Actualmente no sé nada de esto, no lo tengo implementado y no sé como afrontarlo en mi framework de modelamiento. Tengo que ver qué hacer respecto a esto. Una librería que me gustó es `deepcheck` la cual voy a estar revisando para ver cómo me ayuda.
 
 Espero este artículo sea de ayuda. Tengo otros artículos en la puerta del horno que no he podido terminar porque no tengo mucho tiempo. Espero tener pronto el tiempo para terminarlos.
 
