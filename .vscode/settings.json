@@ -1,3 +1,8 @@
 {
-    "python.pythonPath": "/home/alfonso/miniconda3/envs/dl/bin/python"
+    "python.pythonPath": "/home/alfonso/miniconda3/envs/dl/bin/python",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#2B3007",
+        "titleBar.activeBackground": "#3C430A",
+        "titleBar.activeForeground": "#F9FBE6"
+    }
 }
