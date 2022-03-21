@@ -17,4 +17,4 @@ Me integro como Senior Data Scientist al equipo de Modelamiento predictivo de X-
 Tareas:
 * Análisis Exploratorio.
 * Modelamiento Predictivo (Modelos RUL, Anomalías, etc.).
-* Poner el Modelo en Producción.
+* Produccionalizar Modelos.
