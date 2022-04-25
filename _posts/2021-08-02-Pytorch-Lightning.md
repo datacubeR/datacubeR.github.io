@@ -5,7 +5,7 @@ subheadline: "Eliminando el Boiler Plate Code"
 teaser: "Otra librería espectacular de Deep Learning"
 # layout: page-fullwidth
 usemathjax: true
-category: quick
+category: dl
 header: no
 image:
     thumb: pl/PTL.png

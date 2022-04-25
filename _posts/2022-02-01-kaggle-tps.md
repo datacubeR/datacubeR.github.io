@@ -5,7 +5,7 @@ subheadline: "Tabular Playground Enero 2022"
 teaser: "Prediciendo ventas de Kaggle"
 # layout: page-fullwidth
 usemathjax: true
-category: quick
+category: ml
 header: no
 image:
     thumb: kaggle-tps/kaggle-tps.png

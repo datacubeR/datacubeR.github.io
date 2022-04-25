@@ -5,7 +5,7 @@ subheadline: "Predecir el comportamiento del BitCoin"
 teaser: "Creando LSTM en Pytorch Lightning"
 # layout: page-fullwidth
 usemathjax: true
-category: quick
+category: dl
 header: no
 image:
     thumb: bitcoin/bitcoin.jpg
