@@ -1,7 +1,7 @@
 ---
 permalink: /ds-tech/ 
 title: "Qué debo aprender para ser Data Scientist."
-subheadline: "Un compendio más de 100 tecnologías para Data Scientist."
+subheadline: "Un compendio con más de 100 tecnologías para Ciencia de Datos."
 teaser: "Un compendio de todas las tecnologías que he usado como Data Scientist."
 # layout: page-fullwidth
 usemathjax: true
