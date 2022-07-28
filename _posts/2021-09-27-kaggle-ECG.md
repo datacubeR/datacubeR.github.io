@@ -1,4 +1,5 @@
 ---
+permalink: /lstm-ae/ 
 title: "Anomalías cardiacas con Deep Learning"
 subheadline: "Implementando un algoritmo de Anomaly Detection"
 teaser: "LSTM AutoEncoder con Pytorch Lightning."

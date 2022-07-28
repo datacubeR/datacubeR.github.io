@@ -1,4 +1,5 @@
 ---
+permalink: /pytorch-native/
 title: "Clasificando Imágenes, pero ahora en Pytorch"
 subheadline: "¿Cómo implementar un clasificador simple de imágenes?"
 teaser: "Clasificando Imágenes con ANN en Pytorch en GPU"
