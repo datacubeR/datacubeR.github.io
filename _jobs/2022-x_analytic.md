@@ -7,7 +7,7 @@ sector: Machine Learning
 location: Remoto
 dates:
   from: 2022-01-03
-  to: 
+  to: 2022-05-25
 employer:
   onsite: true
 ---

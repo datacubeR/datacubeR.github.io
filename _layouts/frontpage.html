@@ -21,7 +21,8 @@ format: blog-index
 
 	{% if page.widget3.title %}
 		{% include frontpage-widget.html widget=page.widget3 %}
-	{% endif %}
+    {% endif %}
+
 </div><!-- /.row -->
 
 
@@ -56,25 +57,43 @@ format: blog-index
 
 
 	<div class="row">
-		<div class="medium-6 columns">
+		<div class="medium-4 columns">
 			{% for post in site.posts limit:1 %}
-			{% if post.subheadline %}<p class="subheadline">{{ post.subheadline }}</p>{% endif %}
-			<h2>{% include snippets/post_link.html post=post %}</h2>
+			<!-- {% if post.subheadline %}<p class="subheadline">{{ post.subheadline }}</p>{% endif %} -->
+			
+            <h3>{% include snippets/post_link.html post=post %}</h3>
 			<p>
 				{% if post.meta_description %}{{ post.meta_description | strip_html | escape }}{% elsif post.teaser %}{{ post.teaser | strip_html | escape }}{% endif %}
-				<a href="{{ site.baseurl }}{{ post.url }}" title="{{ site.data.language.read }} {{ post.title | escape_once }}"><strong>{{ site.data.language.read_more }}</strong></a>
+				<a href="{{ site.baseurl }}{{ post.url }}" title="{{ site.data.language.read }} {{ post.title | escape_once }}"><br>
+                <strong>{{ site.data.language.read_more }}</strong></a>
 			</p>
 			<!-- <img src="{{ site.urlimg }}{{ post.image.thumb }}" width="70%" alt="{{ page.title | strip_newlines | escape }}" /> -->
-			<a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title | strip_html | strip_newlines | escape }}"><img src="{{ site.urlimg }}{{ post.image.thumb }}" class="alignleft" width="70%" alt="{{ page.title | strip_newlines | escape }}" /></a>
+			<a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title | strip_html | strip_newlines | escape }}"><img src="{{ site.urlimg }}{{ post.image.thumb }}" class="alignleft" width="100%" alt="{{ page.title | strip_newlines | escape }}" /></a>
 			{% endfor %}
 	
 		</div>
 
-		<div class="medium-6 columns">
+        <div class="medium-4 columns">
+			{% for post in site.posts offset: 1 limit:1 %}
+			<!-- {% if post.subheadline %}<p class="subheadline">{{ post.subheadline }}</p>{% endif %} -->
+			
+            <h3>{% include snippets/post_link.html post=post %}</h3>
+			<p>
+                {% if post.meta_description %}{{ post.meta_description | strip_html | escape }}{% elsif post.teaser %}{{ post.teaser | strip_html | escape }}{% endif %}
+				<a href="{{ site.baseurl }}{{ post.url }}" title="{{ site.data.language.read }} {{ post.title | escape_once }}"><br>
+                <strong>{{ site.data.language.read_more }}</strong></a>
+			</p>
+			<!-- <img src="{{ site.urlimg }}{{ post.image.thumb }}" width="70%" alt="{{ page.title | strip_newlines | escape }}" /> -->
+			<a href="{{ site.baseurl }}{{ post.url }}" title="{{ post.title | strip_html | strip_newlines | escape }}"><img src="{{ site.urlimg }}{{ post.image.thumb }}" class="alignleft" width="100%" alt="{{ page.title | strip_newlines | escape }}" /></a>
+            {% endfor %}
+		</div>
+
+        <div class="medium-4 columns">
 			<p><strong>{{ site.data.language.more_articles }}</strong></p>
 			{% assign moreLink = site.baseurl | append: '/blog/' %}
-			{% include list-posts.html entries='3' offset='1' more=moreLink %}
+			{% include list-posts.html entries='7' offset='1' more=moreLink %}
 		</div>
+
 	</div>
 {% endunless %}
 
