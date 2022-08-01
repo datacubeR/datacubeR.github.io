@@ -5,27 +5,30 @@ subheadline: "Un compendio con más de 100 tecnologías para Ciencia de Datos."
 teaser: ""
 # layout: page-fullwidth
 usemathjax: true
-category: ml
+category: ds
 header: no
 image:
     thumb: libraries/librerías.png
 tags:
 - python
 - tutorial
-published: false
+published: true
 ---
 
-{% include toc.md %}
-
-# TL;DR
-{: .no_toc }
-*[TL;DR]: Too Long; Didn't Read
+![picture of me]({{ site.urlimg }}libraries/librerías.png){: .left .show-for-large-up .hide-for-print width="300"}
+![picture of me]({{ site.urlimg }}libraries/librerías.png){: .center .hide-for-large-up width="250"}
 
 La ciencia de datos es una de las disciplinas más de moda hoy en día. Y cómo que por alguna razón todos quieren ser parte de ello. Sin duda en el mediano/largo plazo probablemente todas las disciplinas tendrán una componente de datos y la verdad es que vale la pena aprender a lidiar con ellos.<!--more-->
 
 Hoy en día la decisión es simple, trabajar con R o con Python, pero el tema es que Python tiene 150.000+ librerías y R tiene otras tantas, por lo que a veces es abrumante pensar, tengo que aprender todo? Ojo, eso sin contar otro tipo de tecnologías de Visualización, ETL y un largo etc. Por donde empiezo, tengo un montón de opciones y no me gustaría perder el tiempo en cosas que no valen la pena.
 
 Además, en plataformas como Linkedin siempre hay gente en cuyo título dice Data Science \| Machine Learning \| Analytics Expert y un largo etc. y que probablemente en su vida ha programado y comparten publicaciones como esta:
+
+# TL;DR
+{: .no_toc }
+*[TL;DR]: Too Long; Didn't Read
+
+
 
 ## TOP 10 LIBRERÍAS DE PYTHON
 {: .no_toc }
@@ -66,6 +69,8 @@ La ciencia de datos es una disciplina enorme. Y hay que darla paso a paso, o no 
 * **Data Scientist**: Luego de como 4 años logre un puesto de Data Scientist. Ya llevaba como 1 año haciendo modelos a escondidas, porque no era mi rol. Y acá me cambié a Python definitivamente. Tuve que aprender mucho pandas, Scikit-Learn (y los 3 grandes XGBoost, LightGBM y CatBoost) y modelar mucho. Pero con muchos errores teóricos de fondo, y ahí decidí que era importante entender el transfondo teórico. En ese tiempo leía mucho blog y veía mucho video (aún lo hago, pero ahí partí). Quizás desde el 2021 que ya me metí de lleno en el Deep Learning y acá estamos.
 
 > Todo tiene que ser progresivo. El `Deep Learning` es sólo una extensión del `Machine Learning`, en vez de hacer feature selection/engineering, acá hay que hacer "Architecture Engineering", tratando de encontrar la arquitectura más apropiada a un problema. Por otra parte el `Machine Learning` es una extensión del `Análisis`. En vez de que tenga que analizar la data manualmente, el modelo aprende los insights por mí y a escala, pero hay que entregar data estructurada. Y el `Análisis` es sólo una extensión de la `Manipulación de Datos`. Sólo se puede entender la data una vez que la tengo ordenadita. Entonces, hay que partir de a poco, y no saltarse pasos.
+
+{% include toc.md %}
 
 # La idea
 
@@ -232,7 +237,7 @@ Existen algunas librerías/addins en RStudio como `esquisse` que permiten crear 
 
 Esta es por lejos mi sección favorita, por lo que puede que me extienda un poco más de que el resto.
 
-- **Scikit-Learn** (Rk: 94, ND: 32.6M+, Pr: 1): Es la librería por excelencia para crear modelos de Machine Learning. La sintaxis de su API está tan bien diseñada que una manera de reconocer que otras librerías de Machine Learning son confiables es si es que siguen su API. Básicamente `scikit-learn` es super reconocida por sus modelos como Clase y su estandar `fit-transform-predict`, además de casi 15 años de vida. Si quieres hacer modelos de Machine Learning sí o sí tienes que partir por acá por varias razones: (1) Su documentación es excelente, incluso puedes aprender la teoría detras de cada modelo leyendo su [User Guide](https://scikit-learn.org/stable/user_guide.html) (toda persona que se dedique al ML debería leer la documentación completa de Sklearn una vez al año 🤪). Además contiene sólo modelos ML que están en el estado del arte. De hecho para que un modelo se implemente en Scikit Learn tiene que cumplir [requisitos](https://scikit-learn.org/stable/faq.html) muy estrictos. Este es por lejos una de las mejores inversiones que uno hará como Data Scientist, ya que aprendiendo a utilizar esta librería podrás utilizar millones de otras basadas en la misma API. [Acá]({{ site.baseurl }}/titanic/)un ejemplo de modelamiento en Scikit-Learn.
+- **Scikit-Learn** (Rk: 94, ND: 32.6M+, Pr: 1): Es la librería por excelencia para crear modelos de Machine Learning. La sintaxis de su API está tan bien diseñada que una manera de reconocer que otras librerías de Machine Learning son confiables es si es que siguen su API. Básicamente `scikit-learn` es super reconocida por sus modelos como Clase y su estandar `fit-transform-predict`, además de casi 15 años de vida. Si quieres hacer modelos de Machine Learning sí o sí tienes que partir por acá por varias razones: (1) Su documentación es excelente, incluso puedes aprender la teoría detras de cada modelo leyendo su [User Guide](https://scikit-learn.org/stable/user_guide.html) (toda persona que se dedique al ML debería leer la documentación completa de Sklearn una vez al año 🤪). Además contiene sólo modelos ML que están en el estado del arte. De hecho para que un modelo se implemente en Scikit Learn tiene que cumplir [requisitos](https://scikit-learn.org/stable/faq.html) muy estrictos. Andreas Mueller, mantenedor de Scikit-Learn tiene un curso disponible de manera gratuita [acá](https://www.youtube.com/watch?v=d79mzijMAw0&list=PL_pVmAaAnxIRnSw6wiCpSvshFyCREZmlM). Este es por lejos una de las mejores inversiones que uno hará como Data Scientist, ya que aprendiendo a utilizar esta librería podrás utilizar millones de otras basadas en la misma API. [Acá]({{ site.baseurl }}/titanic/)un ejemplo de modelamiento en Scikit-Learn.
 
 - **tidymodels** (R, Pr: 2): Yo solía ser un fan de esta compilación de librerías. Creo que Max Kuhn es un tremendo desarrollador y lo respeto profundamente, pero creo que parsnip trató de llevar el modelamiento en R a un estado incluso más flexible que `scikit-learn` pero no les funcionó. Lamentablemente el Machine Learning en R está disgregado en muchas librerías todas con APIs diferentes, por lo que este esfuerzo de unificar todo es increíble. Lamentablemente el memory leakage que sufre R y el tremendo trabajo de los mantenedores de `scikit-learn` hacen que un esfuerzo como este nunca logre la popularidad que tiene Python en este rubro. Tidymodels está basado en 3 paquetes principalmente: `recipes`, para el preprocesamiento, que a mi gusto tiene una API muy similar a los Pipelines de Scikit, `parsnip`, que es la unificación de todos los modelos de ML implementados en R y `yardstick` que contiene todas las métricas de evaluación. Si te dedicas a hacer modelos pequeñitos de prueba, sin mucho intensidad de cómputo es una opción, en cualquier otro caso vale más cambiarse a `scikit-learn`.
 
@@ -434,10 +439,12 @@ Y con esto terminamos. Debo decir que este es al artículo que más trabajo me h
   * AWS Lambda
   * API Gateway
   * Step Functions
+* [PRegex](https://pregex.readthedocs.io/en/latest/)
 * [Dagshub](https://dagshub.com/)
 * [poetry](https://python-poetry.org/). Por alguna razón me da terror instalarla, aunque he leído bastante de ella.
 * [fancyimpute](https://pypi.org/project/fancyimpute/)
 * [NGBoost](https://stanfordmlgroup.github.io/projects/ngboost/)
+* [SKLego](https://scikit-lego.readthedocs.io/en/latest/)
 * [tabnet](https://github.com/dreamquark-ai/tabnet)
 * [UMAP](https://umap-learn.readthedocs.io/en/latest/)
 * [Segmentation Models](https://github.com/qubvel/segmentation_models.pytorch)
