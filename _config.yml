@@ -33,7 +33,7 @@ baseurl: ''
 
 # This is for the editing function in _/includes/improve_content.html
 # Leave it empty if your site is not on GitHub/GitHub Pages
-improve_content: https://github.com/twisterrob/twisterrob.github.io/issues
+improve_content: https://github.com/datacubeR/datacubeR.github.io/issues
 
 # This URL points directly to the images directory making
 # things easier to link to images in posts and templates. Don't include a slash at the end.
@@ -118,12 +118,8 @@ exclude:
   - _config_dev.yml   # need to explicitly exclude all configs https://github.com/jekyll/jekyll-watch/issues/35
   # Projects Files
   - .idea
-  - www.twisterrob.net.ipr # should be '*.ipr', see https://github.com/jekyll/jekyll-watch/issues/34
-  - www.twisterrob.net.iws # should be '*.ipr', see https://github.com/jekyll/jekyll-watch/issues/34
-  - www.twisterrob.net.iml # should be '*.ipr', see https://github.com/jekyll/jekyll-watch/issues/34
   - .classpath
   - .project
-  - www.twisterrob.net.sublime-project # should be '*.sublime-project', see https://github.com/jekyll/jekyll-watch/issues/34
   # Random stuff
   - sources
   - .svn
@@ -260,14 +256,14 @@ defaults:
         navigation: 'snippets/lateral_navigation_blog.html'
         comments: false
       # sidebar:        # Possible values › left, right › by default there will be no sidebar
-      #author: twisterrob # disable for now, I'm the only one
+      #author: datacubeR # disable for now, I'm the only one
   -
     scope:
       type: projects
       path: ''
     values:
       layout: project
-      title_suffix: "a project by Róbert Papp (TWiStErRob)"
+      title_suffix: "a project by datacubeR"
       published: true
       released: true
       breadcrumbs: false
@@ -284,7 +280,7 @@ defaults:
       path: ''
     values:
       layout: job
-      title_suffix: "a former workplace of Róbert Papp"
+      title_suffix: "a former workplace of datacubeR"
       breadcrumbs: false
       show_meta:
         sharer: true
@@ -308,7 +304,7 @@ defaults:
 #   ___/ / /___/ /_/ / 
 #  /____/_____/\____/    Verify Website to Webmaster Tools
 
-google_author:             "https://plus.google.com/+RóbertPappTWiStErRob"
+#google_author:             "https://plus.google.com/+..."
 #google_site_verification:  "Vk0IOJ2jwG_qEoG7fuEXYqv0m2rLa8P778Fi_GrsgEQ"
 #bing_webmastertools_id:    "0FB4C028ABCF07C908C54386ABD2D97F"
 # alexa_verify_id:         ""
@@ -345,11 +341,11 @@ og_type:                            "website"
 #                      /____/                               
 #
 # Used › _includes/comments.html
-disqus_shortname: twisterrob
+#disqus_shortname: datacubeR
 
 # More › https://www.google.com/analytics/
 # Used › _includes/footer_scripts.html
-google_analytics_tracking_id: UA-38202353-4
+#google_analytics_tracking_id: 
 
 # More › https://www.tawk.to/knowledgebase/
 #        tawk.to is a free live chat app that lets you monitor and chat 
