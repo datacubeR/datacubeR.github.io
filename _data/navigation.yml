@@ -32,29 +32,6 @@
 #   side: left
 
 
-  # dropdown:
-  # - special: projects
-  # - title: POC & Bodge
-  #   dropdown:
-  #     - special: projects-other
-  # - title: Other Sites (old)
-  #   icon: browser
-  #   dropdown:
-  #   - title: Old Homepage (2005–2007)
-  #     url: http://twisterrob.uw.hu/mypage
-  #   - title: LESS Attractive! (2012)
-  #     url: http://twisterrob.net/dev/less
-  #   - title: Reference Projects (2006)
-  #     url: http://web.twisterrob.net/ref
-  #   - title: Project Earthquake (2004)
-  #     url: http://twisterrob.uw.hu/peq/eng/index_eng.htm
-  #   - title: Learn Italian in Hungarian (2004)
-  #     url: http://web.twisterrob.net/italian
-  #   - title: Regex Sandbox
-  #     url: http://regex.twisterrob.net
-  #   - title: Old Website (2005–2007)
-  #     url: http://twisterrob.uw.hu
-
 - title: Blog
   icon: open-book
   url: /blog/
@@ -80,37 +57,6 @@
 #    url: /blog/notes/
 #    side: left
 #    dropdown:
-#    - title: Programozás Alapjai
-#      url: /blog/notes/progalap/
-#      dropdown:
-#      - title: Kötelező Program 1
-#        url: /blog/notes/progalap-kp1.html
-#      - title: Kötelező Program 2
-#        url: /blog/notes/progalap-kp2.html
-#      - title: Vezérlési Szerkezetek
-#        url: /blog/notes/progalap-control.html
-#      - title: Érdekes feladatok
-#        url: /blog/notes/?.html
-#    - title: Számítógép Architektúra
-#      url: /blog/notes/szar/
-#      dropdown:
-#      - title: 2. gyakorlat
-#        url: /blog/notes/szar2.html
-#      - title: 3. gyakorlat
-#        url: /blog/notes/szar3.html
-#      - title: 4. gyakorlat
-#        url: /blog/notes/szar4.html
-#      - title: 5. gyakorlat
-#        url: /blog/notes/szar5.htmlurl: site.data.links.cv-en
-#        url: /blog/notes/szar6.html
-#      - title: 7. gyakorlat
-#        url: /blog/notes/szar7.html
-#      - title: 8. gyakorlat
-#        url: /blog/notes/szar8.html
-#      - title: 9. gyakorlat
-#        url: /blog/notes/szar9.html
-#      - title: 10. gyakorlat
-#        url: /blog/notes/szar10.html
 #    - title: Roadmap
 #      url: /roadmap/
 
