@@ -12,4 +12,4 @@ employer:
   onsite: true
 ---
 
-Me integro al Doctorado de Ciencia de Datos de la Universidad Adolfo Ibañez. 
+Me integro al Doctorado de Ciencia de Datos de la Universidad Adolfo Ibáñez. 

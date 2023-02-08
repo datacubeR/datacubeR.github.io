@@ -92,6 +92,10 @@
       url: site.data.links.l_p
     - title: Diario Financiero
       url: site.data.links.d_f
+    - title: Datathon 2022 USM
+      url: site.data.links.datathon
+    - title: Datathon 2022 UAI
+      url: site.data.links.datathon_uai
     
 
 # - title: Contact
