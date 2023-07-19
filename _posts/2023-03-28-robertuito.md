@@ -1,7 +1,7 @@
 ---
 permalink: /robertuito/ 
 title: "Transformers, el Robertuito"
-subheadline: "Fine Tuning para HateSpeech en Español"
+subheadline: "Mi primer post como miembro de la Lightning League."
 teaser: "Robertuito, un modelo RoBERTa entrenado en 500 millones de Tweets."
 # layout: page-fullwidth
 usemathjax: true
@@ -23,16 +23,26 @@ Hate Speech. Suena bonito, pero es probablemente una de nuestras peores costumbr
 
 La verdad es que trabajos sobre detección de odios hay por montones. De hecho las plataformas como Twitter o Facebook están constantemente desarrollando herramientas que permitan detectar y eliminar este tipo de contenido. Pero la verdad es que no es tan fácil, en especial porque el lenguaje es muy subjetivo. Y dependiendo del idioma puede ser que incluso las palabras que usamos para expresar odio no sean las mismas. E incluso, como ocurre en mi país, Chile, las palabras del uso cotidiano son las mismas que se utilizan al momento de hablar con mucho odio. Eso hace que detectar Odio en Español chileno sea muy desafiante. 
 
+<q>Ahora, de todos los modelos existentes, cuál utilizar?</q>
+
+![picture of me]({{ site.urlimg }}hate_speech/bert_meme.png){: .center width="500"}
+
+{% include alert alert='Este es un meme robado de manera descarada a [Neils Rogge](https://www.linkedin.com/in/niels-rogge-a3b7a3127/?originalSubdomain=be), ML Engineer de Hugging Face y de ML6 que es un crack, y del cual he aprendido mucho mirando sus tutoriales. Por más que Googleé no lo encontré en ninguna parte.'%}
+
 En este artículo me gustaría mostrar uno de los modelos que intenté durante la [Datathon 2022]({{ site.baseurl }}/datathon/) y que si bien no dio tan buenos resultados para la competencia (principalmente porque necesitaba detectar más cosas que sólo Odio) quiero mostrar uno de los proceso de Fine-Tuning que apliqué en el cuál sí hubo resultados para detectar Odio. 
 
 ## El Modelo
 
-Bueno el Modelo es el [RoberTuito](https://arxiv.org/pdf/2111.09453.pdf) es un modelo desarrollado en Argentina supongo que un poco siguiendo los pasos del BETO en Chile. La idea es poder entrenar algunos de los modelos basados en Transformers más famosos pero en idioma Español (ya que casi todo el research en este tipo de modelos se ha hecho en Inglés). El modelo está basado en RoBERTa, que no es un modelo nuevo, de hecho es un BERT, pero entrenado siguiendo otras prácticas, que de acuerdo a los autores entrega más estabilidad y robustez al entrenarse en muchísima más data. En el caso de RoberTuito se entrenó en 500 millones de Tweets, lo cual es bastante.
+Bueno el Modelo es el [RoberTuito](https://arxiv.org/pdf/2111.09453.pdf) es un modelo desarrollado por académicos de Argentina supongo que un poco siguiendo los pasos del BETO en Chile. La idea es poder entrenar algunos de los modelos basados en Transformers más famosos pero en idioma Español (ya que casi todo el research en este tipo de modelos se ha hecho en Inglés). El modelo está basado en RoBERTa, que es un modelo propuesto por Meta en el cuál se propone un BERT pero pre-entrenado de manera distinta que de acuerdo a los autores entrega más estabilidad y robustez al entrenarse en muchísima más data. 
+
+En el caso de RoberTuito se entrenó en 500 millones de Tweets, lo cual es bastante. Y se utilizó Dynamic Masking. Dynamic Masking es un tipo de pre-entrenamiento no supervisado en el cuál se van enmascarando palabras aleatorias epoch a epoch y luego se busca que el módelo aprenda qué palabra es la que se enmascaró. 
 
 Otra cosa que es interesante es que el modelo se probó en varias tareas, una de ellas es Hate Speech, por lo que al momento de competir realmente pensé que podría dar algunas ventajas competitivas. Ahora el modelo promete ciertas métricas de desempeño, pero como siempre, hay que probarlo.
 
 Ahora, acá hay algunas discrepancias. El paper muestra resultados un poco más optimistas de lo que muestra la implementación en Huggingface, por lo que la idea es chequear el poder de generalización de este modelo en un dataset que es bastante distinto al que fue entrenado, ya que como comenté está en Chileno, y mucho de la tokenización y vocabulario es distinto al que se usa en el corpus en el cual fue pre-entrenado.
+
 Los resultados publicados en el paper son los siguientes:
+
 ![picture of me]({{ site.urlimg }}hate_speech/robertuito_paper.png){: .center .show-for-large-up .hide-for-print width="500"}
 ![picture of me]({{ site.urlimg }}hate_speech/robertuito_paper.png){: .center .hide-for-large-up width="500"}
 
@@ -41,17 +51,25 @@ Los resultados publicados en el repositorio de HuggingFace son estos:
 ![picture of me]({{ site.urlimg }}hate_speech/robertuito_hf.png){: .center .show-for-large-up .hide-for-print width="500"}
 ![picture of me]({{ site.urlimg }}hate_speech/robertuito_hf.png){: .center .hide-for-large-up width="500"}
 
-## BERT
+## Ahora qué es BERT?
 
-Como dijimos RoberTuito es básicamente un BERT pero entrenado de otra manera. BERT es un modelo de lenguaje que fue desarrollado por Google en 2018 por [Devlin et al.](https://arxiv.org/abs/1810.04805). Es un modelo pero que está basado sólo en el Encoder de un Transformer, por lo que sus fortalezas están en poder extraer features, o generar un embedding que pueda represetar un texto para que luego una red neuronal pueda tomarlo y generar predicciones. Fue entrenado una técnica llamada Masked Language Model de manera semi-supervisada, que a pesar de ser simple es super efectiva y creativa. 
+Como dijimos RoberTuito es básicamente un BERT pero entrenado de otra manera. BERT es un modelo de lenguaje que fue desarrollado por Google en 2018 por [Devlin et al.](https://arxiv.org/abs/1810.04805). Es un modelo pero que está basado sólo en el Encoder de un Transformer, por lo que sus fortalezas están en poder extraer features, o generar un embedding que pueda represetar un texto para que luego una red neuronal pueda tomarlo y generar predicciones. Fue entrenado una técnica llamada Masked Language Model de manera semi-supervisada, que a pesar de ser simple es super efectiva y creativa. Básicamente se le entrega todo la data, y se ocultan, ciertas palabras de tal manera que el modelo pueda predecir cuál es la palabra que se ocultó. Esto es muy útil porque permite que el modelo aprenda a entender el contexto de una frase, y no sólo a memorizar palabras. Y además el proceso de etiquetado es muchísimo más rápido.
 
-Básicamente se le entrega todo la data, y se ocultan, ciertas palabras de tal manera que el modelo pueda predecir cuál es la palabra que se ocultó. Esto es muy útil porque permite que el modelo aprenda a entender el contexto de una frase, y no sólo a memorizar palabras. Y además el proceso de etiquetado es muchísimo más rápido.
+Lo novedoso es que BERT es sólo el Encoding de los transformers y funciona más o menos así. En vez de ser alimentado con palabras de manera secuencial cada representación de la palabra entra en paralelo al modelo y está compuesto de 3 partes:
 
+![picture of me]({{ site.urlimg }}hate_speech/bert_encodings.png){: .center width="500"}
+
+* **Token Embeddings**: Un Embedding aprendido por el modelo de las palabras. Estas palabras se entregan tokenizadas con un algoritmo llamado SubWord Tokenization. 
+* **Segment Embedding**: Un Embedding que indica a qué frase pertenece (actual o próxima).
+* **Position Embedding**: Un Embedding que indica cuál es la relación con el resto del contexto de manera de tomar en consideración la posición de la palabra. Por ejemplo, no es lo mismo decir: *"Te dije que no"* vs *"No te dije"*. La palabra no modifica la frase de manera distinta en una indicando que nada fue dicho, y en la otra que se le dijo que no. Esto es probablemente una de las características más potentes de un transformer. 
+
+Ahora, una vez que el modelo es alimentado con esta representación de palabras pasará por el famoso mecanismo de atención, o mejor dicho por varios mecanismos lo cual componen el "Multi-Head Attention" que le permitirán al modelo entender qué aspectos son más importantes de una oración y a partir de eso entregar una representación final del texto (otro embedding pero que se le suele llamar logits o features) que permitirá a otra Red Neuronal Feed Forward aprender y entregar una predicción, en este caso si es o no Odio.
+
+![picture of me]({{ site.urlimg }}hate_speech/bert_pretraining.png){: .center width="500"}
 
 ## Solución Propuesta
 
-La verdad es que tenía todas mis esperanzas puestas en este RoBERTuito, y si alguno me quiere ayudar a decifrar por qué no dió tan buenos resultados les agradecería montones. 
-La implementación pre-entrenada de RoBERTuito se puede encontrar en 🤗 HuggingFace (debido a que es un transformer) pero de una manera un poco extraña que es mediante una librería llamada `pysentimiento`. Esta librería tiene la verdad es que varias funcionalidades bien simpáticas las cuales pueden encontrar en su [Github](https://github.com/pysentimiento/pysentimiento). 
+La verdad es que tenía todas mis esperanzas puestas en este RoBERTuito, y si alguno me quiere ayudar a decifrar por qué no dio tan buenos resultados les agradecería montones. La implementación pre-entrenada de RoBERTuito se puede encontrar en 🤗 HuggingFace (debido a que es un transformer) pero de una manera un poco extraña, que es mediante una librería llamada `pysentimiento`. Esta librería tiene la verdad es que varias funcionalidades bien simpáticas las cuales pueden encontrar en su [Github](https://github.com/pysentimiento/pysentimiento). 
 
 Siendo sincero hice varias pruebas con este modelo utilizando las funcionalidades directamente de la librería pero también haciendo un fine-tuning del modelo, que es lo que voy a mostrarles ahora. 
 
@@ -59,7 +77,7 @@ Siendo sincero hice varias pruebas con este modelo utilizando las funcionalidade
 
 Básicamente Lightning ahora contiene no sólo Pytorch Lightning, sino también Fabric y Lightning Apps. Probablemente cada uno de estos requiere un tutorial por separado (el cuál habrá), pero principalmente Fabric es el ex Lightning Lite el cuál permite agregar rápidamente características de Lightning a un Modelo en Pytorch Nativo sin cambiar su código (digamos que es sólo un wrapper). Finalmente Lightning Apps permitirá facilitar el deploy de Apps que hacen uso de modelos de Machine o Deep Learning. 
 
-{% include alert alert='Lamentablemente no voy a poder mostrar los beneficios de `torch.compile()` debido que parece ser que los modelos de `pysentimiento` no son compatibles. Como lo sé? La verdad no estoy del todo seguro, pero obtuve un error bien feo el cuál no logré encontrar en ninguna parte a qué se debe. Si alguien sabe y me quiere ayudar estaría muy agradecido, pero este el gran problema de los frameworks de Deep Learning, como trabajan con CUDA, sus errores son muy crípticos:
+{% include alert alert='Lamentablemente no voy a poder mostrar los beneficios de `torch.compile()` debido que parece ser que los modelos de `pysentimiento` no son compatibles. ¿Como lo sé? La verdad no estoy del todo seguro, pero obtuve un error bien feo el cuál no logré encontrar en ninguna parte a qué se debe. Si alguien sabe y me quiere ayudar estaría muy agradecido, pero este el gran problema de los frameworks de Deep Learning, como trabajan con CUDA, sus errores son muy crípticos:
 
 ```bash
 AssertionError                            Traceback (most recent call last)
@@ -148,7 +166,7 @@ training_config = Box(dict(
 
 `model_config` contendrá hiperparámetros del modelo a utilizar: Modelo Pre-entrenado, dropout rate entre la unión del backbone y el clasificador, `decay` y `learning_rate` para el optimizador que en este caso es `AdamW` (Adam con weight decay).
 
-Finalmente `training_config` tendrá configuración del proceso de entrenamiento: Número de `epochs`, `patience` para el EarlyStopping y flags para debuggear.
+Finalmente `training_config` tendrá configuración del proceso de entrenamiento: Número de `epochs`, `patience` para el `EarlyStopping` y flags para debuggear.
 
 {% include alert tip='Todos los diccionarios están envueltos en un `Box`. `Box` permite envolver un diccionario para poder llamarlo con notación de punto. En vez de dict["key"] puedo llamar los elementos como dict.key, lo cual me permite ahorrar algunos caracteres al escribir.'%}
 
@@ -452,7 +470,7 @@ class RoberTuito(L.LightningModule):
 ```
 {: title="model.py"}
 
-En el archivo `model.py` definimos finalmente el RoBERTuito. Robertuito se importa del HuggingFace Hub y será el backbone de nuestro modelo. La salida del Encoder BERT se promediará y saldrá como un average_pooling. No sé cuál es la razón teórica por la que se hace esto, pero es sugerido en varios tutoriales y en la documentación misma de HuggingFace como una manera de entregar más estabilidad al modelo además de hacer calzar las dimensiones. 
+En el archivo `model.py` definimos finalmente el RoBERTuito. Robertuito se importa del HuggingFace Hub y será el backbone de nuestro modelo. La salida del Encoder BERT se promediará y saldrá como un average_pooling. La razón de esto es lo que menciono más arriba.
 
 Pasamos por un dropout para luego conectar con un MLP que servirá para predecir. Además implementamos `xavier initialization` para el MLP (esto tiene pesos pre-determinados en vez de partir completamente random). 
 
@@ -533,7 +551,7 @@ def evaluate(trainer, model, dm, threshold=0.5, custom=True):
 ```
 {: title="trainer.py"}
 
-`train_model()` es una pequeña función que permite:
+`train_model()` es una pequeña función que permite generar:
 * El Datamodule.
 * El Modelo.
 * Checkpoint.
@@ -562,8 +580,10 @@ Durante la competencia obtuve un F1_custom cercano a 0.45 para 5 clases y 0.73 p
 
 {% include alert alert='La verdad no he tenido el tiempo para poder estudiar el por qué se da este fenómeno. Pero estoy intentando averiguar por qué sólo un epoch genera tan buenos resultados y luego se va degradando. No estoy seguro si esto es un comportamiento normal de los transformers, pero algunas hipótesis que tengo pueden ser que tengo demasiado parámetros para tan pocos datos (cerca de 109 millones sólo para RoBERTa) o si el Loss Function no es el apropiado para optimizar la métrica en cuestión.' %}
 
-En las últimas semanas he estado estudiando bien en detalle el funcionamiento de los Transformers mediante el curso de HuggingFace. Voy a estar de poco compartiendo más del aprendizaje que llevo y que pueda ser de utilidad para ustedes también.
+En las últimas semanas he estado estudiando bien en detalle el funcionamiento de los Transformers mediante el curso de HuggingFace y leyendo el libro de Lewis Tunstall [NLP with Transformers](https://www.amazon.com/Natural-Language-Processing-Transformers-Applications/dp/1098103246). Voy a estar de poco compartiendo más del aprendizaje que llevo y que pueda ser de utilidad para ustedes también.
 
+
+Bueno, todo el código lo voy a dejar disponible en mi Github. Por lo que si les interesa déjenme una estrellita [acá](https://github.com/datacubeR/hate_speech).
 Nos vemos a la otra,
 
 [**Alfonso**]({{ site.baseurl }}/contact/)

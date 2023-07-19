@@ -19,11 +19,14 @@ Check typography variables › _3_typography_settings.scss
 
 // need to be separate
 $selection-color: adjust-hue($primary-color, -45deg);
+
 ::-moz-selection {
     background-color: $selection-color;
 }
+
 ::selection {
     background-color: $selection-color;
+
     &:window-inactive {
         background-color: desaturate($selection-color, 80%);
     }
@@ -33,31 +36,33 @@ $selection-color: adjust-hue($primary-color, -45deg);
 ------------------------------------------------------------------- */
 
 a,
-a:link {
-}
+a:link {}
 
 a:visited {
     border-bottom: $grey-2;
 }
 
 a:hover {
-    color: lighten( $primary-color, 10% );
+    color: lighten($primary-color, 10%);
 }
 
 a:focus {
-    color: darken( $primary-color, 20% );
+    color: darken($primary-color, 20%);
 }
 
 a:active {
-    color: lighten( $primary-color, 20% );
+    color: lighten($primary-color, 20%);
 }
 
-.no-adorn, .no-adorn:hover, .no-adorn:visited {
+.no-adorn,
+.no-adorn:hover,
+.no-adorn:visited {
     border: 0;
     text-decoration: none;
 }
 
-a:not([href]), a[href=''] {
+a:not([href]),
+a[href=''] {
     cursor: default;
 }
 
@@ -69,15 +74,17 @@ a[target='_blank']:after {
 }
 
 @media print {
-  a {
-    border: none !important;
-    text-decoration: underline !important;
-  }
-  a[href]:after { // extend style in _type > @print to allow in-url breaks
-    word-wrap: break-word;
-    white-space: pre;
-    font-size: $base-font-size * 0.8;
-  }
+    a {
+        border: none !important;
+        text-decoration: underline !important;
+    }
+
+    a[href]:after {
+        // extend style in _type > @print to allow in-url breaks
+        word-wrap: break-word;
+        white-space: pre;
+        font-size: $base-font-size * 0.8;
+    }
 }
 
 .clickable {
@@ -98,61 +105,85 @@ p {
     -ms-text-align-last: start;
     text-align-last: start;
 }
+
 p a,
 article a {
     font-weight: bold;
     border-bottom: 1px dotted;
+
     &:hover {
         border-bottom: 2px solid;
     }
 }
-h1, h2, h3, h4, h5, h6 {
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     a {
         font-weight: normal;
         border: 0;
     }
-    & + ul > li, & + ol > li {
-        & > a, & > ul > li > a, & > ol > li > a {
+
+    &+ul>li,
+    &+ol>li {
+
+        &>a,
+        &>ul>li>a,
+        &>ol>li>a {
             font-weight: normal;
             border: 0;
         }
     }
 }
+
 p a.button,
 .button,
 .button:hover {
     border: 0;
     color: text-on-solid-color($primary-color);
 }
+
 p.button a {
     border: 0;
     color: text-on-solid-color($primary-color);
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.breadcrumbs > *:before {
+.breadcrumbs>*:before {
     top: -1px !important;
 }
 
 @media print {
-  *:before, *:after {
-    background: transparent !important; // from _type > @print > *
-    color: $black !important;           // from _type > @print > *
-    box-shadow: none !important;        // from _type > @print > *
-    text-shadow: none !important;       // from _type > @print > *
-  }
+
+    *:before,
+    *:after {
+        background: transparent !important; // from _type > @print > *
+        color: $black !important; // from _type > @print > *
+        box-shadow: none !important; // from _type > @print > *
+        text-shadow: none !important; // from _type > @print > *
+    }
 }
 
 /* Headlines
 ------------------------------------------------------------------- */
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: $header-font-family;
     font-weight: normal;
     padding: 0;
 
     @media only screen {
-        &:target, &:target > * {
+
+        &:target,
+        &:target>* {
             color: $topbar-link-bg-active !important;
         }
     }
@@ -162,21 +193,26 @@ h1 {
     font-size: $font-size-h1;
     margin-top: 0;
 }
+
 h2 {
     font-size: $font-size-h2;
     margin: 1.563em 0 0 0;
 }
-    .blog-index h2 {
-        margin-top: 0;
-    }
+
+.blog-index h2 {
+    margin-top: 0;
+}
+
 h3 {
     font-size: $font-size-h3;
     margin: 1.152em 0 0 0;
 }
+
 h4 {
     font-size: $font-size-h4;
     margin: 1.152em 0 0 0;
 }
+
 h5 {
     font-size: $font-size-h5;
     margin: 1em 0 0 0;
@@ -187,22 +223,42 @@ h5 {
 /* Images
 ------------------------------------------------------------------- */
 
-img { border-radius: $global-radius;}
-    img.alignleft,
-    img.left        { float: left; margin:5px 15px 5px 0; }
-    img.alignright,
-    img.right       { float: right; margin:5px 0 5px 15px; }
-    img.aligncenter,
-    img.center      { display: block; margin:0 auto 10px; }
-    img.light-bg    { background: rgba(255,255,255,.6); padding: 10px; }
+img {
+    border-radius: $global-radius;
+}
+
+img.alignleft,
+img.left {
+    float: left;
+    margin: 5px 15px 5px 0;
+}
+
+img.alignright,
+img.right {
+    float: right;
+    margin: 5px 0 5px 15px;
+}
+
+img.aligncenter,
+img.center {
+    display: block;
+    margin: 0 auto 10px;
+}
+
+img.light-bg {
+    background: rgba(255, 255, 255, .6);
+    padding: 10px;
+}
 
 figure {
     margin: 0 0 rem-calc(30) 0;
 }
+
 #masthead-with-background-color figure,
 #masthead-with-pattern figure {
     margin: 0;
 }
+
 figcaption,
 .masthead-caption {
     color: $grey-10;
@@ -210,16 +266,19 @@ figcaption,
     font-size: rem-calc(13);
     padding-top: rem-calc(2);
 }
+
 figcaption a,
 .masthead-caption a {
     border-bottom: 1px dotted $grey-4;
     color: $grey-10;
 }
+
 figcaption a:hover,
 .masthead-caption a:hover {
     border-bottom: 2px solid $primary-color;
     color: $primary-color;
 }
+
 .masthead-caption {
     padding-right: 10px;
     text-align: right;
@@ -239,28 +298,34 @@ td {
 /* Code
 ------------------------------------------------------------------- */
 $code-border: 3px ridge transparentize(darken($primary-color, 40%), 0.5);
+
 pre {
     margin-bottom: rem-calc(20);
     padding: rem-calc(4) rem-calc(7) rem-calc(3) rem-calc(4);
     border-radius: $global-radius;
     line-height: 1.2;
-    max-height: 350px;
+    // max-height: 350px;
     color: $code-color;
     background-color: $code-background-color;
+
     .alert-box & {
         background-color: opacify($code-background-color, 0.3);
     }
+
     &:active {
         //max-height: none; // TODO annoying and impossible to scroll
     }
+
     @media not print {
         border: $code-border;
     }
+
     @media print {
-      max-height: none;
-      code {
-        white-space: pre-wrap;
-      }
+        max-height: none;
+
+        code {
+            white-space: pre-wrap;
+        }
     }
 
     code {
@@ -282,9 +347,11 @@ pre {
 
     &::-webkit-scrollbar-thumb {
         background: darken($primary-color, 40%);
+
         @media print {
             background: rgba(black, 0.3);
         }
+
         background-clip: padding-box;
         border-radius: 1ex;
         border: 2px solid transparent;
@@ -296,23 +363,27 @@ pre {
 }
 
 .highlight.debug code {
-  white-space: pre-wrap;
+    white-space: pre-wrap;
 }
 
-.highlight[title]::before, .highlighter-rouge[title]::before {
+.highlight[title]::before,
+.highlighter-rouge[title]::before {
     content: attr(title);
     text-align: center;
     display: block;
     border: $code-border;
+
     @media print {
         border: 1px solid $aluminum !important; // from _type > @print > pre
     }
+
     background-color: transparentize(scale-color($header-font-color, $lightness: -90%), 0.5);
     color: darken($header-font-color, 20%);
     border-bottom: none;
 }
 
-code, var {
+code,
+var {
     padding: rem-calc(1.5) rem-calc(2) rem-calc(0.5) rem-calc(2);
     font-style: normal;
     letter-spacing: rem-calc(-0.5);
@@ -337,6 +408,7 @@ ol.numbered-list {
         counter-reset: list;
         list-style-type: none;
     }
+
     li:before {
         counter-increment: list;
         content: counters(list, ".") ". ";
@@ -348,25 +420,34 @@ ol.numbered-list {
 }
 
 li {
-    > ul,
-    > ol {
-         margin-bottom: 0;
+
+    >ul,
+    >ol {
+        margin-bottom: 0;
     }
 }
 
-dl {
+dl {}
 
-}
 dt:first-child {
     padding-top: 0px;
 }
+
 dt {
     font-weight: bold;
 }
-dd {
+
+dd {}
+
+article dl dt {
+    line-height: 1.3;
 }
-article dl dt   { line-height: 1.3; }
-article dl dd   { line-height: 1.6; margin-bottom: rem-calc(12); margin-left: rem-calc(24); }
+
+article dl dd {
+    line-height: 1.6;
+    margin-bottom: rem-calc(12);
+    margin-left: rem-calc(24);
+}
 
 dl.project {
     dt {
@@ -378,9 +459,11 @@ dl.project {
         margin: 0;
         padding: 0;
     }
+
     dt:after {
         content: ":";
     }
+
     dd {
         margin: 0 0 0 160px;
         padding: 0 0 0.5em 0;
@@ -396,27 +479,32 @@ blockquote {
     position: relative;
     border: none;
     margin: 0 30px 30px 30px;
+
     p {
         font-style: italic;
         text-align: initial;
     }
 
-    &:before, &:after {
+    &:before,
+    &:after {
         font-size: 80px;
         line-height: 0;
         position: absolute;
         color: $secondary-color;
     }
+
     &:before {
         content: "\00BB";
         left: -26px;
         top: auto;
     }
+
     &:after {
         content: "\00AB";
         right: -26px;
         bottom: 20px;
     }
+
     cite:before {
         content: "\2014 \0020"
     }
@@ -431,7 +519,8 @@ q {
     color: $blockquote-font-color;
 }
 
-button, .button {
+button,
+.button {
     letter-spacing: 1px;
 }
 
@@ -453,14 +542,19 @@ mark {
     margin: 0;
     text-transform: uppercase;
 }
+
 .teaser {
     font-size: rem-calc(20);
 }
+
 .big-teaser {
-    font-style: italic; font-weight: 300;
+    font-style: italic;
+    font-weight: 300;
 }
+
 .big-teaser a {
-    font-style: italic; font-weight: 400;
+    font-style: italic;
+    font-weight: 400;
 }
 
 /* Smaller Fontsize for Bigteaser on small devices */
@@ -469,8 +563,9 @@ mark {
         font-size: rem-calc(20);
     }
 }
+
 @media only screen and (min-width: 40.063em) {
-    .big-teaser         {
+    .big-teaser {
         font-size: rem-calc(29);
     }
 }
@@ -480,15 +575,37 @@ mark {
 /* Additional typographical elements
 ------------------------------------------------------------------- */
 
-.sans           { font-family: $font-family-sans-serif; }
-.serif          { font-family: $font-family-serif; }
+.sans {
+    font-family: $font-family-sans-serif;
+}
 
-.font-size-h1   { font-size: $font-size-h1; }
-.font-size-h2   { font-size: $font-size-h2; }
-.font-size-h3   { font-size: $font-size-h3; }
-.font-size-h4   { font-size: $font-size-h4; }
-.font-size-h5   { font-size: $font-size-h5; }
-.font-size-p    { font-size: $font-size-p; }
+.serif {
+    font-family: $font-family-serif;
+}
+
+.font-size-h1 {
+    font-size: $font-size-h1;
+}
+
+.font-size-h2 {
+    font-size: $font-size-h2;
+}
+
+.font-size-h3 {
+    font-size: $font-size-h3;
+}
+
+.font-size-h4 {
+    font-size: $font-size-h4;
+}
+
+.font-size-h5 {
+    font-size: $font-size-h5;
+}
+
+.font-size-p {
+    font-size: $font-size-p;
+}
 
 
 
@@ -503,17 +620,20 @@ mark {
     margin-top: -10px;
     border-bottom: 1px solid $grey-2;
 }
+
 .footnotes {
     margin-top: 60px;
 }
+
 .footnotes ol {
     font-size: $font-size-small;
 }
+
 .footnotes p {
     font-size: inherit;
     margin-bottom: 0;
 }
 
-.table-overflow{
+.table-overflow {
     overflow: auto;
 }

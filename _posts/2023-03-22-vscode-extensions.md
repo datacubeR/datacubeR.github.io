@@ -5,7 +5,7 @@ subheadline: "Preparando un IDE para trabajar en Ciencia de Datos"
 teaser: "Por qué prefiero VScode por sobre otros entornos."
 # layout: page-fullwidth
 usemathjax: true
-category: ds
+category: other
 header: no
 image:
     thumb: vscode/vscode.png
