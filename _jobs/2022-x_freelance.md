@@ -2,7 +2,7 @@
 title: Freelance Data Science
 type: Company
 role: Consultor Freelance
-maintech: R, Python, SQL, AWS, Pytorch
+maintech: Python, SQL, Pytorch, AWS, GCP
 sector: Data Science
 location: Remoto
 dates:
@@ -11,10 +11,11 @@ dates:
 employer:
   onsite: true
 ---
-A lo largo del 2022 he realizado distintos proyectos como Freelance dedicados a áreas como:
+He realizado distintos proyectos como Freelance dedicados a áreas como:
 
 * Computer Vision.
 * MLOps.
+* Data Engineering. 
 * NLP.
 * Bases de Datos.
 * Software Development.

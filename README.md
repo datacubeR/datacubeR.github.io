@@ -16,7 +16,7 @@ Las secciones principales que quiero tener son:
 * Blog: Postear cosas que me interesen de Data Scientist, generalmente artículos cortos.
 * Proyectos: Algunos proyectos en los que he estado involucrado, normalmente largas líneas de código.
 
-Visiten [datacuber.github.io/](https://datacuber.github.io/) y si encuentran algún problema/error/typo, ayúdenme reportándolo a [aquí](https://github.com/datacubeR/datacubeR.github.io/issues).
+Visiten [datacuber.cl](https://datacuber.github.io/) y si encuentran algún problema/error/typo, ayúdenme reportándolo a [aquí](https://github.com/datacubeR/datacubeR.github.io/issues).
 
 Gracias,
 

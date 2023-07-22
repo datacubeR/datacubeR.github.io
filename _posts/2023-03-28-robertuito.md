@@ -31,9 +31,11 @@ La verdad es que trabajos sobre detección de odios hay por montones. De hecho l
 
 En este artículo me gustaría mostrar uno de los modelos que intenté durante la [Datathon 2022]({{ site.baseurl }}/datathon/) y que si bien no dio tan buenos resultados para la competencia (principalmente porque necesitaba detectar más cosas que sólo Odio) quiero mostrar uno de los proceso de Fine-Tuning que apliqué en el cuál sí hubo resultados para detectar Odio. 
 
+> Además como parte de mi Doctorado decidimos publicar un paper al respecto mostrando los resultados del modelo ganador y los resultados pobres de este modelo. En caso de que llegue a ser aceptado lo publicaré acá.
+
 ## El Modelo
 
-Bueno el Modelo es el [RoberTuito](https://arxiv.org/pdf/2111.09453.pdf) es un modelo desarrollado por académicos de Argentina supongo que un poco siguiendo los pasos del BETO en Chile. La idea es poder entrenar algunos de los modelos basados en Transformers más famosos pero en idioma Español (ya que casi todo el research en este tipo de modelos se ha hecho en Inglés). El modelo está basado en RoBERTa, que es un modelo propuesto por Meta en el cuál se propone un BERT pero pre-entrenado de manera distinta que de acuerdo a los autores entrega más estabilidad y robustez al entrenarse en muchísima más data. 
+Independiente de los resultados creo que es bueno mostrar este Modelo, el [RoberTuito](https://arxiv.org/pdf/2111.09453.pdf).  Este modelo fue desarrollado por académicos de Argentina supongo que un poco siguiendo los pasos del BETO en Chile. La idea es poder entrenar algunos de los modelos basados en Transformers más famosos pero en idioma Español (ya que casi todo el research en este tipo de modelos se ha hecho en Inglés). El modelo está basado en RoBERTa, que es un modelo propuesto por Meta en el cuál se propone un BERT pero pre-entrenado de manera distinta que de acuerdo a los autores entrega más estabilidad y robustez al entrenarse en muchísima más data. 
 
 En el caso de RoberTuito se entrenó en 500 millones de Tweets, lo cual es bastante. Y se utilizó Dynamic Masking. Dynamic Masking es un tipo de pre-entrenamiento no supervisado en el cuál se van enmascarando palabras aleatorias epoch a epoch y luego se busca que el módelo aprenda qué palabra es la que se enmascaró. 
 
@@ -69,13 +71,13 @@ Ahora, una vez que el modelo es alimentado con esta representación de palabras 
 
 ## Solución Propuesta
 
-La verdad es que tenía todas mis esperanzas puestas en este RoBERTuito, y si alguno me quiere ayudar a decifrar por qué no dio tan buenos resultados les agradecería montones. La implementación pre-entrenada de RoBERTuito se puede encontrar en 🤗 HuggingFace (debido a que es un transformer) pero de una manera un poco extraña, que es mediante una librería llamada `pysentimiento`. Esta librería tiene la verdad es que varias funcionalidades bien simpáticas las cuales pueden encontrar en su [Github](https://github.com/pysentimiento/pysentimiento). 
+La verdad es que tenía todas mis esperanzas puestas en este RoBERTuito, y si alguno me quiere ayudar a decifrar por qué no dio tan buenos resultados les agradecería montones. La implementación pre-entrenada de RoBERTuito se puede encontrar en 🤗 HuggingFace (debido a que es un transformer) pero de una manera un poco extraña, que es mediante una librería llamada `pysentimiento`. Esta librería tiene varias funcionalidades bien simpáticas las cuales pueden encontrar en su [Github](https://github.com/pysentimiento/pysentimiento). 
 
 Siendo sincero hice varias pruebas con este modelo utilizando las funcionalidades directamente de la librería pero también haciendo un fine-tuning del modelo, que es lo que voy a mostrarles ahora. 
 
-{% include alert success='Esta semana fue una semana bien importante para Pytorch, se lanzó oficialmente la versión 2.0 el cuál permite el uso de `torch.compile()` para poder compilar/acelerar directamente un modelo sin mucho cambio. Además como miembro de la ⚡⚡Lightning League⚡⚡ tengo que mencionar que también se liberó la versión de Lightning 2.0 (ex Pytorch Lightning), el cual formaliza ya varios cambios que se venían dando hace un tiempo, por lo que adapté el código a los últimos cambios de Lightning que voy aprovechar de presentar.' %}
+{% include alert success='En los últimos meses Pytorch ha tenido varias actualizaciones importantes, se lanzó oficialmente la versión 2.0 el cuál permite el uso de `torch.compile()` para poder compilar/acelerar directamente un modelo sin mucho cambio. Además como miembro de la ⚡⚡Lightning League⚡⚡ tengo que mencionar que también se liberó la versión de Lightning 2.0 (ex Pytorch Lightning), el cual formaliza ya varios cambios que se venían dando hace un tiempo, por lo que adapté el código a los últimos cambios de Lightning que voy aprovechar de presentar.' %}
 
-Básicamente Lightning ahora contiene no sólo Pytorch Lightning, sino también Fabric y Lightning Apps. Probablemente cada uno de estos requiere un tutorial por separado (el cuál habrá), pero principalmente Fabric es el ex Lightning Lite el cuál permite agregar rápidamente características de Lightning a un Modelo en Pytorch Nativo sin cambiar su código (digamos que es sólo un wrapper). Finalmente Lightning Apps permitirá facilitar el deploy de Apps que hacen uso de modelos de Machine o Deep Learning. 
+Básicamente Lightning ahora contiene no sólo Pytorch Lightning, sino también Fabric y Lightning Apps. Probablemente cada uno de estos requiere un tutorial por separado (eventualmente publicaré algo al respecto), pero principalmente Fabric es el ex Lightning Lite el cuál permite agregar rápidamente características de Lightning a un Modelo en Pytorch Nativo sin cambiar su código (digamos que es sólo un wrapper). Finalmente Lightning Apps permitirá facilitar el deploy de Apps que hacen uso de modelos de Machine o Deep Learning. 
 
 {% include alert alert='Lamentablemente no voy a poder mostrar los beneficios de `torch.compile()` debido que parece ser que los modelos de `pysentimiento` no son compatibles. ¿Como lo sé? La verdad no estoy del todo seguro, pero obtuve un error bien feo el cuál no logré encontrar en ninguna parte a qué se debe. Si alguien sabe y me quiere ayudar estaría muy agradecido, pero este el gran problema de los frameworks de Deep Learning, como trabajan con CUDA, sus errores son muy crípticos:
 
@@ -112,6 +114,7 @@ Quizás acá hay dos puntos bien importantes a recalcar: el primero es que ahora
 
 Además como utilizamos un módulo, podemos importar todo directamente desde el módulo robertuito, lo que permite un import mucho más limpio y ordenado.
 
+<!-- TODO: Modificar de acuerdo al código final -->
 ```python
 LABELS = [
     "Odio",
@@ -325,6 +328,7 @@ class HateDataset(Dataset):
 ```
 {: title="dataset.py"}
 
+<!-- TODO: Corregir el REPO de HateSpeech y dejar listo para la liberación.  -->
 En este archivo definimos el Pytorch Dataset el que se encargará de convertir cada texto recibido en un output compatible con transformers. Revisemos el detalle:
 
 Primero, esta es una clase bastante más sofisticada que una clase normal, esto porque generé una lógica para transformar el texto por folds. Por lo tanto, esta misma clase se puede utilizar para los folds de entrenamiento, el fold de validación, o en caso que no quisiera ningún fold (entrenar con todo el train set).
@@ -577,11 +581,9 @@ Durante la competencia obtuve un F1_custom cercano a 0.45 para 5 clases y 0.73 p
 | 3      |   0.61   |     0.80      |
 | 5      |   0.77   |     0.78      |
 
-
 {% include alert alert='La verdad no he tenido el tiempo para poder estudiar el por qué se da este fenómeno. Pero estoy intentando averiguar por qué sólo un epoch genera tan buenos resultados y luego se va degradando. No estoy seguro si esto es un comportamiento normal de los transformers, pero algunas hipótesis que tengo pueden ser que tengo demasiado parámetros para tan pocos datos (cerca de 109 millones sólo para RoBERTa) o si el Loss Function no es el apropiado para optimizar la métrica en cuestión.' %}
 
 En las últimas semanas he estado estudiando bien en detalle el funcionamiento de los Transformers mediante el curso de HuggingFace y leyendo el libro de Lewis Tunstall [NLP with Transformers](https://www.amazon.com/Natural-Language-Processing-Transformers-Applications/dp/1098103246). Voy a estar de poco compartiendo más del aprendizaje que llevo y que pueda ser de utilidad para ustedes también.
-
 
 Bueno, todo el código lo voy a dejar disponible en mi Github. Por lo que si les interesa déjenme una estrellita [acá](https://github.com/datacubeR/hate_speech).
 Nos vemos a la otra,
